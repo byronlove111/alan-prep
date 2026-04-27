@@ -1,0 +1,96 @@
+Alan
+Software Engineer Internship (6 months)
+Location
+Paris
+
+Employment Type
+Intern
+
+Location Type
+Hybrid
+
+Department
+Engineering
+
+Overview
+Application
+You. Better. With Alan.
+Alan is building a vertically integrated health partner that unites insurance and smart healthcare delivery into one seamless system. Our vision is to make prevention the new norm of care for all.
+
+Our mission: Help people live in good health to 100 while helping employers feel proud, turning health benefits from a cost centre into their most valuable investment.
+
+By connecting all aspects of care (private, public, and direct to consumer) we create the most member-centric healthcare experience, reducing claims costs while generating new monetization opportunities.
+
+We partner with tens of thousands of companies across France 🇫🇷, Spain 🇪🇸, Belgium 🇧🇪, and Canada 🇨🇦, serving over a million members.
+
+How we work: our Leadership Principles
+Mission is the Boss — We think long-term and are methodical optimists who take risks, seeking our mission's success above all else.
+
+Distributed Ownership — Accountable enlightened despots: everyone owns their decisions and results.
+
+Radical Transparency — All information is accessible and written-first, so everyone can make the best decisions asynchronously.
+
+Always Growing — Direct, positive, and caring feedback, combined with self-growth ownership.
+
+⭐️ The Engineering team ⭐️
+In our engineering team, we build the infrastructure, interfaces, and applications to provide first-class service to our members, health professionals, and even ourselves!
+
+Being an engineer at Alan means joining a team of talented, committed and passionate engineers, with a lot of product interaction.
+
+We move fast, with a lot of ownership, and are proud to tackle big problems!
+
+Our process is very simple: those who make product decisions are the same ones who build them.
+
+Our stack is Python/Flask, React, React Native, PostgreSQL.
+
+Want to know more? Read this article if you want to discover how life as an Engineer at Alan and this article on our Engineering career path.
+
+
+
+⭐️ Is it you we’re looking for? ⭐️
+Please note that for this internship, you need to be based in Paris, France, and currently enrolled in your last year of a Master's degree in a university.
+
+You would be a great fit at Alan if most of this sounds like you:
+
+You are looking for your 6-month end-of-studies internship and want to start in H1 2026
+
+You have prior internship or side-projects coding experience, and have already deployed frontend and backend code to production for real users
+
+You are willing to work in Python/JavaScript (but you don't need to have experience with those 2 languages!)
+
+You are passionate about building products
+
+You are self-starting and humble
+
+You are collaborative, enthusiastic about teamwork and learning
+
+Fluent in English (no need to speak French!)
+
+But above all, we are looking for high potential and curiosity: make sure to show us this when you apply! Everything else is a bonus.
+
+If you want to learn how engineers can grow at Alan, take a look at our Engineering career path.
+
+For this internship, we are hiring at the A2 level of our salary grid.
+
+
+🎯 Important note: we hire people, not roles.
+If you're excited about this opportunity but don't check every box, we'd love to hear from you. Everyone, no matter how underrepresented, should feel free to apply, as it can only bring learnings or success.
+
+If you identify yourself as a woman: Did you know that research shows women often apply only when meeting 100% of requirements?
+
+Remember, this is just a guide, not a checklist. We'll be thrilled to receive your application!
+
+🔖 Check out our About Alan and Career pages, as well as our Medium, blog and Glassdoor pages for more info.
+
+
+
+You want to know more about Alan?
+🙌 Perks & Benefits: Alaners are provided with a stimulating environment and perks ensuring they are happy, efficient and spend only high-quality time with co-workers.
+
+🤘 A strong culture: People joining Alan are often surprised and delighted by our innovative working method. We have a set of cultural values that guide our approach to work
+
+Apply for this Job
+Powered by 
+Privacy PolicySecurityVulnerability Disclosure
+
+

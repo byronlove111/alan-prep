@@ -1,0 +1,373 @@
+
+Search
+
+Get app
+Write
+Sign up
+
+Sign in
+
+
+
+Alan Product and Technical Blog
+Alan Product and Technical Blog
+Alan is on a mission to build the ultimate one-stop health partner for people & companies
+
+Follow publication
+
+Top highlight
+
+Engineering hiring process at Alan
+Rémy-Christophe Schermesser
+Rémy-Christophe Schermesser
+
+Follow
+8 min read
+·
+Mar 22, 2021
+153
+
+
+3
+
+
+
+Press enter or click to view image in full size
+
+Photo by Tim Mossholder on Unsplash
+Last update: 19th December 2025
+
+We have the reputation of having a heavy recruitment process. As a transparent company, we’ve decided to shine more light on it to allow you to understand what we do, and why.
+
+What is the engineering hiring process at Alan?
+How we hire people at Alan
+At Alan, our recruitment process is designed to be global while specialized for engineers. It’s based on four main principles:
+
+Fair: we learn continuously how to evaluate, calibrate, and manage unconscious bias.
+Objective: we have a defined set of assessments relevant to the role and backed by concrete examples.
+Transparent: our expectations are explicit, well-documented, and transparently shared with the candidate.
+Effective: our interviews have a good signal/time ratio, and the interviewer knows what a good and a bad answer looks like.
+In addition to those principles, we have fundamentals that we truly believe in:
+
+We have different types of Alaners (care, product, engineering, etc.) who are involved in the process. This allows us to have a maximum amount of unbiased signal. We try to avoid having a single person involved in too many steps of each person’s process. This also gives you, as a candidate, the opportunity to meet several Alaners and get a better picture of the company you’re considering joining.
+Each team has a hiring owner and the Talent team is there to support them. Their goal is to distribute and own the process management.
+Each step of the process is testing for something different to keep the interviewer’s focus high and give clarity to the Alaner responsible for the candidate hiring process.
+We pay close attention to the entire process. At any point, important flags may surface that require us to stop the process.
+We know that our hiring process is demanding. We believe it’s important to be able to assess you on multiple criteria: technical skills, cultural fit, growth mindset, etc. We think it needs to be thorough. We want to continue building a strong company culture as well as a great team that can reach our goals.
+
+In the end, we want to find out if we want to work with you, but most importantly to help you know if you want to work with us.
+
+All of this makes us trust our process to hire the best candidates for Alan. It also allows us to fully trust any new hire from day one. From your first day, you are treated like any other Alaner: with trust and confidence. That way you can focus on learning and ramping up rather than proving yourself.
+
+Yes, we know, it differs from what is pointed on the website here. However, engineers are snowflakes (data pun intended) and we needed something special.
+
+The specificities of the engineering process
+Our engineering process is divided as follows:
+
+Screening, 30 min. Focused on getting to know each other. It’s divided between us, Alan, asking you some probing questions, and roughly 50% of the interview, for you to ask us questions.
+Technical, 1 hour. The goal is to assess your programming skills. It is composed of an exercise to do online on coderpad.io. This is not an algorithm challenge or a puzzle. We will ask you to implement a small program that is as close as possible to the daily work of an engineer.
+Alaner Fit interview, 45 min. It will be centered around your past experiences and you will meet one of our Founders or Senior Alaners who are strong ambassadors of our mission. We’ll assess traits that are important to thrive at Alan. Specifically, we will explore your motivation, mission-driven mindset, your approach to work, your communication skills, your ability to take a step back as well as your growth mindset.
+Reference calls, varies. We believe in a thorough interview process, and our ability to make the right assessment of candidates. However, in certain situations we recommend seeking outside feedback in order to make a more informed decision. We ask you for a list of people to contact (no backchannel references). The reference calls step is optional.
+Alan day, 1/2 day. The Alan day comes with many objectives in terms of signals that can be summarized as: additional “sharpness” signal, cultural fit, personal fit, and product sense. It’s split into multiple interviews.
+The Alan day consists of:
+
+Arrival/Introduction to the day, 15 min. Introduction to the team, briefing on Alan day, presentation of our tools.
+Past Project, 1 hour. Depending on the results of the previous steps, we may ask you to talk about a significant project in which you played a key role. This interview is meant to test your understanding of a previous project that you worked on, and your ability to speak clearly about technical detail.
+Feature design, 1 hour. This interview is similar to the engineering brainstorms we often do when starting a new project. It is meant to be a discussion on how to implement a new feature. The feature is the same for every candidate: we don’t reuse what was created by you during the interviews at Alan!
+Lunch/Break, 60 min
+Ask Me Anything, 30 min. We switch roles with you just after lunch by letting you ask us any questions you may have about Alan. It’s not an interview, but rather a way to allow you to better understand what it would be to work at Alan.
+Debrief, 15 min or more. It’s the time for us to get feedback from you about the day and our hiring process.
+The feedback loop
+We believe the hiring process is an assessment on both sides, and we expect you to give us feedback at any moment. Nonetheless, we have organised times dedicated to feedback. Those three moments are not interviews and are not there to assess you in any way.
+
+Pre-Alan day call. It’s a time dedicated to answering your questions, giving actionable feedback before the Alan day, and showing you how to succeed during this day.
+Alan day debrief. A moment at the end of the Alan day to gather your feelings and feedback about this intense day!
+Anonymous survey. When the process is over, we send an anonymous survey to get your feedback. This survey is sent regardless of the outcome of the process, and whenever it stops, whether it be the technical interview or the Alan day.
+How do you assess engineering skills?
+As you can see, we assess multiple engineering skills:
+
+Pure coding skills with the technical interview.
+Architectural and system design in the feature design interview and the past project.
+Leadership and mentoring with the past project.
+Coding is one of the core skills of any software engineer. We need to assess it. And for now, the best way we have found is face-to-face exercises. We know that we do not want our hiring process to take more time than necessary for you, and it is already quite long! Not everyone has 6–7 hours available to work on a home assignment. We want to make sure our process is fair and inclusive. Being inclusive also means respecting your personal life, and your private constraints. That is why we prefer to have a one hour long face-to-face interview for assessing skills.
+
+Get Rémy-Christophe Schermesser’s stories in your inbox
+Join Medium for free to get updates from this writer.
+
+Enter your email
+Subscribe
+
+Remember me for faster sign in
+
+Live coding during the hiring process is an endless debate among engineers. Nonetheless, our experience shows that it has been a great way to assess coding skills. We are not interested in whether you write perfect or clever code but rather in your way of thinking and approaching the problem.
+
+How do you assess soft skills?
+We have a very strong culture. This implies soft skills are key for us. To assess those we dedicated a full interview to them — the Alaner Fit interview. Almost all of the other interviews also assess some soft skills; like leadership in the past experience. As mentioned above, each interview is backed by an evaluation grid. This helps us mitigate biases and assess all candidates on the same grounds.
+
+How do we mitigate biases?
+We constantly assess potential candidates, and evaluate their performance, both formally and informally. These evaluations lead to forming an idea (as individuals and as a group) of who is “impressive” and how we define “talent”.
+
+Research shows that stereotypes can introduce bias into the process, inflating or lowering the evaluation of people’s potential, despite them having the same qualifications, skills, or levels of accomplishment.
+
+It’s ok, we all have those biases whether we are conscious of them or not. Understanding and managing unconscious bias can help us build a more inclusive and better hiring process.
+
+The first step is to be more aware of them and watch out for them. From that, they are less likely to blindly dictate our decisions.
+
+Here are a few resources and ideas that we use internally:
+
+Managing Bias: Facebook’s training
+The facilitator guide and slides of Google’s training,
+Bias Busting @ Work Slides
+How can I negotiate my salary and perks?
+We believe that transparency comes with trust, and that’s one of the key reasons for us to work so much on it. Open salaries are one of the steps towards trust and transparency. Levels are defined during the interview process and shared with the offer after the Alan day. There is a premium depending on years of professional experience that is calculated year by year. This means that we don’t strictly offer salary negotiation. We may offer a degree of flexibility between salary and stock options.
+
+As we are a work-from-anywhere company, you can also have local perks or differences, depending on the city/country you will work from.
+
+I am a XXX engineer. Do you have a position for me?
+Whatever your current job title or seniority, we do have a position for you. In fact, we don’t have titles. We want to hire people, not roles. Our one and only job offering is named “Software Engineer (Junior, Senior, Staff, Principal)”. We hire software engineers that match Alan culture, and leverage their full potential. We have plenty of technical and product challenges to serve all appetites! We also don’t have quotas on the seniority. Our level repartition (shown in the graph below) is like this at the time of writing this piece, but we are not attached in any way to it. We only ensure a good repartition of C-levels compared to the others. This is to make sure they are set up for success, with enough support from more senior engineers.
+
+In the following graph, “H” is the most senior level we currently have. But it could go higher! The level “E” is equivalent to Senior Software Engineer at Google or Facebook. You can find more on our levels in this article. We consider levels G and above to be leadership positions.
+
+
+Are you hiring?
+Of course 😉.
+
+We’re also discussing hiring more junior entry-level software engineering positions. If you’re interested, stay tuned!
+
+See you around! 👋
+
+Hiring
+Engineering
+Transparency
+153
+
+
+3
+
+
+Alan Product and Technical Blog
+Published in Alan Product and Technical Blog
+1.8K followers
+·
+Last published 5 days ago
+Alan is on a mission to build the ultimate one-stop health partner for people & companies
+
+
+Follow
+Rémy-Christophe Schermesser
+Written by Rémy-Christophe Schermesser
+139 followers
+·
+7 following
+Software Engineer @dust.tt
+
+
+Follow
+Responses (3)
+
+Write a response
+
+What are your thoughts?
+
+Cancel
+Respond
+Mahdi Karabiben
+Mahdi Karabiben
+
+Mar 23, 2021
+
+
+I really wanted to agree with this process, but I just can't. Alan as a company has a stellar reputation (Kudos on that) and I usually strongly agree with your values/culture, but this one gave me more of a negative image on the company.
+The first…more
+4
+
+
+1 reply
+
+Reply
+
+Matthias Brat
+Matthias Brat
+
+Jul 30, 2025
+
+
+I think the hiring process just translates Alan's technicality on the humane perspective. It's like getting to know someone before engaging in anything more serious. And in my opinion that's what makes its more humane. As candidates we're not here…more
+Reply
+
+Sebastien Creme
+Sebastien Creme
+
+Nov 7, 2024
+
+
+Managing Bias: Facebook’s training
+
+Hi I think this link is broken.
+Reply
+
+More from Rémy-Christophe Schermesser and Alan Product and Technical Blog
+A new iteration of our engineering career path at Alan
+Alan Product and Technical Blog
+In
+
+Alan Product and Technical Blog
+
+by
+
+Rémy-Christophe Schermesser
+
+A new iteration of our engineering career path at Alan
+A few years ago, we shared our engineering career path with the outside world. We thought it was interesting for our candidates and other…
+Mar 29, 2024
+181
+Alan Cache — the best caching library? (Part 1)
+Alan Product and Technical Blog
+In
+
+Alan Product and Technical Blog
+
+by
+
+Damien "dams" Krotkine
+
+Alan Cache — the best caching library? (Part 1)
+Did we build the best python caching library? Two layers, atomic writes, distributed invalidation, warmup, async refresh, observability...
+Mar 24
+77
+How we bootstrapped an AI agent platform for operations at Alan
+Alan Product and Technical Blog
+In
+
+Alan Product and Technical Blog
+
+by
+
+David Mercklé
+
+How we bootstrapped an AI agent platform for operations at Alan
+At Alan, our operations teams handle hundreds of distinct processes every day, from claim-related requests to invoice reconciliation.
+5d ago
+107
+Engineering career path at Alan
+Alan Product and Technical Blog
+In
+
+Alan Product and Technical Blog
+
+by
+
+Rémy-Christophe Schermesser
+
+Engineering career path at Alan
+We speak a lot about transparency. Let’s take it a step further and talk about our engineer career path!
+Oct 18, 2019
+619
+See all from Rémy-Christophe Schermesser
+See all from Alan Product and Technical Blog
+Recommended from Medium
+Vibe Coding is Over illustration of three ai generated landing pages with the words IT’S OVER written at the top in large text
+Michal Malewicz
+Michal Malewicz
+
+Vibe Coding is OVER.
+Here’s What Comes Next.
+
+Mar 24
+6.7K
+265
+If You Understand These 5 AI Terms, You’re Ahead of 90% of People
+Towards AI
+In
+
+Towards AI
+
+by
+
+Shreyas Naphad
+
+If You Understand These 5 AI Terms, You’re Ahead of 90% of People
+Master the core ideas behind AI without getting lost
+
+Mar 29
+12.9K
+249
+6 brain images
+Write A Catalyst
+In
+
+Write A Catalyst
+
+by
+
+Dr. Patricia Schmidt
+
+As a Neuroscientist, I Quit These 5 Morning Habits That Destroy Your Brain
+Most people do #1 within 10 minutes of waking (and it sabotages your entire day)
+
+Jan 14
+47K
+970
+Extreme Programming in practice at Autotrader
+Autotrader Engineering
+In
+
+Autotrader Engineering
+
+by
+
+Dan Brown
+
+Extreme Programming in practice at Autotrader
+Recently, I attended XConf in Madrid, a one-day software conference hosted by Thoughtworks. Throughout the day, I noticed a series of…
+Feb 10
+8
+Join theDOE!
+theDOE
+In
+
+theDOE
+
+by
+
+Aria R.
+
+Join theDOE!
+Learn how to write for us
+Apr 6
+250
+When the System Breaks You: Surviving Academia and Medicine as a Brainy Woman
+(Re)imagin(in)g the brain
+In
+
+(Re)imagin(in)g the brain
+
+by
+
+Hypatia D
+
+When the System Breaks You: Surviving Academia and Medicine as a Brainy Woman
+And how to rebuild without losing yourself
+
+Apr 7
+21
+See more recommendations
+Help
+
+Status
+
+About
+
+Careers
+
+Press
+
+Blog
+
+Privacy
+
+Rules
+
+Terms
+
+Text to speech
