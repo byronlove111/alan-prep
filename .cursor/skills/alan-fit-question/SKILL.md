@@ -18,11 +18,31 @@ Simulates Alan's Alaner Fit interview — 45 min, centered around past experienc
 
 ### Step 1 — Create session folder, pick a value, open the session
 
-Create folder `sessions/YYYYMMDD-HHmm-fit-question/` with one file:
+Create folder `sessions/YYYYMMDD-HHmm-fit-question/` with two files:
 ```
 sessions/YYYYMMDD-HHmm-fit-question/
-└── debrief.md   # empty — agent writes the debrief here at the end
+├── transcript.md   # agent writes every question + answer here in real time
+└── debrief.md      # empty — agent writes the debrief here at the end
 ```
+
+`transcript.md` initial content:
+```markdown
+# Transcript — Fit Question — [date]
+
+<!-- Agent appends each Q&A block here during the session -->
+```
+
+**During the interview**: after each answer from the user, append a block to `transcript.md`:
+```markdown
+---
+**Q ([value tested])**: [exact question asked]
+
+**A**: [user's answer, verbatim or close paraphrase]
+
+💡 **What you should have said**: [placeholder — filled in after debrief]
+```
+
+**After the debrief**: go back and fill in every `💡 **What you should have said**` block in `transcript.md`. For each answer, write 3-5 sentences in English showing a stronger version — not a model answer, but a concretely improved version of what the user actually said. Keep the same story, fix the framing: add ownership language ("I decided"), close the outcome loop, sharpen the "what I learned and how I applied it" part. The user should be able to read this, practice saying it out loud, and immediately use it in a real interview.
 
 Then pick a value and open the session.
 

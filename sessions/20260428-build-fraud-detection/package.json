@@ -1,0 +1,10 @@
+{
+  "name": "alan-fraud-detection",
+  "version": "1.0.0",
+  "scripts": { "test": "npx tsx test-runner.ts" },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}
