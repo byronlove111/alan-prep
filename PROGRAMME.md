@@ -99,6 +99,30 @@ Objectif lecture : comprendre leur culture technique, leur stack, leurs défis r
 
 ---
 
+## Bonus — exercices optionnels (hors programme, quand tu veux)
+
+Ces exercices ne comptent pas dans les jours. Tu les lances quand t'en as envie, sans contrainte.
+
+### `/alan-ts-drill` — Drill TypeScript ciblé
+
+Lance ça après n'importe quelle session où t'as galéré sur une notion TS/JS.
+Tu listes les notions, il génère un exercice 15-20 min dans le domaine Alan.
+
+### `/alan-build-feature` — Build from scratch *(skill à créer)*
+
+Une stack t'est imposée (tirée de celle d'Alan : TypeScript, Flask/Python, PostgreSQL, React).
+Un brief métier Alan t'est donné. Tu construis la feature de zéro — pas de starter code.
+Utile pour progresser en conception et en maîtrise de stack.
+
+> Stack imposées possibles :
+>
+> - TypeScript + fonctions pures (logique métier)
+> - Flask + Python (API backend)
+> - SQL/PostgreSQL (requêtes et modélisation)
+> - React (composants et state)
+
+---
+
 ## Signaux de progression
 
 Tu es prêt quand :

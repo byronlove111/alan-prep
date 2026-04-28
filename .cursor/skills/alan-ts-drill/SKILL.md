@@ -9,6 +9,35 @@ Generates a focused TypeScript exercise to reinforce specific JS/TS notions the 
 
 ## Workflow
 
+### Step 0 — Propose 3 drill themes
+
+Before generating anything, propose exactly 3 different drill themes and ask the user to pick one (or give their own list of notions).
+
+Rules for the 3 proposals:
+- Each theme should combine 3-4 notions that naturally go together
+- Vary the themes across the common notion list below — don't repeat the same notions
+- Include at least one theme that focuses on things typically hard for JS/TS beginners
+- Never repeat a theme from a recent `drills/` session (check the folder if needed)
+
+Format:
+```
+Voici 3 thèmes de drill — choisis en un (ou donne-moi tes propres notions) :
+
+**A — [theme name]**
+Notions : [list]
+[1-line description of the exercise angle]
+
+**B — [theme name]**
+Notions : [list]
+[1-line description of the exercise angle]
+
+**C — [theme name]**
+Notions : [list]
+[1-line description of the exercise angle]
+```
+
+Wait for the user's choice before generating anything.
+
 ### Step 1 — Identify the notions
 
 Ask the user: "Sur quelles notions t'as eu des difficultés aujourd'hui ? Liste-les."

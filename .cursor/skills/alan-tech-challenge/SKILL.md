@@ -17,6 +17,32 @@ Simulates Alan's 45-minute technical interview. Based on their actual process: e
 - NOT expected: Levenshtein, graph algorithms, DP, fancy data structures — brute force is explicitly fine
 - The goal is to reach a working solution, not a perfect one
 
+## Step 0 — Propose 3 subjects
+
+Before generating anything, propose exactly 3 distinct exercise ideas and ask the user to pick one.
+
+Rules for the 3 proposals:
+- Each must be a different type (`parsing`, `business-rules`, `data-processing`, `refactoring`)
+- Each must be in a different sub-domain of Alan's world (e.g. one on claims, one on members, one on documents)
+- Present them as short pitches (2-3 lines each) — enough context to choose, not the full exercise
+- Never propose something too similar to what was done in a previous session (check the `sessions/` folder if needed)
+
+Format:
+```
+Voici 3 sujets pour aujourd'hui — choisis en un :
+
+**A — [type] · [sub-domain]**
+[2-3 line pitch]
+
+**B — [type] · [sub-domain]**
+[2-3 line pitch]
+
+**C — [type] · [sub-domain]**
+[2-3 line pitch]
+```
+
+Wait for the user's choice before generating anything.
+
 ## What to generate
 
 Create folder `sessions/YYYYMMDD-HHmm-tech-challenge/` in the workspace with:
