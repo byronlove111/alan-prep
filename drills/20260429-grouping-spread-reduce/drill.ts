@@ -29,7 +29,14 @@ export interface Claim {
 // Hint : initialise le tableau avec `if (!acc[key]) acc[key] = []` avant de push
 // ------------------------------------------------------------
 export function groupByMember(claims: Claim[]): Record<string, Claim[]> {
-  throw new Error('not implemented');
+  const byMember : Record<string, Claim[]> = {};
+  for (const c of claims) {
+    if (!byMember[c.memberId]) {
+      byMember[c.memberId] = [];
+    }
+    byMember[c.memberId].push(c);
+  }
+  return byMember;
 }
 
 // ------------------------------------------------------------
@@ -42,7 +49,15 @@ export function groupByMember(claims: Claim[]): Record<string, Claim[]> {
 //        Pour ignorer une variable dans le destructuring, utilise la virgule seule : [, value]
 // ------------------------------------------------------------
 export function activeMemberIds(grouped: Record<string, Claim[]>): string[] {
-  throw new Error('not implemented');
+  const activeMembers: string[] = [];
+  const iterableList = Object.entries(grouped);
+
+  for (const [memberId, claim] of iterableList){
+    if (claim.length > 1){
+      activeMembers.push(memberId);
+    }
+  }
+  return activeMembers;
 }
 
 // ------------------------------------------------------------
@@ -56,7 +71,11 @@ export function activeMemberIds(grouped: Record<string, Claim[]>): string[] {
 //        tous ses éléments en une fois : arr.push(...autreArray)
 // ------------------------------------------------------------
 export function collectIds(groups: Claim[][]): string[] {
-  throw new Error('not implemented');
+  const collection : string[] = [];
+  for (const group of groups){
+    collection.push(...group.map(c => c.id));
+  }
+  return collection;
 }
 
 // ------------------------------------------------------------
@@ -72,5 +91,9 @@ export function collectIds(groups: Claim[][]): string[] {
 //        À utiliser quand tu veux transformer un tableau en UN seul objet ou valeur.
 // ------------------------------------------------------------
 export function totalByActCode(claims: Claim[]): Record<string, number> {
-  throw new Error('not implemented');
+  return claims.reduce((dict, claim) => {
+    if (!dict[claim.actCode]) dict[claim.actCode] = 0;
+    dict[claim.actCode] += claim.amount;
+    return dict;
+  }, {} as Record<string, number>);
 }

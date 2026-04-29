@@ -1,0 +1,239 @@
+At Alan, our operations teams handle hundreds of distinct processes every day, from claim-related requests to invoice reconciliation.
+
+For years, the biggest of these processes (e.g. claim document parsing) have all had product teams dedicated to automation. For the rest, the approach was to document a process, train people to follow it, and hire more people as volume grows. This long tale of small-to-medium processes, involving ambiguity, edge cases, and judgment calls, stayed manual. Individually, each process might cost only a few dozen hours per month. Accumulated, they represent millions of euros per year, growing as our business scales.
+
+We believe AI agents can redefine how operations work at Alan in the coming months. That’s why we created the Ops AI Agents team: to automate operations with AI agents, and build a platform that empowers the operations teams to own the process end to end.
+
+Our first exploration
+We chose a concrete use case to explore and learn from before trying to scale: Blocked Employment Movements, a well-defined process in our employment data pipeline.
+
+When new employment data arrives (from HR admin invitations, bulk imports, or integrations), it usually gets processed automatically, and the employee immediately receives an invitation to join as an Alan member within their new company’s plan. But sometimes, the incoming data is inconsistent. For instance, it partially matches an existing user: the email and names match but the social security number doesn’t. When that happens, the system creates a blocked movement, and an operator must manually investigate and resolve it by following a detailed playbook.
+
+Press enter or click to view image in full size
+
+The internal tool used by operators to process Blocked Movements. Data in screenshots is 100% fake.
+Operators typically open their dedicated internal tool, identify which scenario they’re dealing with, check user profiles, contact admins when needed, and update records accordingly. It’s methodical, well-documented work, and exactly the kind of process where an AI agent can help.
+
+What makes our use case different
+Several Alan teams are building AI agents or automations today, but the constraints and priorities vary widely depending on the use case. Here’s what shapes ours:
+
+Structured source of truth: Our goal is to check and modify database records and trigger actions with side effects, not to generate text. Only the end result matters, which is why we invested early in stateful evaluation rather than output-matching.
+Zero tone-of-voice risk: The agent communicates with internal operators, not end users. If its reasoning text is blunt, that’s fine, unlike a customer-facing chatbot where an inappropriate tone could be catastrophic. The only external communication we do for now relies on predefined macros with placeholder replacements.
+Trusted users, with guardrails: Our operators are internal staff, so prompt injection from operators isn’t a realistic threat. Regardless, we still sanitize user-controlled inputs as a security measure, since external data (like employee names) flows through the system.
+Reasoning over exhaustive rules: For edge cases like fuzzy name matching, we describe the goal in a concise prompt and rely on the agent’s reasoning instead of enumerating every branch. Classical rule-based flows would need to anticipate every variation; the agent handles ones we hadn’t even anticipated.
+Solution overview and results
+The agent: an LLM with tools
+Our agent is a conversational AI that combines an LLM with tools. It receives the details of a blocked movement, reasons about which scenario applies, and calls tools to gather additional data and resolve the issue.
+
+Beyond producing answers, the agent takes actions. We implemented 15 tools that mirror what operators do: fetching user profiles, comparing data, sending Intercom emails from predefined macros, updating employment records, and updating the status of blocked movements.
+
+Each tool is configured with a permission level. Read-only tools (like fetching a user profile) execute automatically. Sensitive write tools (like sending an email to an external admin) require human-in-the-loop approval: the operator reviews the arguments and approves or denies the action before it executes.
+
+Press enter or click to view image in full size
+
+A tool call pending approval
+Press enter or click to view image in full size
+
+How it looks after approval
+We don’t trust the LLM to police itself here. The validation is enforced at the application layer: tools configured with human validation are intercepted before execution, and the agent cannot bypass the review step. It’s the first use case at Alan where we’ve implemented this pattern, and it’s proved essential for building trust with the operations team.
+
+Integration with existing workflows
+We didn’t build a standalone AI tool. Instead, we embedded the agent directly into the existing ops tooling, the same internal interface operators already use daily. When an operator opens a blocked movement, they can launch an AI analysis that opens a chat panel within the tool. They see the agent’s reasoning, its tool calls, and can approve or follow up. The result of agent actions, like updating a blocked movement status, is immediately reflected in the interface.
+
+Press enter or click to view image in full size
+
+The agent is tightly integrated into our existing internal tool
+Operators can also send follow-up messages, for instance to course-correct the agent. After an initial iteration where we tested a single-turn structured-output agent, moving to a conversational agent felt like a much more flexible, powerful, and generalizable approach for operators to use.
+
+Press enter or click to view image in full size
+
+The AI Agent chat panel we created is generic and can be plugged into any of our internal tools.
+
+Get David Mercklé’s stories in your inbox
+Join Medium for free to get updates from this writer.
+
+Enter your email
+Subscribe
+
+Remember me for faster sign in
+
+We also integrated with our operations task orchestration platform. In production, the agent pulls tasks from queues, processes them, and marks them as complete, or escalates to a human queue when it can’t resolve a case. The AI agent fits into the same workflow as a human agent would.
+
+Git as the backbone for operators autonomy
+From the start, we designed the system so that operations teams can iterate on the agent without engineering support. If every prompt tweak or new scenario requires an engineer, we’ll never scale to the dozens of processes we want to automate.
+
+We made a deliberate design choice: the agent’s prompt, tool configuration, and evaluation dataset all live in Git. Not in a database or file storage mechanism like S3, but in a repository, versioned like code.
+
+Why? Because Git gives us for free what we’d otherwise have to build: version history on every change, branching to test modifications safely, pull requests for peer review between operations team members, diffs to see exactly what changed and when, and a full audit trail of who changed what and why. For a system that takes real actions (sending emails, modifying user records), this traceability is essential.
+
+For now, the UX is deliberately minimal: users can edit files in Github, create a branch, and test their changes immediately in our staging environment by specifying their branch name in the Agent Panel UI. Non-prod runtimes can load any change to an agent’s configuration (prompt, tools) from a remote branch in Github. No local development setup or deployment step is needed.
+
+For example, when we discovered the agent was failing on compound names (like “Marie Marceau-Dupont” vs. “Marie Dupont”), an operations team member added a prompt instruction to handle minor name variations, tested the change on a fresh blocked movement generated for this purpose in the staging environment, verified the fix, and opened a PR for review.
+
+There’s a last important advantage to Git as an agent config storage mechanism that we’ll develop in our next article.
+
+Results
+After a quarter of exploration:
+
+The agent processes 70% of all blocked movements
+It fully resolves 25% of all blocked movements end to end
+94% accuracy, tracked weekly with expert operator annotations
+15 tools implemented, with configurable human-in-the-loop per tool
+
+We got here faster than we expected, helped by two things:
+
+Reusing our internal agents Python framework and runtime, now shared across several of our AI products (Mo, our personalized medical assistant; Automated Resolution for support contacts; and others).
+Heavy use of AI coding tools, but not vibe-coding. We reviewed and adjusted in depth what the coding agents produced, and kept the opinionated architectural decisions ours.
+Now for the honest part. Since we started empowering the operations team to iterate on the agent directly, the pace of iteration has slowed down. The barebones UX, relying heavily on Github edits, branches, and pull requests, plus YAML for evaluation task definitions (more on that in our next article), is unnatural for ops. We knew the trade-off going in: the MVP was the point, and we wanted to ship solid foundations working for at least 2 agents, before investing in polish. We’re now prototyping a nicer UI on top of Github, and also exploring a “meta-agent “ approach that we’ll develop in our next article about testing and evaluation.
+
+Expanding the approach
+Reusable building blocks: we created a generic and reusable frontend component for our AI Agent Chat Panel, that can be integrated into any internal tool with minimal effort. We also created shared backend code for associating agent conversations with arbitrary business objects, and a new agent base class that handles all the branching logic (allowing to optionally load agent config from a remote Github branch) and tool call human validation. This proved very useful, as we could very quickly and efficiently bootstrap our second ops agent, as well as help a sister team ship their brand new Sales AI agent into another internal tool. We believe our approach can scale to any conversational agent integrated within internal tools, whether it serves Operators, Sales, or other internal users.
+
+Second use case, Belgium claims: In the last weeks, we started tackling a new ops process related to claims in Belgium. We picked it on purpose: a new product area, a new country (forcing us to think about generic and global code early), and a new pattern (the process involves document parsing). It’s the perfect opportunity to validate that our platform and opinionated choices generalize to a variety of use cases.
+
+Ops-led scale-up to 80% automation: Our north star going forward is having our agents fully automate the vast majority of processes, with the operations team iterating on the agents themselves using our platform. Engineering’s job becomes enhancing the platform (e.g. by adding tools), not iterating on individual agents, except when we dogfood our own tools.
+
+Testing, evaluation, and meta-agents: a dedicated article will follow for a deep dive on those aspects that are key to our vision!
+
+David Mercklé is an engineer at Alan, leading the Ops AI Agents team.
+
+TL;DR: We generalized our French insurance document pipeline to handle three countries and multiple use cases. The key: configuration over code. Each team owns their document types, picks their transcription engine and classification strategy, and runs evaluations before shipping changes.
+
+This is the third post in our series on document processing at Alan. In the How we reached 70% document processing automation at Alan, we covered how we reached 70% automation on French insurance documents. In the Lessons from Running an LLM Document Processing Pipeline in Production, we shared lessons from running the pipeline in production. This post covers how we generalized the pipeline for new countries and use cases.
+
+Beyond French Health Claims
+The pipeline now covers three countries — France, Belgium, and Canada — and multiple use cases within each:
+
+Press enter or click to view image in full size
+
+Belgium and Canada: health insurance documents with country-specific layouts and languages
+French retiree eligibility: pension documents, payslips for retiree onboarding
+French social funds eligibility: payslips, tax income documents
+French fraud investigation: companion documents (delivery forms, justifications) submitted by members — parsing these is the first step toward automatically reimbursing legitimate members whose documents are compliant
+All powered by the same document processing stack, with each use case owning its own configuration
+The Pipeline at a Glance
+Every document goes through the same three steps, with validation gates at each stage. If any step fails validation, the document gets routed to a human reviewer rather than producing bad data.
+
+Press enter or click to view image in full size
+
+Each step produces a result along with a validation status: either validated or review_needed. If any step fails validation, the document gets routed to human review and the pipeline stops early. The system never silently produces bad data. It either extracts the information correctly or asks a human to take a look. We'd rather process fewer documents automatically and get them right than process all of them and get some wrong.
+
+Document Types and Document Categories
+Before diving into the steps, it’s worth clarifying two key concepts that structure the entire pipeline.
+
+A Document Type is the top-level grouping — a broad class of documents scoped to a country and use case. French insurance documents, Canadian insurance documents, and French retiree eligibility documents are each their own document type.
+
+Each Document Type contains multiple Document Categories — the specific kinds of documents within that type: invoice, prescription, ss_decompte (social security reimbursement statement), and so on. Each category has its own extraction schema, as covered in How we reached 70% document processing automation at Alan.
+
+The Document Type determines which pipeline configuration to load, while the Document Category (selected during classification) determines which extraction schema to use and how to extract.
+
+Making It Configurable
+Everything described above — the transcription backend, the classifiers, the extraction model, the number of few-shot examples — is driven by configuration. Each document type registers its own configuration at application startup, and the pipeline reads from it at runtime.
+
+Press enter or click to view image in full size
+
+Configurable at Every Step
+Transcription. Crews choose their OCR engine — AWS Textract or LLM-based — depending on document quality. Confidence thresholds and minimum text lengths are configurable per document type; documents below threshold go to human review.
+
+Get Othman Moumni Abdou’s stories in your inbox
+Join Medium for free to get updates from this writer.
+
+Enter your email
+Subscribe
+
+Remember me for faster sign in
+
+Classification. Four strategies are available: ML model endpoints for high-volume categories with lots of training data, LLM-based classifiers for bootstrapping without training data, rule-based Python functions for deterministic logic, and fixed classification when the category is known upfront. An ML model trained on hundreds of thousands of documents outperforms LLMs — but for rare document types, an LLM with good instructions beats an undertrained model.
+
+Press enter or click to view image in full size
+
+Adding a New Document Category
+Adding support for a new document category means writing configuration, not new processing code. You define:
+
+The document category and its metadata
+A Pydantic model describing the fields you want to extract per category
+Extraction instructions telling the LLM what to look for
+Classification setup so the pipeline knows how to identify this category
+Show me the code
+Here’s a small example to configure parsing of credit card payment receipts
+
+class PaymentReceiptContent(BaseModel):
+    payment_datetime: datetime
+    amount: float
+
+    @field_validator("amount")
+    @classmethod
+    def validate_positive_amount(cls, amount: float) -> float:
+        # this is a simple validation to show what can be achieved with field validators
+        if amount <= 0:
+            raise ValueError("Amount must be positive")
+        return amount
+
+
+PAYMENT_RECEIPT_PARSING_CONFIGURATION = DocumentParsingConfiguration(
+    document_type=DocumentType.PaymentReceipt,
+    document_categories={
+        "payment_receipt": DocumentCategoryConfiguration(
+            category="payment_receipt",
+            icon="IconReceipt",
+            extraction_content_model=PaymentReceiptContent,
+        ),
+    },
+    document_auto_parsing_flow_configuration=DocumentAutoParsingFlowConfiguration(
+        transcription_configuration=DocumentTranscriptionConfiguration(
+            min_confidence_score=0.6,  # if less <60%, we don't trust the transcription and send to manual review
+        ),
+        classification_configuration=DocumentClassificationConfiguration(
+            classifiers={
+                "category": DocumentClassifierConfiguration(
+                    predictor_type="fixed",  # can also be sagemaker,llm or pythonic
+                    predictor_configuration=None,  # None for "fixed"
+                    possible_classes=["payment_receipt"],
+                    fallback_label="payment_receipt",
+                )
+            }
+        ),
+        extraction_configuration=DocumentExtractionConfiguration(
+            document_handler=DocumentHandler(document_type=DocumentType.PaymentReceipt),
+            category_extraction_configurations={
+                "payment_receipt": DocumentCategoryExtractionConfiguration(
+                    extractor_type=ExtractorType.dynamic_llm,  # LLM with similar documents few-shots
+                    extractor_configuration=DynamicLLMExtractorConfiguration(
+                        document_type=DocumentType.PaymentReceipt,
+                        llm_model=GeminiModel.gemini_2_5_pro,
+                        instructions="""
+You are a document processing assistant. Your task is to extract the payment date and amount from the payment receipt.
+The `payment_datetime` is the date time of the payment in iso format, and the `amount` is the total amount paid.
+Provide the extracted information in JSON format.""",
+                        content_type=PaymentReceiptContent, # the output structure with validation
+                        n_similar_examples=2, # similar examples to inject
+                        use_multimodal=True # pass both transcription and image
+                        use_approximate_search=False, # use HNSW search
+                    ),
+                )
+            },
+        ),
+    ),
+)
+Crews Own Their Document Types
+This design lets each crew manage their document types independently. At Alan, crews are the teams responsible for specific use cases or domains. In France, one crew handles insurance documents, another handles member onboarding documents (retiree eligibility, social funds eligibility), and yet another works on fraud investigation. Each crew owns their document types and categories end-to-end.
+
+The fraud crew can switch their transcription engine to Gemini for better quality on dense table layouts. The Canadian crew can use LLM-based classification prompts tailored to their document landscape. Neither crew needs to touch the core pipeline code, and neither crew’s changes affect the other.
+
+Few-shot examples are filtered by document type and category so that a French hospital invoice doesn’t accidentally pull examples from a Canadian pharmacy receipt.
+
+Press enter or click to view image in full size
+
+Manual Parsing Tool
+Wrapping Up
+Press enter or click to view image in full size
+
+The key ideas behind making this pipeline work across countries and use cases:
+
+Configuration over code scales across countries and document types. Adding support for a new document type is a matter of writing configuration, not building new processing logic.
+
+Crews own their document types. Independent teams configure their transcription engines, classification strategies, and extraction instructions without touching shared pipeline code.
+
+Graceful escalation to human review keeps quality high. The system doesn’t guess when it’s unsure — it asks for help. This builds trust with the crews that depend on the extracted data.
+
+If you’re an engineer excited by claim management, document processing, and making LLMs work reliably on messy real-world data at scale — we’re hiring. Come build this with us!
