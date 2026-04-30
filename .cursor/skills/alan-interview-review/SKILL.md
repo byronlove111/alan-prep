@@ -91,6 +91,16 @@ Only if code was provided. Assess:
 
 Be specific. Quote lines if needed.
 
+#### ⏱️ Complexity Analysis
+
+Only for `tech` and `build-feature` sessions. Analyse the time and space complexity of each non-trivial function the user wrote or modified. Format:
+
+| Fonction | Complexité temps | Complexité espace | Note |
+|----------|-----------------|-------------------|------|
+| `functionName` | O(...) | O(...) | brief explanation |
+
+Then add 1-2 sentences on whether the complexity is acceptable for the exercise context, and what the user should say out loud in a real interview to name the trade-off without fixing it (e.g. "Je vois que cette approche est O(n²) — dans un vrai système avec des milliers de claims, je passerais par un index. Pour l'instant je mets ça de côté.").
+
 ---
 
 ### 🇬🇧 English
