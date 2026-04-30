@@ -15,8 +15,8 @@ export type MemberStatus = "active" | "pending" | "suspended";
 export type CoverageLevel = "basic" | "standard" | "premium";
 
 export interface Member {
-  id: string;           // ex: "M-001"
-  name: string;         // ex: "Dupont Jean"
+  id: string; // ex: "M-001"
+  name: string; // ex: "Dupont Jean"
   plan: CoverageLevel;
   status: MemberStatus;
 }
@@ -33,10 +33,15 @@ export interface OnboardingSummary {
 // Input  : "M-001:Dupont Jean:premium:active"
 // Output : { id: "M-001", name: "Dupont Jean", plan: "premium", status: "active" }
 //
-// Hint : split(":") donne les 4 segments — utilise switch/case pour typer plan et status
 // ------------------------------------------------------------
 export function parseMemberString(line: string): Member {
-  throw new Error('not implemented');
+  const [id, name, plan, status] = line.split(":")
+  return {
+    id: id,
+    name: name,
+    plan: plan,
+    status: status
+  };
 }
 
 // ------------------------------------------------------------
@@ -45,10 +50,9 @@ export function parseMemberString(line: string): Member {
 // Input  : ["M-001:Dupont Jean:premium:active", "M-002:Martin Claire:basic:pending"]
 // Output : [Member, Member]
 //
-// Hint : lines.map(parseMemberString)
 // ------------------------------------------------------------
 export function parseMemberBatch(lines: string[]): Member[] {
-  throw new Error('not implemented');
+  return lines.map(line => parseMemberString(line));
 }
 
 // ------------------------------------------------------------
@@ -57,12 +61,15 @@ export function parseMemberBatch(lines: string[]): Member[] {
 // Retourne les membres dont le nom contient la chaîne recherchée (insensible à la casse non requis)
 // Input  : members=[...], query="jean"
 // Output : membres dont name.includes("jean") est vrai
-//
-// Hint : string.includes() fonctionne sur les strings, pas seulement les tableaux.
-//        c'est la même méthode mais appliquée à un string : "Dupont Jean".includes("Jean") → true
 // ------------------------------------------------------------
 export function searchByName(members: Member[], query: string): Member[] {
-  throw new Error('not implemented');
+  const membersFound : Member[] = [];
+  for (const member of members){
+    if (member.name.includes(query)){
+      membersFound.push(member);
+    }
+  }
+  return membersFound;
 }
 
 // ------------------------------------------------------------
@@ -71,12 +78,24 @@ export function searchByName(members: Member[], query: string): Member[] {
 // Input  : [{ id:"M-001", status:"active", ... }, { id:"M-002", status:"pending", ... }]
 // Output : { totalMembers: 2, pendingCount: 1, activeIds: ["M-001"] }
 //
-// Hint : utilise reduce avec { totalMembers: 0, pendingCount: 0, activeIds: [] } comme départ.
-//        Pour ajouter un id sans muter l'acc : [...acc.activeIds, member.id]
-//        N'oublie pas de return acc à la fin du callback.
 // ------------------------------------------------------------
 export function buildOnboardingSummary(members: Member[]): OnboardingSummary {
-  throw new Error('not implemented');
+  const summary : OnboardingSummary = {
+    totalMembers : 0,
+    pendingCount: 0,
+    activeIds: []
+  };
+
+  for (const member of members) {
+    summary.totalMembers += 1;
+    if (member.status === "pending"){
+      summary.pendingCount += 1;
+    }
+    if (member.status === "active"){
+      summary.activeIds.push(member.id);
+    }
+  }
+  return summary
 }
 
 // ------------------------------------------------------------
@@ -90,5 +109,15 @@ export function buildOnboardingSummary(members: Member[]): OnboardingSummary {
 // Hint : slice(-n) retourne les n derniers éléments — puis map chaque member en string
 // ------------------------------------------------------------
 export function auditReport(members: Member[], n: number): string[] {
-  throw new Error('not implemented');
+  const report: Member[] = members.slice(-n);
+  return report.map(r => `${r.id} | ${r.name} | ${r.plan} | ${r.status}`);
 }
+
+const members: Member[] = [
+  { id: "M-001", name: "Dupont Jean", plan: "premium", status: "active" },
+  { id: "M-002", name: "Martin Claire", plan: "basic", status: "pending" },
+  { id: "M-003", name: "Leroy Paul", plan: "standard", status: "suspended" },
+  { id: "M-004", name: "Bernard Sophie", plan: "premium", status: "active" },
+]
+console.log(auditReport(members, 1));
+// // → ['M-002 | Martin Claire | basic | pending']
