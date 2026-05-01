@@ -1,0 +1,7 @@
+{
+  "name": "alan-build",
+  "version": "1.0.0",
+  "scripts": { "test": "npx tsx test-runner.ts" },
+  "dependencies": {},
+  "devDependencies": { "tsx": "latest", "typescript": "latest", "@types/node": "latest" }
+}
