@@ -42,7 +42,14 @@ sessions/YYYYMMDD-HHmm-fit-question/
 💡 **What you should have said**: [placeholder — filled in after debrief]
 ```
 
-**After the debrief**: go back and fill in every `💡 **What you should have said**` block in `transcript.md`. For each answer, write 3-5 sentences in English showing a stronger version — not a model answer, but a concretely improved version of what the user actually said. Keep the same story, fix the framing: add ownership language ("I decided"), close the outcome loop, sharpen the "what I learned and how I applied it" part. The user should be able to read this, practice saying it out loud, and immediately use it in a real interview.
+**After the debrief**: go back and fill in every `💡 **What you should have said**` block in `transcript.md`. For each answer, write 3-5 sentences in English showing a stronger version — not a model answer, but a concretely improved version of what the user actually said. Keep the same story, fix the framing: add ownership language ("I decided"), close the outcome loop, sharpen the "what I learned and how I applied it" part.
+
+**Crucially**: before writing each "What you should have said", read the files in `profile/` (chataigne.txt, opensourcetogether.txt, s37.txt). Use the real details from these experiences to:
+1. Suggest a stronger version of what the user said, grounded in their actual work (specific metrics, decisions, technologies, outcomes)
+2. Flag if there was a better example from their profile that would have answered this question more powerfully — and explain why
+3. If the user reused the same project twice across different values, explicitly name which project from their profile would have been a better fit for each value
+
+The user should be able to read this, practice saying it out loud, and immediately use it in a real interview.
 
 Then pick a value and open the session.
 

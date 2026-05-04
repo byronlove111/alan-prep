@@ -1,0 +1,85 @@
+## Context
+
+[OpenSource Together](https://opensource-together.com) is a non-profit, community-led open source platform born from a personal frustration. When I was starting out in development, the industry's standard advice was unanimous: contribute to open source. But the actual experience of doing it as a beginner was opaque, hostile, and deeply discouraging — repositories without documentation, issues too advanced to touch, no way to filter by what matched your level or your stack. There was no platform that made open source genuinely accessible to people who were just starting.
+
+I decided to build one.
+
+The concept was simple: a platform where junior developers could discover open source projects that matched their profile and their skill level, where maintainers could find the contributors they struggled to attract, and where the entire ecosystem reinforced one another's growth. I co-founded the project and led it from the first idea to a live product in production.
+
+The team was assembled entirely from my network on Twitter/X — developers, designers, and engineers I had connected with in the French developer community. No recruiting process, no job postings. Everyone joined because they believed in the mission: a frontend engineer, two backend engineers, a DevOps engineer, a machine learning engineer, a GTM engineer, a designer, and my co-founder. It was a volunteer team working on a non-profit product, which made every decision about motivation, clarity of vision, and team cohesion critical from day one.
+
+What united us beyond the mission was a shared profile. Most of us were self-taught or career switchers, not graduates of elite engineering schools. My co-founder and I were already active voices in the French developer community on social media — which gave the project both credibility and reach from the moment we announced it. We were building for people who looked like us, and the community felt that.
+
+---
+
+## Founding Decisions
+
+### Open Source and Non-Profit by Design
+
+The decision to make the platform fully open source and non-profit was mine. It wasn't a default — it was a deliberate statement of intent. A platform designed to make open source more human and accessible had to be open source itself. There was no credibility without that alignment. The non-profit model also removed any ambiguity about incentives: the community we were building for could trust that we weren't optimizing for monetization at their expense.
+
+### Stack and Architecture
+
+The technical stack was chosen pragmatically: Next.js on the frontend, NestJS on the backend, PostgreSQL via Prisma, deployed on Cloudflare Workers via OpenNext. The principle was simple — we used what the team already mastered well. The goal was to ship, not to experiment with unfamiliar technology. I made this call early and deliberately: with a volunteer team and no runway, over-engineering the stack was a risk I wasn't willing to take.
+
+The frontend architecture was defined in collaboration with the frontend engineer: a feature-based structure with strict naming conventions, TanStack Query for server state, Zustand for client-only UI state, and Zod with React Hook Form for all validation. This was the same architectural philosophy I had developed at Châtaigne, and I brought that thinking into the early discussions that shaped the codebase.
+
+### Concept Validation Before Building
+
+Before committing the team to building anything, I initiated a public concept test. Rather than spending months developing a product on a hypothesis, we released a wireframe of the initial concept — a Product Hunt-style interface for open source projects — and gauged the community's response. The reaction was overwhelmingly positive. That signal gave us the confidence and the team the conviction to fully commit to the project. It also set a precedent for how we would operate: test early, build on validated demand.
+
+### The Waitlist
+
+With the concept validated, I launched the waitlist strategy: a dedicated app released before the main product, designed to capture registrations and build anticipation. We promoted it publicly on our respective networks. The response confirmed there was a real audience waiting for what we were building, and it gave the team a concrete, human signal to work toward.
+
+---
+
+## Product Leadership
+
+### Bringing in a Senior Advisor
+
+As the product process matured, we brought in a senior product designer as a strategic advisor. His involvement structured how we approached user research and product definition. Under his guidance, we ran UX workshops to rigorously define our users — creating detailed Ideal Customer Profiles and interviewing team members who matched those profiles to surface authentic pain points. This was a step change in how we operated: moving from intuition-led decisions to a process grounded in real user insight.
+
+### Defining the MVP
+
+The most important product decisions were made collaboratively between me, my co-founder, and the designer. We analyzed competing platforms, mapped the user journey, and categorized every proposed feature into must-haves and nice-to-haves. The core user segments we committed to were junior developers looking to build experience, maintainers looking to attract contributors, and non-technical contributors. Every feature decision traced back to serving one of those personas.
+
+The core flows we locked in for the MVP were project discovery, surfacing good first issues, and building a credibility-focused developer profile. Everything else was deferred until those worked well.
+
+### Challenging the Team
+
+One of the hardest recurring problems was the team's tendency to over-engineer. Early on, the architecture proposals were far too complex for where we were — a volunteer project that hadn't shipped anything yet. I had to challenge those decisions directly, push for simplicity, and reset the priority to getting something live rather than building the perfect system.
+
+Maintaining momentum on a team of volunteers building a non-profit product with no financial incentive is structurally hard. We had already announced the project publicly and built anticipation before the MVP was ready, which created pressure and, at times, discouragement. I managed that by imposing a weekly cadence — structured syncs, accountability, visibility into what every team member was doing. I introduced Linear for project management, documented the product vision in a format that could be shared and referenced by any team member at any time, and made it a habit to communicate decisions clearly so no one was left guessing what direction we were heading.
+
+---
+
+## Growth and Community
+
+### Building the Audience
+
+I co-led the growth alongside my co-founder, primarily on Twitter/X. We shared progress, wrote threads, posted updates, and built the story of the project publicly as we built the product. The official OpenSource Together account reached 1,000 followers. The combination of authentic storytelling, community values, and the visibility of our respective networks drove significant organic reach.
+
+By the time of the beta release, OpenSource Together had become one of the most-viewed products in the French developer community. The traction wasn't manufactured — it came from building in public, being honest about where we were, and speaking directly to a community that felt the same frustration we were trying to solve.
+
+---
+
+## Brand Identity
+
+The visual identity of OpenSource Together was a deliberate creative position, built by the designer and co-defined with me as the founder setting the direction. The goal was an interface that felt "alive" — personal to our generation, built with significant whitespace and strong typography to make complex data easy to digest rather than overwhelming.
+
+The imagery drew from references the team shared: *Elden Ring*, *Dark Souls*, *Berserk*. The illustrations used dithering as a subtle texture — not as a trend, but as a deliberate tonal choice that made the visual world feel handcrafted and distinct. Assets were created using Midjourney and manual image treatments to achieve a cohesive, atmospheric look. The logo was inspired by a window shape from *Planet of the Apes*, carrying a geometric simplicity that aligned visually with modern AI brands while remaining distinctly its own.
+
+The community responded strongly to this identity. The brand became one of the recognizable things about the project — people associated the visual world of OST with something that felt genuine and crafted by people who cared.
+
+---
+
+## What Was Built
+
+The platform launched with a full feature set: project discovery with filtering by tech stack and category, GitHub and GitLab repository import, project ownership claiming, a contributor-facing issue discovery layer surfacing good first issues directly from connected repositories, developer profiles with GitHub contribution graphs, experience timelines, and pull request history, a dashboard for project management, SEO optimization with dynamic OpenGraph images, a sitemap, and a manifest. A separate waitlist application was shipped first, designed and deployed to capture early interest before the main product went live.
+
+---
+
+## What's Next
+
+The platform is live and actively used. The next chapter is a significant one: we are building an AI and MCP layer that will expose the entire platform's database and logic to AI agents. The goal is to open up entirely new ways of interacting with OpenSource Together — letting AI agents discover projects, match contributors, surface issues, and operate within the ecosystem in ways that no purely UI-driven product can match. It is the evolution from a platform you navigate to an infrastructure that intelligent systems can work through.

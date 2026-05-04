@@ -1,0 +1,145 @@
+## Context
+
+[Châtaigne.ai](https://chataigne.ai/) is a [**VZ Labs](https://vzlabs.ai/) product**, an AI food-tech startup backed by [RTP Global](https://rtp.vc/). The core product allows restaurant clients to order food through natural language on WhatsApp, with a fully AI-integrated chatbot.
+
+I joined because one of the [co-founders](https://www.linkedin.com/in/noe-zaabi/) was a close friend from high school who trusted me with the role even though I wasn't yet technically ready for it. I came on board as their first full-stack engineer, joining a team of just three: the two co-founders and me. The company was based out of an incubator in Lausanne at the time — we only got the Paris offices in the summer of 2025. The team later grew to four, with the addition of an [AI engineer](https://www.linkedin.com/in/jean-baptiste-conan/). I joined on a contract full-time basis from December 2024 to December 2025.
+
+I held a unique position within the team. I was thrown into the deep end from day one — no documentation, no staging environment, no onboarding process to speak of. My contract was remote from the start. When I arrived, the company had been operating for one year and had only a single client. Everything had been built by a single developer, and it showed: commits named "fix", entirely vibe-coded architecture, and a frontend so tangled that logic, views, and API calls all lived in the same `page.tsx` files.
+
+My goal was to install the engineering rigor and scalability the platform severely lacked. I had never worked on a monorepo, never touched TypeScript in production, never done backend work, and had limited Next.js experience. In return, this environment forced me to grow extraordinarily fast, bridging frontend, backend, architecture, and tooling — all while shipping features that went live to real restaurant clients.
+
+---
+
+## Rebuilding the Frontend
+
+### The Challenge
+
+When I joined, the frontend was entirely vibe-coded and visually rough. The UX was painful for our restaurant clients. Everything was duplicated. Bugs surfaced by the dozen. The first page took over 20 seconds to load. There was no structure: logic, views, and API calls were all mixed together in `page.tsx` files, making the codebase practically unreadable.
+
+My goal was to bring the application from a broken, embarrassing state to a fast, trustworthy, and scalable one — without disrupting the backend logic and the active client using the product.
+
+### Strategy & AI Prototyping Workflow
+
+Rather than refactoring directly in the chaotic codebase, I developed a specific prototyping workflow. I created a second, clean repository that contained only the essentials — React, shadcn/ui, and nothing else. The minimal surface area allowed AI tools to focus purely on UI and UX, free from the noise of business logic and backend wiring.
+
+I would prototype each page there, using AI to quickly generate UX-friendly interfaces far superior to what classical vibe-coding produced. Once a prototype was solid, I would reconstruct the `.tsx` page in the official repo. This method allowed me to completely rebuild the UI/UX of the platform and delivered a noticeably better experience for our first clients, who began using the platform far more actively as a result.
+
+### Architecture & Re-Architecture
+
+Once the interface was usable, I tackled the underlying structure. The existing Next.js App Router setup had no meaningful frontend architecture: no separation of concerns, no reusability, no scalability. I researched frontend architecture patterns and designed a feature-based structure rather than a page-based one.
+
+Each main feature of the application got its own folder containing: `components`, `views`, `services`, `types`, and `hooks`. All business logic lived exclusively inside custom hooks — components became pure visual orchestrators with no direct API calls or state management. A `shared/` directory complemented the features layer with reusable UI components, common hooks, and global stores. Next.js's file-based routing was reduced to its rightful role — pure routing — with `page.tsx` files importing only from the `features` directory.
+
+I also enforced strict naming conventions throughout: every file followed kebab-case with explicit suffixes — `.component.tsx`, `.view.tsx`, `.hook.ts`, `.service.ts`, `.store.ts`, `.schema.ts` — making the role of any file immediately clear from its name alone.
+
+For state management, I adopted a hybrid approach: **TanStack Query** for all server state (data fetching, caching, background synchronization, and cache invalidation after mutations), and **Zustand** for client-only UI state (open/closed panels, temporary filters, in-progress form data). The two never duplicated data — a clean separation that eliminated an entire class of consistency bugs. I also introduced **optimistic updates** for high-frequency interactions, updating the UI immediately and rolling back on error, which made the product feel significantly more reactive.
+
+For type safety across the stack, all API calls went through a shared `@chataigne/client` package — a typed backend client with DTOs shared between frontend and backend. Any breaking change to the API contract surfaced as a TypeScript compilation error, not a runtime bug.
+
+Form validation was handled with **Zod** schemas integrated into **React Hook Form** via `zodResolver`. Each form had a dedicated schema file, which both drove runtime validation and inferred TypeScript types — a single source of truth for data shape. I also used **CVA (Class Variance Authority)** to build type-safe component variants, making design system components like buttons and badges extensible without drifting into inconsistent className strings.
+
+This refactor made the application radically more readable, testable, and scalable. It has been running in production for over a year since.
+
+---
+
+## Performance & Data Optimization
+
+### From 20 Seconds to Under 3 Seconds
+
+The performance situation when I arrived was alarming. All data — every restaurant, every client, every order, every conversation — was loaded simultaneously on page load. The caching system used restaurant IDs stored in Next.js cache, creating a fragile and slow navigation experience.
+
+I ripped out the entire data-loading system and replaced it with a lean, ID-based approach. I refactored every data-fetching logic point in the frontend. The most impactful change was implementing a dedicated `fetchLocationSummary` endpoint for the sidebar, which had previously called a heavy `fetchLocations` endpoint loading far more restaurant detail than the UI ever needed. Clients had been regularly complaining about latency. The result: load times dropped from over 20 seconds to under 3 seconds, with skeleton loaders ensuring the experience felt fluid throughout.
+
+### Analytics Platform
+
+Later in the project, I built out a full analytics section — not a single dashboard, but a multi-tab data platform covering the entire business. The goal was for each metric to be fetched asynchronously and independently from all others — one endpoint per calculation, computed at the database level for maximum efficiency.
+
+To support this, I built a custom component framework on the frontend. I wrapped shadcn/ui data components inside an abstraction that accepted a `fetcher` function and a component type as parameters. Each component managed its own data lifecycle independently.
+
+The platform covered four tabs, each built from scratch: a **Revenue** tab with total revenue, average cart value, Châtaigne savings calculations, revenue evolution over time (area chart), and average orders broken down by day and by hour (bar charts); an **Orders** tab with a paginated searchable table and individual order detail pages; a **Customers** tab with the same structure — paginated list, search, and individual customer profiles; and a **Channels** tab comparing order volumes across WhatsApp, Uber Eats, and Just Eat. A global period filter managed in Zustand drove all tabs simultaneously. The result was a genuinely useful operational tool that restaurant clients used daily to understand their business.
+
+---
+
+## WhatsApp Marketing Campaigns & Conversations
+
+### Building a New Revenue Channel
+
+One of the most impactful features I built was a WhatsApp Template Campaign system. WhatsApp had released their template messaging API, which allowed businesses to send personalized marketing messages to a full contact list via CSV — a high-ROI channel that most restaurants had completely ignored in favor of email.
+
+My role was to design and build the entire system end-to-end. I built a real-time WYSIWYG template editor: on the left, every field available through the WhatsApp API — title, description, media, call button, URL button. On the right, a live preview of the message rendered exactly as it would appear on a recipient's phone: the green WhatsApp bubble, the same background, Markdown rendering, media previews. What you built was exactly what got sent.
+
+### Impact
+
+This feature was praised by Uber's internal teams, with whom we were in collaboration. Within the first months, over ten restaurants ran campaigns using the tool, sending approximately 1,000 messages each — a total of 10,000 to 15,000 messages delivered through our platform, with a 16% reply rate. It opened an entirely new acquisition channel for our restaurant clients.
+
+### Backend Implementation
+
+This was also my first real backend feature. I had to learn and apply the clean architecture principles the codebase was moving toward: adding NestJS controllers, extending entities, creating services, extending repositories and their interfaces. It required understanding Domain-Driven Design and event-driven patterns from scratch — in a production codebase, on a live product.
+
+### Conversation Interface & Optimized Pagination
+
+Beyond campaigns, I also built the full WhatsApp conversation UI — the interface through which restaurant staff monitor and interact with ongoing AI conversations. The technical challenge was significant: the application could have thousands of conversations per location, and the original system loaded them all at once, making the page unusable at scale.
+
+I designed and implemented a new cursor-based pagination architecture with three dedicated endpoints: `getLatestConversation` which returns only the ID of the most recent conversation for near-instant initial load (~50ms vs ~3s previously); `getConversationsFromPresent` which loads a windowed batch of conversations anchored around a target conversation with a configurable buffer, enabling the list to open at the right position; and `getConversationsBefore` which powers backward infinite scroll, loading older conversations on demand. Each endpoint had separate admin, organization, and location variants. On the frontend, these three endpoints were orchestrated through a single `useInfiniteQuery` hook that assembled all pages into a flat, deduplicated list and tracked the target conversation's position dynamically for smooth scroll anchoring.
+
+---
+
+## Roles, Permissions & Onboarding Systems
+
+### Multi-Step Onboarding
+
+I built the client onboarding system from the ground up. The requirements were complex: a multi-step flow with many branching paths depending on whether the restaurant wanted to integrate delivery, connect WhatsApp, set up their catalog, and more. Each step had optional validation — if a restaurant hadn't completed onboarding, they'd land on the app with an alert pointing them to exactly where they left off, with certain features gated until setup was complete. This also fed into an admin dashboard where we could monitor every client's onboarding progress in real time.
+
+### Roles & Permissions
+
+I implemented the entire roles and permissions system from zero, using the `better-auth` plugin. I defined the role hierarchy, added NestJS guards for the backend, and implemented conditional rendering on the frontend based on auth context. This enabled organizations to have multiple users with differentiated permissions — editing catalogs, running marketing campaigns, managing conversations — giving enterprise clients the access control they needed.
+
+---
+
+## Standalone Product: The Lucky Wheel
+
+### v1 — From Zero to 3,500 Users in Three Days
+
+One of our clients had an event with a food stand and needed an interactive experience in three days. I designed and shipped a full standalone product from scratch: a "Lucky Wheel" web app integrated into our WhatsApp AI flow.
+
+The system worked as follows: a person at the event scanned a QR code, entered a WhatsApp conversation with our AI, which recognized the event context and sent a unique link. The link led to a Next.js web app where they could spin the wheel. Each participant's phone number was hashed and stored in a Cloudflare D1 database with a `hasPlayed` boolean. The URL was derived from the hash — making it impossible to replay or regenerate, regardless of what the bot returned. From a live dashboard, we could adjust prize probabilities in real time to control how many winners appeared throughout the event. Win notifications were pushed to Discord in real time.
+
+The product was deployed on Cloudflare Workers and went live in three days. It was used by 3,500 people during the event.
+
+### v2 — A Full Product Rewrite
+
+After the initial success, I rebuilt the entire product from the ground up to turn it into a reusable, multi-client platform.
+
+The core architectural shift was moving from a single-game model to a **multi-store / multi-place** hierarchy: a store can host multiple independent game instances (places), each with its own prizes, configuration, player pool, and state. This allowed multiple events or food stands to run simultaneously, completely isolated from each other, under the same admin umbrella.
+
+I rewrote the game logic engine: prize selection uses a weighted probabilistic algorithm that maps prizes to wheel segments with proportional repetitions, shuffles them to avoid clustering, and calculates the exact spin angle for the animation. Player eligibility is enforced per-place — a player who completed one game can still participate in another, with the hash-based URL system extended accordingly.
+
+The admin dashboard became a proper product: a players manager, a prizes manager with proportional sliders for real-time probability adjustment, a settings panel, and a stats overview per place. I also built a **no-code customization system** that let admins personalize each game's logo, copywriting (titles, win/lose messages), and wheel colors — all without touching code, with changes reflected live on the player-facing page.
+
+The v2 migration ran on live production data. I wrote the migration scripts, backup procedures, rollback scripts, and a full export-to-CSV system to preserve all player records from v1 before switching over.
+
+---
+
+## Engineering Quality & Tooling
+
+### QA, Testing & Documentation
+
+I led the quality engineering culture at Châtaigne from scratch. I wrote the first QA testing guidelines — a manual test checklist covering the entire application before every production deployment. No one on the team had prior quality assurance experience, and this became the baseline.
+
+I later implemented automated testing using Vitest, inspired by Kent C. Dodds' Testing Trophy strategy: prioritize integration tests over unit tests, test things at the level closest to how users experience them, mock APIs and routers. This dramatically reduced production bugs and gave us a healthier, more scalable development rhythm.
+
+I documented the entire frontend architecture in Mintlify — the feature structure, coding standards, rules to follow — and complemented it with OpenAPI documentation via a NestJS library to standardize endpoint contracts. This documentation then became the foundation for something more powerful.
+
+### AI-Native Workflows
+
+Before AI agentic workflows became mainstream, I implemented Cursor Rules using regex-based file scoping. The logic was simple: if the AI agent edited a file belonging to a specific architectural layer (e.g., a controller), it automatically loaded a rule explaining exactly how to write that controller according to our standards. Rules were directly tied to our Mintlify documentation.
+
+This meant AI outputs were consistent with our architecture from day one, without needing to re-explain context on every prompt. We had reliable, architecture-aware AI-assisted development before tools like Claude Code reached mainstream adoption.
+
+---
+
+## Growth & Brand Presence
+
+Beyond the product, I contributed directly to business growth. I produced tweets that reached over 200,000 impressions, generating significant leads across France and attracting strong developer candidates to apply to the team.
+
+I also co-directed the production of the video announcement of our partnership with Uber / Uber Direct, providing critical feedback on the edit, pacing, and visual dynamics — ensuring the announcement reinforced Châtaigne's brand on social media with the weight it deserved.

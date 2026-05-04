@@ -1,0 +1,73 @@
+## Context
+
+[S37 Studio](https://s37.studio) is a digital solutions agency co-founded in early 2026 by three specialists: Alexis, a GTM and revenue operations expert, Zinedine, a senior UI/UX designer, and me, as the engineering lead. The services span outbound go-to-market systems, premium web design and development, and AI automation. Clients have included FlexAI, a Paris-based AI infrastructure startup that raised $30M in seed funding, HappyPal, a Series A employee benefits platform with 500,000 beneficiaries, and O Communication, a food and wellness agency whose organic traffic we grew from 748 to 90,000 monthly visits in thirteen months.
+
+My role is CTO. Beyond client delivery, I am responsible for the entire internal platform that powers the agency — the tooling, the infrastructure, and the AI layer that will eventually handle 90% of the agency's operations.
+
+---
+
+## The Premise: Building for Agents, Not for Humans
+
+Most agencies accumulate tools. A CRM, a project management platform, a proposal tool, a billing solution, an automation layer. Each solves one problem, each has its own data model, its own API format, its own authentication. The result is a fragmented stack where data lives in five places and a human has to reconcile them.
+
+S37 started with that same patchwork: Attio for contacts, n8n for automations, Notion for documentation and mission tracking. The problem was not just friction — it was that none of these tools are designed to be operated by AI agents. They are built for human interaction: dashboards, GUIs, browser extensions. An agent that needs to create a deal, attach a proposal, and log a task completion has to navigate three separate APIs, three separate auth systems, and three separate data models.
+
+The architectural decision I made early on was simple and radical: replace everything with one internal platform, built from scratch, where agents are the primary consumer.
+
+This is not a subtle distinction. When you build for humans, the API is an afterthought — you design the UI first, then expose just enough data to power it. When you build for agents, the API is the product. The UI is a secondary interface that sits on top of the same surface that agents consume. Every endpoint exists because an agent might need to call it. Every data model is designed to be traversed programmatically. Every response is structured so a language model can interpret it without disambiguation.
+
+---
+
+## The Platform: s37-portal
+
+The central piece is s37-portal — a Turborepo monorepo with a Next.js frontend and an Elysia REST API backed by Prisma 7 and PostgreSQL, deployed on Railway.
+
+### Why Elysia
+
+The choice of Elysia over tRPC was deliberate and reflects the agent-first philosophy. tRPC requires a dedicated client package to be type-safe — it works perfectly between a Next.js frontend and a Node.js backend written by the same team. But an AI agent cannot install a npm package. It makes HTTP calls.
+
+Elysia generates a fully type-safe REST API that any HTTP client can consume without additional tooling — including agents. The Swagger documentation is auto-generated at `/docs` from the route definitions themselves, including descriptions written specifically to explain to an agent what each endpoint does, when to use it, and what edge cases to handle. An agent can discover the entire API surface from a single endpoint and operate the platform without a human explaining anything.
+
+### The Data Model
+
+The data model replaces every tool S37 was using:
+
+**Companies and Contacts** replace Attio as the CRM layer. A company is a client or prospect. A contact is a person — a lead, an employee, a point of contact on a mission.
+
+**Deals** replace the pipeline tracking done manually across spreadsheets and CRM views. A deal tracks a prospect from first contact to signature: OPEN, WON, or LOST. Each deal carries a source (WEBSITE, OUTREACH, INBOUND), a budget range, and an owner.
+
+**Proposals** are linked to deals and replace the disconnected proposal tools. A proposal carries its full lifecycle: DRAFT → PENDING → WON / LOST / REVISION, with timestamps for when it was sent, first opened, and last opened. The openedAt and lastOpenedAt fields allow agents to reason about client engagement without anyone manually checking.
+
+**Missions** replace Notion as the operational layer. A mission is an active client engagement — GTM, DESIGN, DEV, or AUTOMATION — with a pricing model (RETAINER or FORFAIT), a timeline, a contract URL, and a set of tasks. Each task has a position, a due date, and a doneAt timestamp. Documents can be attached to missions by both the S37 team and the client directly.
+
+**Invoices** are linked to missions. Each invoice tracks its amount, currency, status (DRAFT → SENT → PAID → OVERDUE), and due date.
+
+This data model represents the full agency lifecycle — from the first contact with a prospect to the final invoice on a delivered mission — inside a single database, with a single API, and a single source of truth.
+
+### Dual Role Architecture
+
+The API enforces a strict role split: `s37_team` members have full admin access to every entity. `client` users are scoped to their company and can only read their own data — missions, tasks, documents, proposals — with `internalNotes` fields stripped from every client-facing response.
+
+Both roles consume the same API. The human portal frontend and the agent layer make the same HTTP calls. The role determines what data comes back, not which system is being used. This is the concrete expression of agent-first design: the separation is in authorization, not in architecture.
+
+---
+
+## What Gets Absorbed
+
+The portal is the convergence point for the entire S37 stack. The architecture is being restructured to fold every system into a single platform.
+
+**s37-signed** — the commercial proposal and CRM tool I built as a standalone product — introduced a model for tracking proposals with view analytics, lead management, and an MCP server that exposed the whole operation to AI agents. Its data model and its MCP layer are migrating into the portal. The Proposal model already lives in the portal's schema. The MCP server will be rebuilt on top of the portal's Elysia API, so agents interact with one system rather than two.
+
+**s37-automations** — the Bun + Hono + Croner server handling Malt opportunity monitoring with Claude, Emelia reply tracking, website form processing, and LinkedIn post publishing for agents — will be absorbed into the portal's server layer. Each automation becomes an internal job or webhook route rather than a separate deployed process.
+
+The end state is two repositories: the agency website, and the portal. One codebase for everything the agency does internally. One database. One API. One agent surface.
+
+---
+
+## What Agents Can Already Do
+
+Even before the full convergence, the agent layer is operational. Through the existing MCP server, an AI agent can create a lead, build a proposal from a template, send it, check whether the client has opened it and how many times, update the deal status, and log the outcome — end to end, in natural language, without touching any UI. The conversation used to build this case file itself was conducted using these MCP tools.
+
+The portal API, once the MCP layer is built on top of it, will extend this to the full operational scope of the agency: creating missions, assigning tasks, tracking completion, generating invoices, monitoring client engagement across every active engagement simultaneously.
+
+This is the version of the agency we are building toward: one where the agents handle the operational layer, and the humans handle strategy, creative direction, and client relationships.

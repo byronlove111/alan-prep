@@ -125,6 +125,32 @@ One specific, actionable thing to work on in the next session. Not a list — ju
 
 ---
 
+### 🗂️ Meilleurs exemples depuis ton profil (fit / screening / past-project uniquement)
+
+Only for `fit`, `screening`, and `past-project` sessions. Read the files in `profile/` (chataigne.txt, opensourcetogether.txt, s37.txt) and produce:
+
+**1. Exemple optimal par valeur Alan testée**
+For each Alan value that was assessed during the session, identify which experience from the profile is the strongest possible example for that value — and briefly explain why it fits better than what the user used.
+
+Format:
+> **[Value name]** — Meilleur exemple : **[Project name]**
+> Pourquoi : [2-3 sentences citing specific facts, metrics, or decisions from profile/ that directly demonstrate this value]
+> Ce que tu aurais pu dire : [1-2 sentence pitch in English, ready to say in interview]
+
+**2. Mapping complet expériences → valeurs Alan**
+If not already done this session, produce a full mapping of the user's 3 main experiences (Châtaigne, OpenSource Together, S37) to Alan's 4 values. For each value, assign the strongest project and the strongest specific moment from that project.
+
+| Valeur Alan | Meilleur projet | Moment précis à utiliser |
+|-------------|----------------|--------------------------|
+| Mission is the Boss | ... | ... |
+| Distributed Ownership | ... | ... |
+| Radical Transparency | ... | ... |
+| Always Growing | ... | ... |
+
+This mapping should be stable and reused across sessions — update only when the user discovers a better example.
+
+---
+
 ## Input format
 
 The user will paste one or both of:

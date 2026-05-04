@@ -72,3 +72,40 @@ You're using the same two projects (Chatain.ai + Open Source Together) to answer
 3. Never reuse the same experience for two different values
 
 One story = one value. That's the rule.
+
+---
+
+## 🗂️ Meilleurs exemples depuis ton profil
+
+### Radical Transparency — Meilleur exemple
+
+**→ Châtaigne.ai : Optimisation conversations (cursor-based pagination)**
+
+L'histoire de l'onboarding montre de la transparence réactive — ton co-founder est venu te chercher. Le meilleur exemple de transparence *proactive* est l'optimisation des conversations : avant d'écrire une seule ligne, tu es allé voir l'expert backend, tu as marché dans tes plans, et tu as envoyé des updates écrits à chaque étape à ton co-founder. Le résultat : queries de ~3 secondes à moins de 50 millisecondes. C'est la Radical Transparency au sens Alan — communication écrite en premier, tu soulèves les problèmes avant que quelqu'un te demande.
+
+Un second exemple fort : OpenSource Together — weekly cadence avec Linear, vision documentée, syncs structurés. C'est une architecture de communication proactive à l'échelle d'une équipe de 9.
+
+**Pitch (English, ready to use)** : *"On the conversations optimization at Châtaigne.ai, before writing a single line I went to the most experienced backend person on the team, walked through my plan, and sent a written update to my co-founder at each step. The queries went from 3 seconds to under 50ms — and the written discipline made my own thinking sharper."*
+
+---
+
+### Mission is the Boss — Meilleur exemple
+
+**→ OpenSource Together : Open source + non-profit by design**
+
+Le moment le plus pur de "Mission is the Boss" : tu as décidé que la plateforme serait entièrement open source ET non-profit by design. C'est une prise de risque réelle — tu renonces délibérément à toute monétisation pour rester fidèle à la mission. C'est du long-term thinking, pas une optimisation pour un résultat à court terme. Alan valorise exactement ça : les décisions qui coûtent quelque chose à court terme mais qui sont cohérentes avec la mission sur le long terme.
+
+Un second exemple fort : S37, choix d'une architecture agent-first (Turborepo + Elysia + Swagger auto-généré) — tu construis pour un futur où les agents sont des acteurs principaux, avant que ce soit mainstream.
+
+**Pitch (English, ready to use)** : *"When I built Open Source Together, I made an early call: the platform would be fully open source and non-profit by design. Not to maximize monetization — because that's what the mission demanded. That decision cost something. I chose it anyway."*
+
+---
+
+### Mapping complet — 4 valeurs × meilleur exemple
+
+| Valeur Alan | Meilleur projet | Moment clé |
+|---|---|---|
+| **Mission is the Boss** | OpenSource Together | Décision de rendre la plateforme entièrement open source et non-profit — renonce à la monétisation pour rester fidèle à la mission |
+| **Distributed Ownership** | S37 Studio | Choix d'Elysia over tRPC — décision solo, raisonnement agent-first : REST + Swagger auto-généré parce que les agents ne peuvent pas installer de packages npm |
+| **Radical Transparency** | Châtaigne.ai | Optimisation conversations — allé voir l'expert avant d'écrire une ligne, updates écrits à chaque étape, queries 3s → 50ms |
+| **Always Growing** | Châtaigne.ai | Feedback onboarding → changement de méthode → Lucky Wheel v1 livré en 3 jours, 3 500 utilisateurs live |
