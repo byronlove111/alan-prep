@@ -7,6 +7,23 @@ description: Simulates Alan's Alaner Fit interview (45 min). Generates behaviora
 
 Simulates Alan's Alaner Fit interview — 45 min, centered around past experiences, conducted by a Founder or Senior Alaner. They assess: motivation, mission-driven mindset, approach to work, communication, ability to take a step back, growth mindset.
 
+## Context loading — read before every session
+
+Before generating anything, read ALL files in `docs/`:
+- `docs/alan-context.txt` — Alan's mission, product, engineering culture, values in depth
+- `docs/jobpost.txt` — the internship offer: what they're looking for, the exact profile
+- `docs/process-article.txt` — how the fit interview is run in practice, what they evaluate
+- `docs/video-entretien.txt` — insights from Alan interview debrief videos, what interviewers notice
+- `docs/blog-articles.txt` — Alan's engineering culture, how they think about product and mission
+
+Also read ALL files in `profile/`:
+- `profile/chataigne.txt`, `profile/opensourcetogether.txt`, `profile/s37.txt`
+
+Use this context to:
+- Generate questions that are specifically grounded in Alan's real values and culture (not generic behavioral questions)
+- Reference Alan's actual product, mission, and engineering challenges when framing follow-up questions
+- Write "What you should have said" sections using the user's real profile data after the debrief
+
 ## Alan's 4 Leadership Principles (the filter for every question)
 
 1. **Mission is the Boss** — long-term thinking, methodical optimism, taking risks for the mission

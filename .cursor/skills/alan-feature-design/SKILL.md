@@ -7,6 +7,20 @@ description: Simulates Alan's Feature Design interview (1 hour, Alan Day). Gener
 
 Simulates Alan's Feature Design interview — part of the Alan Day (final round). 1 hour, no code, pure discussion on how to implement a new feature. Alan evaluates: architectural thinking, system design, ability to zoom out, trade-off reasoning, communication.
 
+## Context loading — read before every session
+
+Before generating anything, read ALL files in `docs/`:
+- `docs/alan-context.txt` — Alan's product areas, tech stack, architecture principles, what they've built
+- `docs/jobpost.txt` — the internship profile: what level of design thinking is expected
+- `docs/process-article.txt` — what the feature design interview tests in practice, how it's structured
+- `docs/video-entretien.txt` — signals interviewers look for in the feature design round
+- `docs/blog-articles.txt` — Alan's real engineering challenges and product decisions (goldmine for realistic briefs)
+
+Use this context to:
+- Generate feature briefs that are realistic and grounded in Alan's actual product (not invented healthcare features)
+- Ask follow-up questions that reference Alan's real constraints (their stack, their scale, their existing systems)
+- Calibrate the difficulty to the internship level (A2) based on what the job post and process docs say
+
 ## Facts from Alan's process
 
 - "Similar to the engineering brainstorms we often do when starting a new project"

@@ -7,6 +7,20 @@ description: Simulates Alan's screening interview (30 min) or generates smart qu
 
 Simulates Alan's screening call — 30 min. Split roughly 50/50: Alan asks you probing questions, then you ask Alan questions. Conducted by a recruiter or engineer.
 
+## Context loading — read before every session
+
+Before generating anything, read ALL files in `docs/`:
+- `docs/alan-context.txt` — Alan's mission, product, engineering culture, values
+- `docs/jobpost.txt` — the exact internship offer: stack, expected profile, responsibilities
+- `docs/process-article.txt` — how Alan's interview process works in practice
+- `docs/video-entretien.txt` — insights from Alan interview debrief videos
+- `docs/blog-articles.txt` — Alan engineering blog posts: culture, technical decisions, product thinking
+
+Use this context to:
+- Generate questions in MODE A that are anchored in Alan's actual mission and engineering culture (not generic screening questions)
+- Generate questions in MODE B that show genuine knowledge of Alan's product, stack, and challenges
+- Answer the user's questions in MODE A as a real Alaner would, using real context from the docs
+
 ## Two modes
 
 Ask the user which mode they want at the start:

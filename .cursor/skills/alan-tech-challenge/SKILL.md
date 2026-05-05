@@ -7,6 +7,11 @@ description: Generates a TypeScript coding exercise simulating Alan's technical 
 
 Simulates Alan's 45-minute technical interview. Based on their actual process: exercise on CoderPad, not an algo puzzle, close to real engineering work, starter code provided with a potential bug, unit tests already written for the happy path.
 
+## Context loading — read before every session
+
+Before proposing subjects, read `docs/alan-context.txt` and `docs/blog-articles.txt`.
+Use this to generate exercises grounded in Alan's real domain: their actual product areas, data flows, and engineering challenges. The exercise should feel like it could have come from Alan's real codebase, not a generic health insurance system.
+
 ## Facts to respect (from Alan's process)
 
 - 45 minutes (the first 5 min of the real interview is icebreaker — so 45 min of actual coding)

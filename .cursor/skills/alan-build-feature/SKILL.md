@@ -7,6 +7,11 @@ description: Generates a feature-addition exercise on an existing TypeScript cod
 
 Feature addition exercise on an existing codebase. The user is a new engineer joining a project — they must read the existing code, understand it, decide what files to touch, and build the feature. No hand-holding on structure.
 
+## Context loading — read before every session
+
+Before proposing subjects, read `docs/alan-context.txt` and `docs/blog-articles.txt`.
+Use this to generate codebases and feature briefs grounded in Alan's real product areas and engineering challenges. The existing codebase should feel realistic — types, domain logic, and naming conventions anchored in how Alan actually works.
+
 **Stack**: TypeScript only  
 **Duration**: ~1h  
 **Tests**: some failing tests provided + user must write their own

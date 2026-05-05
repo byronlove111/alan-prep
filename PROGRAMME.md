@@ -2,22 +2,40 @@
 
 ## Règles générales
 
-- **5 jours par semaine**, ~1h à 1h15 par session
-- Chaque session se termine toujours par `/alan-interview-review` (sauf vendredi MODE B)
+- **5 jours par semaine**, ~2h30 par session
+- Chaque bloc se termine toujours par `/alan-interview-review`
 - Tu parles à voix haute pendant TOUTES les sessions pratiques — pas d'exception
 - L'anglais n'est pas une session séparée : il est reviewé dans chaque débrief
 
 ---
 
-## Semaine type
+## Journée type
 
-### Lundi — Tech challenge
+### Bloc 1 — Screening (~45 min)
 
-> Priorité absolue. C'est l'étape la plus éliminatoire.
+> Ouvre chaque journée. Ça calibre ton énergie et ton anglais avant de coder.
+
+1. `/alan-screening` MODE A — simulation 30 min (Alan te pose des questions)
+2. `/alan-screening` MODE B — génère les 3 meilleures questions que TU poses à Alan
+3. `/alan-interview-review`
+
+---
+
+### Bloc 2 — Tech Challenge ou Build Feature (~1h15) — alterner chaque jour
+
+> Le cœur de la prep. Priorité absolue.
+
+**Jours impairs → Tech Challenge**
 
 1. `/alan-tech-challenge` — génère l'exercice, lance le chrono 45 min
 2. Code en parlant à voix haute, enregistre-toi
-3. Colle ton code + transcript dans `/alan-interview-review`
+3. `/alan-interview-review` avec ton code + transcript
+
+**Jours pairs → Build Feature**
+
+1. `/alan-build-feature` — codebase existante, brief métier, feature à implémenter
+2. Code en explorant la codebase, enregistre-toi
+3. `/alan-interview-review` avec ton code + transcript
 
 **Objectif de progression :**
 
@@ -26,76 +44,26 @@
 
 ---
 
-### Mardi — Fit question
+### Bloc 3 — Fit Question (~45 min)
 
 > Les 4 valeurs Alan. Souvent sous-estimé, souvent éliminatoire.
 
 1. `/alan-fit-question` × 2 questions (l'agent enchaîne)
 2. Réponds dans le chat, creuse tes exemples
-3. Lis le débrief — vérifie que tu utilises "j'ai décidé" et pas "on a fait"
+3. `/alan-interview-review`
 
 ---
 
-### Mercredi — Tech challenge
+## Récap journalier
 
-> 2ème session coding de la semaine.
+| Bloc | Skill | Durée |
+|------|-------|-------|
+| Screening | `/alan-screening` A + B + `/alan-interview-review` | ~45 min |
+| Tech challenge *ou* Build feature (alterner) | `/alan-tech-challenge` ou `/alan-build-feature` + `/alan-interview-review` | ~1h15 |
+| Fit question | `/alan-fit-question` + `/alan-interview-review` | ~45 min |
+| Complexity drill | `/alan-complexity-drill` | ~20 min |
 
-Même workflow que lundi. L'agent génère un type différent (il tourne automatiquement).
-
----
-
-### Jeudi — Tech challenge
-
-> 3ème session coding de la semaine pour ancrer les réflexes.
-
-Même workflow que lundi. L'agent génère un type différent.
-
----
-
-### Vendredi — Rotation (alterner chaque semaine)
-
-**Semaines impaires → Screening**
-
-1. `/alan-screening` MODE A — simulation 30 min
-2. `/alan-screening` MODE B — génère les questions que TU poses à Alan
-3. Note les 3 meilleures questions dans un coin, affine-les chaque semaine
-
-**Semaines paires → Past project**
-
-1. `/alan-past-project` — simulation 1h
-2. Lis le débrief ownership : est-ce que tu parles en "je" ou en "on" ?
-
-> ⚠️ Première fois que tu fais Past project : prévois 30 min en plus pour le setup (décrire ton projet, structurer ta story).
-
----
-
-### Samedi — Feature design ou lecture Alan (30 min)
-
-Soit `/alan-feature-design`, soit lire 1 article du blog Alan : [medium.com/alan](https://medium.com/alan)
-
-Objectif lecture : comprendre leur culture technique, leur stack, leurs défis réels. Ça nourrit le feature design ET les questions que tu poses au screening.
-
----
-
-### Dimanche — Repos
-
----
-
-## Récap hebdomadaire
-
-
-| Jour     | Skill                                             | Durée         |
-| -------- | ------------------------------------------------- | ------------- |
-| Lundi    | `/alan-tech-challenge` + `/alan-interview-review` | ~1h15         |
-| Mardi    | `/alan-fit-question`                              | ~45 min       |
-| Mercredi | `/alan-tech-challenge` + `/alan-interview-review` | ~1h15         |
-| Jeudi    | `/alan-tech-challenge` + `/alan-interview-review` | ~1h15         |
-| Vendredi | `/alan-screening` ou `/alan-past-project`         | ~45 min - 1h  |
-| Samedi   | `/alan-feature-design` ou lecture blog Alan       | ~1h ou 30 min |
-| Dimanche | Repos                                             | —             |
-
-
-**Total : ~6h - 6h30 par semaine** (dont 3 sessions coding)
+**Total : ~2h50 par jour / ~14h par semaine**
 
 ---
 
@@ -108,18 +76,14 @@ Ces exercices ne comptent pas dans les jours. Tu les lances quand t'en as envie,
 Lance ça après n'importe quelle session où t'as galéré sur une notion TS/JS.
 Tu listes les notions, il génère un exercice 15-20 min dans le domaine Alan.
 
-### `/alan-build-feature` — Build from scratch *(skill à créer)*
 
-Une stack t'est imposée (tirée de celle d'Alan : TypeScript, Flask/Python, PostgreSQL, React).
-Un brief métier Alan t'est donné. Tu construis la feature de zéro — pas de starter code.
-Utile pour progresser en conception et en maîtrise de stack.
+### `/alan-feature-design` — Feature design (à intégrer plus tard)
 
-> Stack imposées possibles :
->
-> - TypeScript + fonctions pures (logique métier)
-> - Flask + Python (API backend)
-> - SQL/PostgreSQL (requêtes et modélisation)
-> - React (composants et state)
+Simulation 1h de conception de feature dans le domaine Alan. À ajouter au planning quand les 4 blocs quotidiens sont solides.
+
+### `/alan-past-project` — Past project (à intégrer plus tard)
+
+Simulation 1h de la présentation de ton projet passé. À ajouter au planning quand le screening et le tech challenge sont solides.
 
 ---
 
@@ -128,8 +92,6 @@ Utile pour progresser en conception et en maîtrise de stack.
 Tu es prêt quand :
 
 - Tech challenge : tu finis dans les 45 min ET tu écris des tests à chaque étape sans qu'on te le demande
-- Feature design : tu poses des questions clarifiantes avant de répondre, systématiquement
-- Fit : tous tes exemples sont concrets, tu parles en "j'ai décidé", tu donnes toujours un outcome
 - Screening : tu as 5 questions solides à poser à Alan que tu peux sortir sans réfléchir
-- Past project : tu peux expliquer ton architecture à un senior Alan en 3 minutes chrono
+- Fit : tous tes exemples sont concrets, tu parles en "j'ai décidé", tu donnes toujours un outcome
 - English : tu peux résumer n'importe quelle session en 5 phrases en anglais
