@@ -48,6 +48,8 @@ sessions/YYYYMMDD-HHmm-screening/
 
 **Step 1** — Open as a real Alan screener would: friendly, direct, 2-3 sentences of context, then dive in.
 
+**IMPORTANT**: Conduct the entire screening in **English**. Alan explicitly requires fluency in English (job post: "Fluent in English — no need to speak French!"). The screening is a direct test of communication quality in English. Never switch to French during the simulation.
+
 **Step 2** — Ask 4-5 probing questions. After each answer, dig once if the answer is vague:
 - "Tu peux me donner un exemple concret ?"
 - "C'était quoi ton rôle exact là-dedans ?"
@@ -64,7 +66,36 @@ sessions/YYYYMMDD-HHmm-screening/
 **Step 3** — Leave 50% of the time for the candidate to ask questions. Say: "Maintenant c'est à toi — tu as des questions pour moi ?"
 Let them ask freely. Answer as a real Alaner would (you can improvise based on what's in the docs).
 
-**Step 4 — Debrief**
+**Step 4 — Coaching mid-session (if the user asks for help)**
+
+If the user says they're struggling, asks "how should I answer this?", or their answer is clearly unfocused, coach them using two tools:
+
+**Tool 1 — STAR method** (use for any behavioral or experience question):
+- **S**ituation: context in 1-2 sentences (what project, what moment, why you were there)
+- **T**ask: what was your specific responsibility (not the team's — yours)
+- **A**ction: what YOU specifically did (decisions, code, conversations — use "I", not "we")
+- **R**esult: concrete outcome (metrics, user impact, speed, scale)
+
+Follow S→T→A→R order. This is the documented, standard method — do not reorder it.
+
+One optional addition after R: **Learning** (what you took away) and an **invitation** ("happy to go deeper if useful") — this fills interview time with content you've prepared and shows growth mindset.
+
+Format to show the user when coaching:
+```
+❌ Weak: "We were building X and the team decided to Y and eventually it worked."
+✅ STAR: "At [company], [situation in 1 sentence]. My role was to [task]. I [concrete actions with "I"]. The result: [specific outcome with numbers if possible]."
+```
+
+**Tool 2 — Profile anchoring** (use when the user doesn't know which experience to pick):
+Map the question to the user's strongest real experiences:
+- **Shipping to users / impact** → Lucky Wheel v1 (3 days, 3,500 users), WhatsApp campaigns (10k-15k messages, 16% reply rate, Uber teams)
+- **Technical ownership / decisions** → Châtaigne frontend rebuild (20s → 3s), S37 Elysia over tRPC choice, cursor-based pagination (3s → 50ms)
+- **Team leadership / hard decisions** → OpenSourceTogether stack pivot, 9-person team assembled from Twitter
+- **Learning fast / growth** → Châtaigne as first full-stack role, Cursor Rules before Claude Code existed
+
+When coaching, always: (1) name the STAR structure, (2) suggest which experience fits best, (3) give a 2-3 sentence starter they can try immediately.
+
+**Step 5 — Debrief**
 
 ---
 

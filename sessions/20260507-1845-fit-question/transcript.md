@@ -1,0 +1,29 @@
+# Transcript — Fit Question — 07/05/2026
+
+---
+**Q (Distributed Ownership)**: Tell me about a time you had to make a difficult decision on your own, without consensus. What was the situation, and how did you handle it?
+
+**A**: Built OpenSourceTogether, an open source platform to find open source projects. Was the founder. Project was stuck because the tech stack was built around team members, not the project. Made the call to rebuild from scratch. Many engineers disagreed. Called each one individually to understand their point of view. After listening, made a nuanced decision: not rebuild everything, just the parts that needed it. A few weeks later shipped the final product — one of the most-viewed products in the French dev community on X.
+
+💡 **What you should have said**: I co-founded OpenSourceTogether — a platform to find and contribute to open source projects — with a 9-person team I assembled from my Twitter network. Early on, each contributor picked their own tool: we ended up with NestJS, Cloudflare Workers, Prisma, and a frontend that only one person fully understood. When two engineers left, new contributors couldn't onboard, and the project stalled. I made the call to simplify the architecture — I decided which parts to keep and which to replace, without waiting for consensus. I called each dissenting engineer individually, heard them out, and then made a nuanced decision: not a full rewrite, but a targeted simplification of the pieces that were actually blocking us. A few weeks later we shipped, and the platform became one of the most-viewed products in the French developer community on X.
+
+---
+**Q (Distributed Ownership — follow-up 1)**: What exactly did you decide to keep and what did you scrap? Walk me through the technical decision.
+
+**A**: Initial mistake was choosing a tech stack for each person on the team, not for the project. Backend engineer chose their framework, frontend did the same. When people left, new contributors couldn't onboard. Decided to simplify — lightest backend framework, simplest frontend architecture. New members could push features without understanding a complex architecture.
+
+💡 **What you should have said**: The original stack was Next.js on the frontend, NestJS on the backend, with PostgreSQL, Prisma, and Cloudflare Workers — each piece chosen by whoever happened to own that layer. The mistake wasn't the technologies themselves; it was that no one had made a conscious decision for the project. I decided to scrap NestJS and Cloudflare Workers — the two components with the steepest onboarding cost — and replace them with a lightweight framework any contributor could read in an afternoon. I kept Prisma and PostgreSQL because the schema was solid and the cost of migration wasn't justified. The result was a codebase where a new contributor could push a feature on their first day, which is what unblocked us.
+
+---
+**Q (Distributed Ownership — follow-up 2)**: You said you called people individually. What did you say to the ones who still disagreed after the decision was made?
+
+**A**: First call was the backend engineer — beginner, had over-engineered the system. Told him directly: "from my point of view you over-engineered this." He pushed back — said everything had a purpose, mentioned scaling. We debated: ship fast with a solid but simple base, or build for future cases we don't have yet? Agreed that since everyone had jobs and school, shipping was the priority. He said: if we simplify, we need clear documentation. Fair — agreed on that.
+
+💡 **What you should have said**: The first call I made was with the backend engineer — he was talented but had built something complex far beyond what we needed. I told him directly: "From my point of view, you over-engineered this." He pushed back and made a case for the future scale — fair argument, but we were a 9-person volunteer team with jobs and school on the side; we had to ship first. I explained my reasoning, we debated it openly, and I held the decision: we simplify, we ship, and we write clear documentation so the complexity he cared about could be added back intentionally later. He accepted it and even contributed the documentation himself. After those calls, everyone was aligned — not because they all agreed, but because they knew the decision was made, explained, and owned.
+
+---
+**Q (Distributed Ownership)**: Tell me about a project where you had full ownership over a technical area. What did that mean concretely — what decisions did you make that nobody else could reverse?
+
+**A**: At S37, built a backend for an AI agent platform for growth agencies. Needed a backend AI agents could understand — full client data, mission context, conversation transcripts. Chose Elysia over tRPC. tRPC gives type-safety between frontend and backend but reinvents the REST protocol — AI agents can't install npm packages and need standard REST + auto-generated Swagger. Chose Elysia because it gives the same type-safety while still being REST. Decision was made to work more closely with AI agents. Still working on it, everything is working fine.
+
+💡 **What you should have said**: At S37 — a startup I co-founded in 2026 — I made the architectural call to use Elysia instead of tRPC for our backend. The reason was product-driven: our clients are AI agents, and agents can't install npm packages — they need standard REST endpoints with auto-generated Swagger, not an RPC protocol that assumes a TypeScript client. I chose Elysia because it gives the same end-to-end type-safety as tRPC while staying fully REST-compliant. That decision is what made the MCP server possible: today, agents working for clients like FlexAI and HappyPal can create leads, build proposals, send them, and check open rates — entirely in natural language, end to end. That's a direct consequence of the architecture choice I made.
