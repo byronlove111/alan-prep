@@ -1,0 +1,70 @@
+# Cursor Ambassador — Malik
+
+## Rôle
+
+Premier ambassadeur Cursor en France (depuis ~2025).
+
+Un ambassadeur Cursor est une personne mandatée par Cursor pour :
+- Créer du contenu autour de Cursor (posts, tutoriels, démos)
+- Enseigner l'utilisation de Cursor à de nouveaux utilisateurs
+- Organiser des événements pour faire grandir l'adoption de Cursor dans son pays
+- Représenter Cursor dans sa communauté locale
+
+Malik est le **premier ambassadeur français de Cursor**.
+
+---
+
+## Événements organisés
+
+### Événement 1 — avec Amo (ex-Zenly / Snapchat Map)
+- **Co-organisateur :** Amo (startup connue pour avoir créé Zenly, rachetée par Snapchat, et la Snapchat Map)
+- **Contenu :** Talk de 30 min sur les Cursor Rules
+  - Comment utiliser les rules pour donner plus de contexte à l'IA et shipper du meilleur code
+  - Démo live : utiliser des regex dans les rules pour cibler des types de fichiers spécifiques dans une architecture et y appliquer automatiquement la documentation et les conventions de code
+- **Audience :** ~100 personnes
+- **Résultat :** Fort engagement sur les réseaux, beau bruit médiatique
+
+### Événement 2 — avec Hexa (incubateur de startups, Swan, etc.)
+- **Co-organisateur :** Hexa, incubateur parisien (startups notables : Swan)
+- **Invité spécial :** Nick Miller, ingénieur Cursor (venu en personne depuis San Francisco)
+- **Audience :** >100 personnes
+- **Résultat :** Événement remarqué, présence physique d'un Cursor engineer rare en Europe
+
+### Événement 3 — avec ORUS
+- **Co-organisateur :** ORUS
+- **Audience :** ~100 personnes
+- **Résultat :** Succès similaire aux précédents
+
+### Événement 4 — avec Alan (à venir)
+- **Date :** 28 mai 2026
+- **Lieu :** Bureaux d'Alan
+- **Audience prévue :** ~100 personnes
+- **Contexte :** Organiser un événement Cursor dans les bureaux de l'entreprise où il postule en stage — signal fort de légitimité et de connexion avec l'équipe
+
+---
+
+## Activités en continu
+
+- **Contenu réseaux :** Posts réguliers sur Cursor, reposts de l'équipe Cursor officielle
+- **Review de documentation :** Collabore avec l'équipe Cursor pour vérifier et améliorer les traductions françaises de leur documentation
+- **Tutoriels vidéo (en cours) :** Création de tutoriels Google/YouTube pour enseigner Cursor de zéro à des débutants
+
+---
+
+## Signaux clés pour les entretiens
+
+- **Pédagogie à grande échelle :** 4 événements x ~100 personnes = ~400 personnes touchées en présentiel
+- **Légitimité technique :** Capacité à démontrer des concepts avancés (regex dans les rules, architecture-aware AI prompting) devant une audience tech
+- **Réseau :** Connexions avec Amo (ex-Zenly), Hexa, ORUS, équipe Cursor (Nick Miller), et bientôt Alan
+- **Primo ambassadeur :** Premier en France — rôle obtenu par reconnaissance de la communauté, pas par candidature classique
+- **Lien avec Alan :** L'événement du 28 mai dans les bureaux Alan est un pont naturel entre son rôle Cursor et sa candidature Alan — montre une cohérence entre les univers
+
+---
+
+## Phrases à utiliser en entretien
+
+> "I'm the first French Cursor ambassador. I've organised four events so far — around 100 people each — teaching developers how to use AI tools effectively. The fourth one is actually at Alan's office on May 28th."
+
+> "At one event I gave a 30-minute demo on using Cursor Rules with regex to target specific file types in an architecture — so the AI applies the right conventions automatically depending on which file you're in."
+
+> "I work closely with the Cursor team — I review their French documentation, and one of their engineers, Nick Miller, flew in from San Francisco for one of our events."

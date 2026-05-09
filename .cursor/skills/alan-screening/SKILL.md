@@ -92,6 +92,7 @@ Map the question to the user's strongest real experiences:
 - **Technical ownership / decisions** → Châtaigne frontend rebuild (20s → 3s), S37 Elysia over tRPC choice, cursor-based pagination (3s → 50ms)
 - **Team leadership / hard decisions** → OpenSourceTogether stack pivot, 9-person team assembled from Twitter
 - **Learning fast / growth** → Châtaigne as first full-stack role, Cursor Rules before Claude Code existed
+- **AI expertise / pedagogy** → First French Cursor Ambassador, 4 events ~100 people each (Amo, Hexa + Nick Miller from SF, ORUS, Alan on May 28th), regex Cursor Rules demo, documentation review with Cursor team
 
 When coaching, always: (1) name the STAR structure, (2) suggest which experience fits best, (3) give a 2-3 sentence starter they can try immediately.
 

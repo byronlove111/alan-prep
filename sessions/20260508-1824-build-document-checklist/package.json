@@ -1,0 +1,13 @@
+{
+  "name": "build-document-checklist",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "npx tsx test-runner.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

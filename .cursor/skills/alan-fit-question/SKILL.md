@@ -17,7 +17,7 @@ Before generating anything, read ALL files in `docs/`:
 - `docs/blog-articles.txt` — Alan's engineering culture, how they think about product and mission
 
 Also read ALL files in `profile/`:
-- `profile/chataigne.txt`, `profile/opensourcetogether.txt`, `profile/s37.txt`
+- `profile/chataigne.txt`, `profile/opensourcetogether.txt`, `profile/s37.txt`, `profile/cursor-ambassador.txt`
 
 Use this context to:
 - Generate questions that are specifically grounded in Alan's real values and culture (not generic behavioral questions)
