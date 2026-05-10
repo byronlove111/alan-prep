@@ -111,6 +111,8 @@ export function expect(value: any) {
 
 **The bug**: embed exactly 1 subtle bug in the starter code. Prefer boundary conditions: first/last element, empty input, index off-by-one, slice that misses the last character. The bug must be findable by writing a targeted unit test.
 
+**CRITICAL — never reveal the bug**: do NOT add any comment in the starter code that hints at the bug location (no `// ❌`, no `// bug here`, no explanatory comment near the buggy line). The bug must be invisible to the reader. Only the agent knows where it is — the user must find it themselves via tests.
+
 **Difficulty**: realistic for a final-year Master's student with some production experience. Not trivial, not impossible in 45 min.
 
 ## Examples — to inspire, not copy

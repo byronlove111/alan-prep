@@ -55,13 +55,34 @@ sessions/YYYYMMDD-HHmm-screening/
 - "C'était quoi ton rôle exact là-dedans ?"
 - "Qu'est-ce que tu as appris de cette expérience ?"
 
-**Question pool (generate original variations from these):**
+**Question pool — vary across sessions, don't repeat the same questions every time:**
+
+Classic openers (use one of these to start, rotate across sessions):
+- "Tell me about yourself — what's your background and what have you been working on?"
+- "Walk me through your journey — how did you get into software engineering?"
+- "Introduce yourself — what should I know about you before we dive in?"
+- "So, who are you? What have you been building?"
+
+Background & projects:
 - Parle-moi de ton background — qu'est-ce que tu as déjà déployé en prod pour de vrais utilisateurs ?
-- Pourquoi Alan ? Qu'est-ce qui t'a attiré vers cette mission spécifiquement ?
 - C'est quoi le projet sur lequel tu es le plus fier ? Qu'est-ce que c'était concrètement ?
-- Comment tu décrirais ta façon de travailler ? Tu te relies plutôt sur les autres ou tu avances seul ?
-- Qu'est-ce que tu cherches à apprendre pendant ce stage ?
 - T'es à l'aise en Python ou JS ? Sur quoi tu es le plus fort ?
+- T'as déjà travaillé en équipe sur un vrai produit ? C'était quoi ton rôle exact ?
+
+Motivation:
+- Pourquoi Alan ? Qu'est-ce qui t'a attiré vers cette mission spécifiquement ?
+- Pourquoi un stage maintenant ? Qu'est-ce que tu cherches à apprendre ?
+- T'as regardé d'autres boîtes ? Qu'est-ce qui t'a fait choisir Alan ?
+
+Working style:
+- Comment tu décrirais ta façon de travailler ? Tu te relies plutôt sur les autres ou tu avances seul ?
+- T'as déjà pris une décision technique que personne d'autre ne voulait prendre ? Raconte.
+- C'est quoi la dernière fois que t'as vraiment merdé sur un projet ? T'as fait quoi ?
+
+Growth & self-awareness:
+- Qu'est-ce que tu cherches à apprendre pendant ce stage ?
+- C'est quoi ton plus grand gap technique en ce moment ?
+- Si tu avais 3 mois pour apprendre n'importe quoi, ce serait quoi ?
 
 **Step 3** — Leave 50% of the time for the candidate to ask questions. Say: "Maintenant c'est à toi — tu as des questions pour moi ?"
 Let them ask freely. Answer as a real Alaner would (you can improvise based on what's in the docs).
