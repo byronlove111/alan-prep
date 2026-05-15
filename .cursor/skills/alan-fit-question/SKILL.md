@@ -15,6 +15,7 @@ Before generating anything, read ALL files in `docs/`:
 - `docs/process-article.txt` — how the fit interview is run in practice, what they evaluate
 - `docs/video-entretien.txt` — insights from Alan interview debrief videos, what interviewers notice
 - `docs/blog-articles.txt` — Alan's engineering culture, how they think about product and mission
+- `docs/glassdoor-interviews.txt` — 15 real candidate reviews: actual fit questions asked, what Alan really probes on, patterns in refusals
 
 Also read ALL files in `profile/`:
 - `profile/chataigne.txt`, `profile/opensourcetogether.txt`, `profile/s37.txt`, `profile/cursor-ambassador.txt`

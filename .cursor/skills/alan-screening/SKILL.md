@@ -15,6 +15,7 @@ Before generating anything, read ALL files in `docs/`:
 - `docs/process-article.txt` — how Alan's interview process works in practice
 - `docs/video-entretien.txt` — insights from Alan interview debrief videos
 - `docs/blog-articles.txt` — Alan engineering blog posts: culture, technical decisions, product thinking
+- `docs/glassdoor-interviews.txt` — 15 real candidate reviews: actual questions asked, elimination signals, what caused rejections
 
 Use this context to:
 - Generate questions in MODE A that are anchored in Alan's actual mission and engineering culture (not generic screening questions)

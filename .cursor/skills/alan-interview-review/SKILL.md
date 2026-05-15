@@ -7,6 +7,10 @@ description: Reviews a technical interview session for Alan preparation. Takes a
 
 Universal review skill. Used after every practice session — coding, feature design, fit questions, screening. Takes a transcript (oral session recorded and transcribed) and optionally the code written during the session.
 
+## Context loading — read before every review
+
+Before reviewing, read `docs/glassdoor-interviews.txt` — 15 real candidate reviews with actual elimination signals and what caused rejections. Use this to calibrate feedback against what Alan truly evaluates in practice, not just in theory.
+
 ## What Alan actually evaluates (source: Alan's process docs and live interview debrief)
 
 **Positive signals — what they want to see:**

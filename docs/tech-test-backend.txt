@@ -1,0 +1,59 @@
+# Alan Tech Test — Backend Focus (mai 2026)
+
+## Ce qui a changé
+D'après un ingénieur Alan (info directe, mai 2026) :
+- Le test n'est plus uniquement de la logique de données ou du parsing
+- Le candidat choisit frontend ou backend
+- Le backend implique une architecture complète (controller/service/repository)
+- Des questions de raisonnement large sur le backend sont posées (pas juste du code)
+
+## Exemple de question posée
+"Tu veux faire une migration, changer une colonne d'un modèle, et tu push en prod. Ça échoue parce qu'un job est en train de locker ce modèle. Qu'est-ce que tu fais ?"
+
+Réponse attendue (raisonnement) :
+- Comprendre pourquoi : ALTER TABLE bloquant sur une table avec un lock actif = deadlock
+- Solutions :
+  1. Migration en plusieurs étapes (additive-first) : ajouter la colonne nullable, backfiller, puis contraindre
+  2. Utiliser des outils de migration non-bloquants (pg-osc, gh-ost pour MySQL)
+  3. Coordonner avec le job : attendre qu'il finisse, ou forcer une fenêtre de maintenance
+  4. Utiliser des opérations non-bloquantes selon le DB (PostgreSQL CONCURRENTLY pour les indexes)
+- Principe clé : never run a blocking migration on a table with active locks in prod
+
+## Concepts à maîtriser
+
+### Controller / Service / Repository pattern
+- Controller : reçoit la requête HTTP, valide l'input, appelle le service, retourne la réponse
+- Service : contient la business logic, orchestre les appels, ne touche pas directement la DB
+- Repository : abstraction de la couche de données, contient les requêtes SQL/ORM
+
+### Database migrations
+- Qu'est-ce que c'est : fichiers versionés qui modifient le schéma de la DB
+- Types d'opérations : CREATE TABLE, ALTER TABLE, ADD COLUMN, DROP COLUMN, ADD INDEX
+- Pièges en prod :
+  - Locking : ALTER TABLE peut poser un lock exclusif sur la table (bloque toutes les requêtes)
+  - Backward compatibility : si le code nouveau et l'ancien tournent en même temps (rolling deploy)
+  - Long-running migrations sur grosses tables
+
+### SQL basics
+- Transactions : ACID (Atomicity, Consistency, Isolation, Durability)
+- Locks : shared lock vs exclusive lock, deadlocks
+- Indexes : pourquoi, quand, B-tree vs hash
+- N+1 problem : charger N entités puis faire N requêtes = anti-pattern
+
+### REST conventions
+- GET (idempotent, pas de side effects), POST (créer), PUT/PATCH (modifier), DELETE
+- Status codes : 200, 201, 400, 401, 403, 404, 409, 422, 500
+- Structure d'erreur : { error: string, message: string, code?: string }
+
+## Stack TypeScript recommandé
+- Framework : Express (le plus simple), Fastify (plus performant), ou Elysia (moderne, type-safe)
+- ORM : Prisma (migrations intégrées, type-safe) ou Drizzle (plus léger)
+- Validation : Zod
+- Structure de dossiers :
+  src/
+  ├── controllers/
+  ├── services/
+  ├── repositories/
+  ├── middlewares/
+  ├── types/
+  └── index.ts

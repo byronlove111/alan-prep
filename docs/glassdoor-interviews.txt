@@ -1,0 +1,183 @@
+# Alan — Retours d'entretiens (Glassdoor, Software Engineer)
+
+Source : Glassdoor | 15 retours | Rôle : Software Engineer
+
+---
+
+## Synthèse des signaux clés
+
+### Ce qui revient dans TOUS les refus
+- Manque d'enthousiasme visible pour la mission santé (testé à chaque étape)
+- Feature Design mal abordé : les candidats font du system design backend → Alan veut du product/user-centric
+- Tests insuffisants pendant le live coding
+- Pas de questions posées à Alan (ou questions trop génériques)
+- Réponses écrites bâclées ou trop courtes
+
+### Ce qui revient dans les retours positifs
+- Feedback détaillé après chaque étape
+- Exercices techniques proches du travail réel (pas d'algo puzzles)
+- Interviewers bienveillants et accessibles
+- Processus transparent sur ce qui est attendu
+
+### Red flags mentionnés
+- TypeScript recommandé même si le choix est libre ("type precision and naming conventions evaluated regardless of language")
+- La feature design interview est un piège si abordée comme du system design classique
+- Le niveau de compensation n'est révélé qu'à la fin du processus
+- Questions écrites : 3-5 pages, pas de feedback donné dessus
+
+---
+
+## Étapes du processus (reconstituées depuis les retours)
+
+1. **Screening — 30 min** — get to know each other, ~50% candidat pose des questions
+2. **Questions écrites — async** — 4-5 questions, réponses 3-5 pages, pas de feedback donné
+3. **Live coding — 1h** — CoderPad, exercice réel, TDD fortement valorisé, TypeScript recommandé
+4. **Alaner Fit — 45 min** — Senior Alaner ou fondateur, checklist de valeurs, peu de place pour les questions candidat
+5. **Pre-Alan Day call** — feedback avant le jour J, alignement compensation
+6. **Alan Day — demi-journée**
+   - Past Project — 1h — projet passé, décisions techniques, ce qu'on ferait différemment
+   - Feature Design — 1h — feature sur whiteboard, user-centric pas backend-centric
+   - Ask Me Anything — 30 min — pas noté, questions libres
+   - Débrief — 15 min
+
+---
+
+## Retours détaillés
+
+### 8 janv. 2026 — Aucune offre | Positif | Difficile
+> "Intense process with a lot of interviews. They test every part of you, technical and behavioral. The tests are fair and comprehensive. Requires a lot of time and effort. At least you make sure that you know what you're signing up for."
+**Question posée :** Describe a past project and what made you make the decisions. What would you have done differently.
+
+---
+
+### 5 janv. 2026 — Aucune offre | Négatif | Moyen
+> "The second step is writing a document to answer 5 questions. I wrote a document that resembles exactly how Alan writes their own documentation and gave well-written answers. I didn't even get feedback about this step even though I asked for it twice. The third step was a live technical test where half the test was based on a topic and skillset that wasn't even mentioned once in the job offer nor the previous steps."
+**Question posée :** What was a challenging situation and how did you resolve it.
+
+---
+
+### 29 nov. 2025 — Aucune offre | Négatif | Moyen
+> "Early stages focus heavily on mission motivation, which seems irrelevant past the first stage. A strong AI focus and passion seem to help in progressing through the process."
+**Questions posées :** How do you use AI to solve problems? Can you give an example where AI helped you improve efficiency or quality? Tell me about a time you received difficult feedback. How did you handle it?
+
+---
+
+### 13 sept. 2025 — Aucune offre | Négatif | Moyen
+> "For technical assessments, consider using a typed language even when given the choices. TypeScript may be the best option given their stack. The evaluation appears to place unexpected emphasis on type precision and naming conventions regardless of language."
+**Question posée :** Code review, questions about database concepts and concurrent access.
+
+---
+
+### 10 juin 2025 — Aucune offre | Négatif | Difficile
+> "The 4th round was a 45 min talk with a senior employee, in which they'll ask questions off of a checklist for 40 minutes while not really engaging with you. Afterwards you have 5 minutes to ask perhaps two questions."
+> "Make sure you're super enthusiastic about who they are and what they do, in every round of the process."
+**Questions posées :** Why do you think you would excel at your job at Alan? How would our culture allow you to thrive? What would excite you about working in the healthcare industry? What is your point of view about testing? What's your definition of a full-stack engineer? How comfortable would you be in such a role? Is there a specific area where you have strong expertise that you think is worth exploring/assessing deeper during the process?
+
+---
+
+### 14 mai 2025 — Aucune offre | Positif | Moyen
+> "Entretien en Anglais, super intéressant, énormément de feedback permettant de comprendre en quoi cela a été bon, quels sont les axes à améliorer. Ils expliquent clairement ce qu'ils attendent de l'entretien au début."
+**Question posée :** Quelle est la culture et les valeurs de l'entreprise.
+
+---
+
+### 13 mai 2025 — Aucune offre | Positif | Moyen
+> "High focus on testing and not so much performance. Try to write TDD if possible."
+**Question posée :** Why would you want to work in healthcare.
+
+---
+
+### 14 avr. 2025 — Aucune offre | Négatif | Facile
+> "One thing to look out for is the feature design interview; I approached this as if it was a traditional system design interview, focusing on backend logic and components. Apparently that's not what they are looking for. They want candidates to be user-centric and product driven."
+> "They give you the majority of the components of the existing system and invite you to a whiteboard tool to implement the feature they want."
+**Questions posées :** A class to implement a part of the system, tests are mandatory. Talk about a past project in detail. Talk about your motivation. What does success look like.
+
+---
+
+### 5 janv. 2025 — Aucune offre | Positif | Moyen
+> "it was gud, they asked me self introduction then aptitude questions, after that final round was machine test. it was harder than i thought. then they asked me about my projects."
+**Question posée :** Why do you join this company?
+
+---
+
+### 29 août 2024 — Aucune offre | Positif | Moyen
+> "It was initiated by the phone call, then we had an online camera meeting. After that you must submit 2-5 pages PDF of the questions related to your prior experience and your desire to work in this company."
+**Questions posées :** How your previous projects looked like, what would you change in them, what would you enhance, improve or add. What would you like to work on.
+
+---
+
+### 16 avr. 2024 — Aucune offre | Positif | Moyen
+> "The interviewers have generally been very nice throughout. The candidate is given both positive and constructive feedback by default after each step completed."
+> "One thing to look out for is the feature design interview; I approached this as if it was a traditional system design interview, focusing on backend logic and components. Apparently that's not what they are looking for. They want candidates to be user-centric and product driven, which I do not fully grasp."
+> "They give you the majority of the components of the existing system and invite you to a whiteboard tool to implement the feature they want."
+> "The initial steps included: Recruiter call → Written answers (3-4 pages at least) → Live coding challenge → Screening with a senior leader. Then a pre-Alan Day check-in (recruiter + engineer, logistics + compensation alignment). Alan Day: Feature design + Past project discussion + Ask me anything."
+**Questions posées :** A class to implement a part of the system, tests are mandatory. Talk about a past project in detail. Talk about your motivation. What does success look like.
+
+---
+
+### 1 avr. 2024 — Aucune offre | Neutre | Facile
+> "People get mad if you don't ask questions about the company which is bad, imo. Coding challenge is pretty easy. You have to write a lot which can be quite annoying."
+**Question posée :** Why did you choose Alan.
+
+---
+
+### 7 oct. 2023 — Aucune offre | Négatif | Moyen
+> "Appel avec un recruteur pour détailler le CV. Appel avec des ingénieurs pour parler de ce que j'ai fait durant mes expériences en détails. Dernier appel pour parler encore tech puis refus pour raison inconnue."
+**Question posée :** Parler d'un projet dont vous êtes fier.
+
+---
+
+### 25 sept. 2023 — Aucune offre | Négatif | Moyen
+> "A real case example where the candidate has to TDD a solution. Average difficulty, everybody with a minimum solid experience in programming is able to write and solve the problem."
+
+---
+
+### 21 sept. 2023 — Aucune offre | Positif | Difficile
+> "Processus long (5 étapes) mais très enrichissant. Beaucoup d'échanges avec des pairs. Ils creusent vraiment le sujet."
+**Questions posées :** Répondre par écrit à 5 questions (valeurs de l'entreprise, etc.). Entretien technique : faire une classe et des tests pour implémenter une fonctionnalité d'Alan.
+
+---
+
+## Questions réelles posées par Alan (compilées)
+
+### Screening / Motivation
+- Why did you choose Alan?
+- Why would you want to work in healthcare?
+- What would excite you about working in the healthcare industry?
+- How would our culture allow you to thrive?
+- What is your point of view about testing?
+- What's your definition of a full-stack engineer?
+- Is there a specific area where you have strong expertise worth exploring deeper?
+
+### Comportemental / Fit
+- What was a challenging situation and how did you resolve it?
+- Tell me about a time you received difficult feedback. How did you handle it?
+- How do you use AI to solve problems? Give an example where AI helped you improve efficiency or quality.
+- Describe a past project and what made you make the decisions. What would you have done differently?
+
+### Past Project (Alan Day)
+- Describe a past project in detail.
+- What decisions did you make and why?
+- What would you have done differently?
+
+### Feature Design (Alan Day)
+- Implement a new feature on an existing system (user-centric approach expected, not pure backend)
+- What does success look like?
+
+### Technique (live coding)
+- Implement a class/function on real-world data (CoderPad)
+- Tests mandatory, TDD encouraged
+- Code review questions
+- Database concepts and concurrent access
+
+---
+
+## Lessons apprises des candidats refusés
+
+1. **TypeScript > autre langage** même si le choix est libre — ils évaluent la précision des types
+2. **Feature Design ≠ System Design** — ne pas parler d'infra, parler d'UX et d'impact member
+3. **Poser des questions à Alan est obligatoire** — ne pas en avoir = signal très négatif
+4. **Questions écrites = 3-5 pages** — traiter ça comme un vrai document Alan, pas comme un formulaire
+5. **Mission santé** — testée à chaque étape, doit être sincère et spécifique à Alan (pas "j'aime la tech santé")
+6. **TDD pendant le live coding** — écrire les tests en premier, pas après
+7. **AI focus aide à passer** — mentionné explicitement dans un retour nov. 2025

@@ -15,6 +15,7 @@ Before generating anything, read ALL files in `docs/`:
 - `docs/process-article.txt` — what the feature design interview tests in practice, how it's structured
 - `docs/video-entretien.txt` — signals interviewers look for in the feature design round
 - `docs/blog-articles.txt` — Alan's real engineering challenges and product decisions (goldmine for realistic briefs)
+- `docs/glassdoor-interviews.txt` — 15 real candidate reviews: the feature design interview is the most misunderstood step — candidates who approached it as system design were rejected, use this to calibrate the simulation correctly
 
 Use this context to:
 - Generate feature briefs that are realistic and grounded in Alan's actual product (not invented healthcare features)

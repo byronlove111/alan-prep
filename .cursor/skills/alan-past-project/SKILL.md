@@ -7,6 +7,11 @@ description: Prepares and simulates Alan's Past Project interview (1 hour, Alan 
 
 Simulates Alan's Past Project interview — 1 hour, part of the Alan Day. The candidate presents a significant project they played a key role in. Alan evaluates: depth of technical understanding, ability to speak clearly about technical detail, system design decisions made, leadership/ownership, and what was learned.
 
+## Context loading — read before every session
+
+Before starting, read `docs/process-article.txt`, `docs/alan-context.txt`, and `docs/glassdoor-interviews.txt`.
+Use the Glassdoor reviews to understand what Alan really digs into during the past project interview: depth of technical decisions, what you'd do differently, and ownership of outcomes.
+
 ## Facts from Alan's process
 
 - "Test your understanding of a previous project that you worked on, and your ability to speak clearly about technical detail"

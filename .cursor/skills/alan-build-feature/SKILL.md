@@ -9,12 +9,14 @@ Feature addition exercise on an existing codebase. The user is a new engineer jo
 
 ## Context loading — read before every session
 
-Before proposing subjects, read `docs/alan-context.txt` and `docs/blog-articles.txt`.
+Before proposing subjects, read `docs/alan-context.txt`, `docs/blog-articles.txt`, and `docs/glassdoor-interviews.txt`.
 Use this to generate codebases and feature briefs grounded in Alan's real product areas and engineering challenges. The existing codebase should feel realistic — types, domain logic, and naming conventions anchored in how Alan actually works.
 
 **Stack**: TypeScript only  
 **Duration**: ~1h  
 **Tests**: some failing tests provided + user must write their own
+
+> **Format évolution (mai 2026)** : les exercices peuvent maintenant inclure des features backend complètes — pas uniquement de la logique pure. Un sujet peut demander d'implémenter une route HTTP (ex: `POST /members/:id/documents`) avec un controller, un service, et une couche de persistence (repository stub). La structure du projet reste la même, mais le fichier à créer peut être un controller ou un service, pas forcément une fonction utilitaire isolée. Voir `docs/tech-test-backend.txt` pour les conventions et concepts backend.
 
 ---
 
