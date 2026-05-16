@@ -1,0 +1,32 @@
+Regles metier - Ajout d'un beneficiaire
+
+LIMITES
+- Max 5 beneficiaires par membre au total.
+- Max 1 conjoint (spouse) par membre, pas de limite pour les enfants (child).
+- Les conjoints ont un contrat independant, ils ne sont pas comptes dans les 5,
+  mais on ne peut pas les ajouter en tant que beneficiaire s'ils sont deja membres.
+
+PREREQUIS
+- Le membre doit avoir un contrat avec le statut "active".
+
+ERREURS
+- Membre introuvable -> 404
+- Contrat non actif -> 422 "Member does not have an active contract"
+- 6eme beneficiaire -> 422 "Maximum number of beneficiaries reached"
+- 2eme conjoint -> 422 "Member already has a spouse beneficiary"
+- Champ manquant dans le body -> 400
+- type invalide -> 400
+- birth_date invalide -> 400
+
+BODY ATTENDU
+{
+  "type": "spouse" | "child",
+  "first_name": "string",
+  "last_name": "string",
+  "birth_date": "YYYY-MM-DD"
+}
+Tous les champs sont obligatoires.
+
+AUTH
+Le middleware JWT injecte req.memberId dans la requete.
+Le controller doit verifier que req.memberId === req.params.id avant de traiter la demande.

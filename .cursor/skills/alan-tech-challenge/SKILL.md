@@ -134,22 +134,24 @@ Create folder `sessions/YYYYMMDD-HHmm-tech-challenge/` with:
 ```
 sessions/YYYYMMDD-HHmm-tech-challenge/
 ├── src/
-│   ├── types.ts             # raw DB row types (interfaces) — provided
+│   ├── types.ts             # raw DB record types — provided
+│   ├── app.ts               # Express app + error middleware — provided
 │   ├── domain/              # entity classes with business methods — user creates files
-│   ├── controllers/         # empty folder — user creates files
-│   ├── services/            # empty folder — user creates files
-│   └── repositories/        # empty folder — user creates files
+│   ├── controllers/         # user creates files
+│   ├── services/            # user creates files
+│   └── repositories/        # user creates files
 ├── db/
 │   ├── database.ts          # DB connection singleton (better-sqlite3)
 │   ├── schema.sql           # CREATE TABLE statements
 │   └── seed.ts              # seed data — npx tsx db/seed.ts to populate
 ├── [exercise-name].test.ts  # 3-4 failing tests calling the service directly
+├── [exercise-name].http.test.ts  # 2-3 failing HTTP tests via supertest — provided
 ├── test-runner.ts
-├── package.json             # express + better-sqlite3 + tsx + typescript
+├── package.json             # express + better-sqlite3 + supertest + tsx + typescript
 └── transcript.md
 ```
 
-Only `types.ts`, `db/`, `test-runner.ts`, `package.json`, and the failing tests are provided. The user writes everything else.
+Provided files: `types.ts`, `app.ts`, `db/`, `test-runner.ts`, `package.json`, `[exercise-name].test.ts`, and `[exercise-name].http.test.ts`. The user writes everything else (domain, controllers, services, repositories).
 
 **OOP rules — always apply:**
 - Services and repositories MUST be classes (never plain functions or objects).
@@ -158,17 +160,23 @@ Only `types.ts`, `db/`, `test-runner.ts`, `package.json`, and the failing tests 
   ```typescript
   // src/domain/Claim.ts
   export class Claim {
-    constructor(private readonly data: ClaimRow) {}
+    constructor(private readonly data: ClaimRecord) {}
     getId(): number { return this.data.id; }
     getStatus(): ClaimStatus { return this.data.status; }
     canBeStalled(): boolean { return this.data.status === "processing"; }
-    stall(): Partial<ClaimRow> { return { status: "stalled", stalled_at: new Date().toISOString() }; }
-    toJSON(): ClaimRow { return { ...this.data }; }
+    stall(): Partial<ClaimRecord> { return { status: "stalled", stalled_at: new Date().toISOString() }; }
+    toJSON(): ClaimRecord { return { ...this.data }; }
   }
   ```
-- The repository converts raw DB rows → entity instances. The service works only with entity instances, never with raw rows.
-- `types.ts` contains only raw DB row interfaces (e.g. `ClaimRow`, `MemberRow`). Domain types (enums, status unions) live there too.
+- The repository converts raw DB records → entity instances. The service works only with entity instances, never with raw rows.
+- `types.ts` contains only raw DB record interfaces (e.g. `ClaimRecord`, `MemberRecord`). Domain types (enums, status unions) live there too.
 - For `endpoint-pagination`, `endpoint-debug` and `endpoint-data-processing`: classes for service/repository are required; domain entity layer is optional.
+- The controller MUST be written for every exercise. It:
+  - Uses `express.Router()`
+  - Validates the request body (checks required fields, returns 400 if invalid)
+  - Checks auth (`req.memberId === req.params.id` → 403 if mismatch) when applicable
+  - Calls the service and returns the result with the correct status code
+  - Never catches errors — the global error middleware in `app.ts` handles them
 
 **package.json** must always include:
 ```json
@@ -181,6 +189,8 @@ Only `types.ts`, `db/`, `test-runner.ts`, `package.json`, and the failing tests 
     "@types/better-sqlite3": "^7.6.0",
     "@types/express": "^4.17.21",
     "@types/node": "^20.0.0",
+    "@types/supertest": "^6.0.0",
+    "supertest": "^7.0.0",
     "tsx": "^4.0.0",
     "typescript": "^5.0.0"
   }
@@ -195,6 +205,31 @@ db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
 export default db;
 ```
+
+**`src/app.ts`** must always be:
+```typescript
+import express from "express";
+import { AppError } from "./errors/AppError";
+
+const app = express();
+app.use(express.json());
+
+// Routes are imported here by the user
+// e.g. import { router } from "./controllers/[feature]Controller";
+// app.use("/", router);
+
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const status = err.statusCode ?? 500;
+  res.status(status).json({ error: err.message ?? "Internal server error" });
+});
+
+export default app;
+```
+
+The user must:
+1. Create `src/errors/AppError.ts` with `class AppError extends Error { constructor(public message: string, public statusCode: number) { super(message); } }`
+2. Create their controller that exports a `router`
+3. Uncomment and add the import + `app.use()` in `app.ts` for their router
 
 The repository imports `db` directly and uses raw SQL:
 ```typescript
@@ -242,6 +277,28 @@ export function expect(value: any) {
 }
 ```
 
+**`[exercise-name].http.test.ts`** — always generate alongside the service tests. Uses supertest to test the full HTTP stack. Example structure:
+```typescript
+import request from "supertest";
+import app from "./src/app";
+import db from "./db/database";
+import { readFileSync } from "fs";
+import { join } from "path";
+
+const schema = readFileSync(join(__dirname, "db/schema.sql"), "utf-8");
+db.exec(schema);
+
+function resetDb() { /* same as service tests */ }
+
+// 2-3 HTTP-level tests (happy path + 1-2 error cases)
+// These call the real HTTP endpoint via supertest
+// They fail until the user wires up the controller in app.ts
+```
+Generate 2-3 HTTP tests that complement (not duplicate) the service tests:
+- 1 happy path: POST returns 201 with the created resource
+- 1 error: 404 or 422 with the correct error shape `{ error: string }`
+- 1 auth check if applicable: 403 when memberId mismatch
+
 ---
 
 ## Step 4 — Run the session
@@ -269,6 +326,9 @@ Display this block once files are ready and design is validated:
     - [ ] Foreign keys enabled and respected
     - [ ] Services and repositories implemented as classes
     - [ ] Business logic lives on entity methods, not in the service (endpoint-business-rules / cron-job)
+    - [ ] Controller written with express.Router()
+    - [ ] Controller wired into app.ts
+    - [ ] HTTP tests pass (npm run test:http)
     - [ ] README written before submitting
 
 🔚  When you're done:
@@ -386,9 +446,35 @@ A good README is worth as much as good code in a real interview.
 ## Backend concepts reference
 
 ### Controller / Service / Repository
-- **Controller**: receives HTTP request, validates input, calls service, returns response. No business logic.
+- **Controller**: receives HTTP request, validates input (400 if invalid), checks auth (403 if unauthorized), calls service, returns response. No business logic. Uses `express.Router()`. Never try/catches — delegates to global error middleware.
 - **Service**: business logic, orchestration. Never touches DB directly.
 - **Repository**: data access layer. Uses better-sqlite3 with raw SQL. In prod: wraps SQL/ORM.
+
+### Express Router & App wiring
+```typescript
+// src/controllers/beneficiariesController.ts
+import { Router } from "express";
+const router = Router();
+
+router.post("/members/:id/beneficiaries", (req, res) => {
+  const { id } = req.params;
+  // 1. Validate body
+  const { type, first_name, last_name, birth_date } = req.body;
+  if (!type || !first_name || !last_name || !birth_date) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+  // 2. Auth check
+  if (req.memberId !== id) return res.status(403).json({ error: "Forbidden" });
+  // 3. Call service (throws AppError on failure → caught by global middleware)
+  const result = service.addBeneficiary(id, req.body);
+  res.status(201).json(result);
+});
+
+export { router };
+```
+- Wire in `app.ts`: `app.use("/", router)`
+- The global error middleware in `app.ts` catches all `AppError` throws automatically
+- `req.memberId` is injected by an auth middleware (in exercises, assume it's already set)
 
 ### SQLite with better-sqlite3
 - Synchronous API — no async/await needed
@@ -457,7 +543,7 @@ A good README is worth as much as good code in a real interview.
   ```typescript
   // repository retourne une entité
   findById(id: number): Claim | null {
-    const row = db.prepare("SELECT * FROM claims WHERE id = ?").get(id) as ClaimRow | undefined;
+    const row = db.prepare("SELECT * FROM claims WHERE id = ?").get(id) as ClaimRecord | undefined;
     return row ? new Claim(row) : null;
   }
   // service travaille avec l'entité
