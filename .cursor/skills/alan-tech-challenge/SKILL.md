@@ -66,69 +66,21 @@ Wait for the user's choice before generating anything.
 
 ---
 
-## Step 1 — Generate the brief (intentionally incomplete)
+## Step 0.5 — Generate brief + files immediately
 
-After the user picks a subject, generate a vague brief. **Do NOT give all the information upfront.**
+As soon as the user picks a subject, do two things in the same response:
 
-The brief should:
-- Explain the business context (1-2 sentences about why this feature exists)
-- State the high-level goal ("implement X")
-- Leave at least 3-4 details deliberately unspecified (error cases, edge cases, data shape, business rules)
+1. **Give the brief** (intentionally incomplete — same rules as before: 1-2 sentences context, high-level goal, 3-4 details left unspecified)
+2. **Generate all session files** in `sessions/YYYYMMDD-HHmm-tech-challenge/`
 
-Then say: **"Before coding — what questions do you have?"**
+The user needs to see `schema.sql`, `types.ts`, and the failing tests BEFORE asking questions — it gives them the vocabulary to ask better questions and understand the domain.
 
-Wait for the user's questions. Answer them one by one, as a real interviewer would.
+After generating the files, say:
+**"Les fichiers sont créés. Lis le schema et les types, puis pose tes questions."**
 
-**Evaluate the question-asking phase:**
-- Good questions: clarify edge cases, error handling, data shape, business constraints, expected behavior at boundaries, concurrency assumptions, scale expectations
-- Bad questions: ask for implementation hints, ask what framework to use, ask about things already stated in the brief
-- If the user tries to code before asking enough questions, say: *"Take a moment — what do you still not know about this problem?"*
+Then wait for questions.
 
----
-
-## Step 2 — Validate understanding before coding
-
-Once the user has finished asking questions, they must summarize their understanding.
-
-Prompt them: **"Before you start — tell me what you're going to implement, point by point."**
-
-The user should say something like: *"Okay, so: 1) the endpoint is POST /members/:id/claims, 2) I validate the member exists, 3) actCode must not be empty and amount must be > 0, 4) no duplicate claim for the same member + actCode + day, 5) on success I return 201 with the created claim."*
-
-Only once this summary is validated, move to the design phase.
-
----
-
-## Step 2.5 — Design phase (5-10 minutes)
-
-Before generating any files, run a mandatory design phase.
-
-Ask: **"Before coding — design it out loud. Walk me through: your data model, the layers you'll create, the edge cases you anticipate, and what could break in production."**
-
-The candidate must cover:
-1. **Data model** — what entities, what fields, what relations?
-2. **Layer breakdown** — what does the controller do? the service? the repository?
-3. **Edge cases** — what inputs or states could go wrong? (without being prompted)
-4. **Production risks** — concurrency, performance, migration side effects, scale
-5. **Member/product impact** — what does this change for the member experience?
-
-**Evaluate proactiveness:**
-- Does the candidate raise problems before being asked?
-- Does the candidate think about the member/client, not just the code?
-- Does the candidate identify concurrency or scale risks before writing a line?
-
-If the design is thin, give a nudge:
-- *"What about concurrent requests hitting this endpoint for the same member?"*
-- *"What about members with no prior data?"*
-- *"At 100k claims per day, what does this query cost?"*
-- *"What if the cron job runs on 3 pods at the same time?"*
-
-Only confirm and generate files once the design is solid enough to start. If the candidate skips this phase entirely, do not proceed to Step 3 — prompt them again.
-
----
-
-## Step 3 — Generate the files
-
-Create folder `sessions/YYYYMMDD-HHmm-tech-challenge/` with:
+### File structure
 
 **All exercises are backend (controller → service → repository):**
 ```
@@ -301,9 +253,64 @@ Generate 2-3 HTTP tests that complement (not duplicate) the service tests:
 
 ---
 
-## Step 4 — Run the session
+## Step 1 — Question-asking phase
 
-Display this block once files are ready and design is validated:
+The user now has the schema, types, and tests in front of them. Ask:
+
+**"Before coding — what questions do you have?"**
+
+Wait for the user's questions. Answer them one by one, as a real interviewer would.
+
+**Evaluate the question-asking phase:**
+- Good questions: clarify edge cases, error handling, data shape, business constraints, expected behavior at boundaries, concurrency assumptions, scale expectations
+- Bad questions: ask for implementation hints, ask what framework to use, ask about things already stated in the brief
+- If the user tries to code before asking enough questions, say: *"Take a moment — what do you still not know about this problem?"*
+
+---
+
+## Step 2 — Validate understanding before coding
+
+Once the user has finished asking questions, they must summarize their understanding.
+
+Prompt them: **"Before you start — tell me what you're going to implement, point by point."**
+
+The user should say something like: *"Okay, so: 1) the endpoint is POST /members/:id/claims, 2) I validate the member exists, 3) actCode must not be empty and amount must be > 0, 4) no duplicate claim for the same member + actCode + day, 5) on success I return 201 with the created claim."*
+
+Only once this summary is validated, move to the design phase.
+
+---
+
+## Step 2.5 — Design phase (5-10 minutes)
+
+Run a mandatory design phase before the user starts coding.
+
+Ask: **"Before coding — design it out loud. Walk me through: your data model, the layers you'll create, the edge cases you anticipate, and what could break in production."**
+
+The candidate must cover:
+1. **Data model** — what entities, what fields, what relations?
+2. **Layer breakdown** — what does the controller do? the service? the repository?
+3. **Edge cases** — what inputs or states could go wrong? (without being prompted)
+4. **Production risks** — concurrency, performance, migration side effects, scale
+5. **Member/product impact** — what does this change for the member experience?
+
+**Evaluate proactiveness:**
+- Does the candidate raise problems before being asked?
+- Does the candidate think about the member/client, not just the code?
+- Does the candidate identify concurrency or scale risks before writing a line?
+
+If the design is thin, give a nudge:
+- *"What about concurrent requests hitting this endpoint for the same member?"*
+- *"What about members with no prior data?"*
+- *"At 100k claims per day, what does this query cost?"*
+- *"What if the cron job runs on 3 pods at the same time?"*
+
+Only confirm the design and move to Step 3 once the design is solid enough to start. If the candidate skips this phase entirely, do not proceed to Step 3 — prompt them again.
+
+---
+
+## Step 3 — Run the session
+
+Display this block once the design is validated:
 
 ```
 ⏱️  CHRONO — 45 minutes. Go.
