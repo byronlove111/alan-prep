@@ -1,0 +1,19 @@
+{
+  "name": "alan-reimbursements-job",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "npx tsx reimbursements.test.ts",
+    "seed": "npx tsx db/seed.ts"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

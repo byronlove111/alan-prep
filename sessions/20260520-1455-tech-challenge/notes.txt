@@ -1,0 +1,13 @@
+1 prendre en input tout les claims
+2 verifier lesquels sont appovals et n'ont pas eu de reimbursment, pas de doublon possible
+3 pour chaque claim, on calcule le remboursement a envoyer selon la categorie de claim
+4 basic = 70% / comfort 85 / premium 100 
+5 si jamais ya une certaine categorie on a des bonus (ne s'applique pas si > 100) dental 10 / optical 5 le reste 0
+6 on procede aux remboursement dans la table SQL et on lock bien la table pour pas que un autre job le fasse en meme temps
+7 je dois retourner { processed, created, errors }
+
+on va devoir creer dans un premier temps le claim..ts qui sera une entity et dedans on mettra les regles metiers
+avec les differents plans ect
+
+ensuite on va creer le repository qui va s'assurer de lockk la table, et faire les verifs unique ect et mettre a jour le claim si refunded
+ensuite on va creer le service qui run le tout 
