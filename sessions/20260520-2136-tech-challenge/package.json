@@ -1,0 +1,24 @@
+{
+  "name": "alan-claim-summary",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test": "npx tsx claim-summary.test.ts && npx tsx claim-summary.http.test.ts",
+    "test:service": "npx tsx claim-summary.test.ts",
+    "test:http": "npx tsx claim-summary.http.test.ts",
+    "seed": "npx tsx db/seed.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.10.0",
+    "express": "^5.2.1",
+    "supertest": "^7.2.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "@types/supertest": "^7.2.0",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
+  }
+}
