@@ -92,6 +92,24 @@ Règle :
 
 ---
 
+### Bloc bonus hebdo — Debug (~25-30 min, 1-2x/semaine)
+
+Skill : `/learn-debug`
+
+Objectif :
+- apprendre à arriver sur une petite codebase existante et comprendre l'existant avant de coder
+- devenir plus fiable pour reproduire un bug métier, isoler la vraie cause, puis corriger proprement
+- travailler un vrai mode entretien business logic : tests rouges, lecture, hypothèse, vérification, fix minimal
+
+Règle :
+- ne pas partir en refactor large
+- suivre la logique existante (`types`, `fixtures`, `utils`, `services`) avant de patcher
+- ajouter au moins un test de régression après le fix
+
+Ce bloc est **optionnel** : insère-le 1 à 2 fois par semaine à la place du bloc `controller` ou `business logic`, sans changer le reste de l'ordre.
+
+---
+
 ### Bloc 6 — Final Alan (~45 min)
 
 Skill : `/alan-tech-challenge`
@@ -121,6 +139,7 @@ Règle :
 **Total : ~2h35 par jour**
 
 Si une journée est plus courte, garde le même ordre mais coupe chaque bloc d'entraînement à 10-15 minutes. Ne supprime pas le bloc final.
+Le bloc `/learn-debug` reste un bonus hebdo, pas un bloc quotidien obligatoire.
 
 ---
 
@@ -168,6 +187,7 @@ Objectif : **fluidité + moins d'hésitation**
 - Service : idempotence légère, conflits, coordination de deux repos
 - Controller : query params, `409`, shaping un peu plus propre
 - Business logic : agrégations et sorties structurées
+- Debug : 1 séance par semaine sur codebase existante avec un bug métier subtil à isoler
 - Final : finir plus souvent dans les temps avec une structure claire
 
 ### Semaines 5+
@@ -175,6 +195,7 @@ Objectif : **fluidité + moins d'hésitation**
 Objectif : **vitesse + autonomie**
 
 - garder exactement la même routine
+- garder `/learn-debug` en bonus hebdo pour travailler le diagnostic sous contrainte
 - demander moins d'indices
 - écrire les tests plus vite
 - expliquer à voix haute plus clairement
