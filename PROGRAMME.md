@@ -92,7 +92,7 @@ Règle :
 
 ---
 
-### Bloc bonus hebdo — Debug (~25-30 min, 1-2x/semaine)
+### Bloc 6 — Debug (~25-30 min)
 
 Skill : `/learn-debug`
 
@@ -106,11 +106,7 @@ Règle :
 - suivre la logique existante (`types`, `fixtures`, `utils`, `services`) avant de patcher
 - ajouter au moins un test de régression après le fix
 
-Ce bloc est **optionnel** : insère-le 1 à 2 fois par semaine à la place du bloc `controller` ou `business logic`, sans changer le reste de l'ordre.
-
----
-
-### Bloc 6 — Final Alan (~45 min)
+### Bloc 7 — Final Alan (~45 min)
 
 Skill : `/alan-tech-challenge`
 
@@ -134,12 +130,12 @@ Règle :
 | Service | `/learn-service` | ~25 min |
 | Controller | `/learn-controller` | ~20 min |
 | Business logic | `/learn-business-logic` | ~25 min |
+| Debug | `/learn-debug` | ~25-30 min |
 | Final | `/alan-tech-challenge` | ~45 min |
 
-**Total : ~2h35 par jour**
+**Total : ~3h00 par jour**
 
 Si une journée est plus courte, garde le même ordre mais coupe chaque bloc d'entraînement à 10-15 minutes. Ne supprime pas le bloc final.
-Le bloc `/learn-debug` reste un bonus hebdo, pas un bloc quotidien obligatoire.
 
 ---
 
@@ -152,7 +148,8 @@ Ordre conseillé, tous les jours :
 3. `/learn-service`
 4. `/learn-controller`
 5. `/learn-business-logic`
-6. `/alan-tech-challenge`
+6. `/learn-debug`
+7. `/alan-tech-challenge`
 
 Logique pédagogique :
 
@@ -161,6 +158,7 @@ Logique pédagogique :
 - `service` te fait porter les règles métier
 - `controller` te fait exposer proprement le comportement en HTTP
 - `business logic` te muscle sur les transformations de données qui bloquent souvent en entretien
+- `debug` te force à lire vite une codebase existante, isoler un bug métier, puis faire un fix propre
 - `/alan-tech-challenge` te force à recombiner tout ça en situation réelle
 
 ---
@@ -187,7 +185,7 @@ Objectif : **fluidité + moins d'hésitation**
 - Service : idempotence légère, conflits, coordination de deux repos
 - Controller : query params, `409`, shaping un peu plus propre
 - Business logic : agrégations et sorties structurées
-- Debug : 1 séance par semaine sur codebase existante avec un bug métier subtil à isoler
+- Debug : lecture rapide d'une codebase existante avec un bug métier subtil à isoler
 - Final : finir plus souvent dans les temps avec une structure claire
 
 ### Semaines 5+
@@ -195,7 +193,7 @@ Objectif : **fluidité + moins d'hésitation**
 Objectif : **vitesse + autonomie**
 
 - garder exactement la même routine
-- garder `/learn-debug` en bonus hebdo pour travailler le diagnostic sous contrainte
+- garder `/learn-debug` dans la routine pour travailler le diagnostic sous contrainte
 - demander moins d'indices
 - écrire les tests plus vite
 - expliquer à voix haute plus clairement
