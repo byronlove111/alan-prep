@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Learn Repository
 
-Daily repository drill. The user practices persistence code only: SQL, mapping, and data access behavior.
+Daily repository drill. The user practices only the repository basics that are still worth keeping warm for the Alan interview.
 
 ## Context loading — read before every session
 
@@ -15,11 +15,13 @@ Use them to keep repository drills grounded in Alan's real product, vocabulary, 
 
 ## Goal
 
-Train the repository layer in isolation:
-- read rows from SQLite
-- write rows to SQLite
-- map database records to TypeScript types
-- handle nullable fields, sorting, filtering, and simple persistence edge cases
+Train the repository layer in isolation, but keep it light:
+- read a simple schema
+- write 1-2 simple SQL queries
+- map database rows to TypeScript types
+- handle one `not found` or empty-result case
+
+The objective is not deep persistence mastery. The objective is to stay comfortable with simple repository work and not lose time when a small SQL or mapping task appears.
 
 Do not move business rules into the repository. Do not turn the exercise into a service or controller task.
 
@@ -49,60 +51,43 @@ Rules:
 - `database.ts`, `types.ts`, `schema.sql`, and `seed.ts` are provided
 - tests fail only because the repository behavior is incomplete
 - the exercise must run locally without extra setup beyond `npm install` and `npm test`
+- keep the dataset and schema small enough to understand in a couple of minutes
 
 ## Scope
 
 Allowed repository work:
 - `findById`
-- list with simple filters
-- insert
-- update
-- delete
-- existence checks
-- simple transaction wrapper when a method writes to multiple tables
+- one simple list query with a basic filter
+- one simple insert or update
+- one `not found` or empty-result case
+- row-to-type mapping
 
 Allowed SQL:
 - single-table queries by default
-- one simple join only if mapping would otherwise feel artificial
+- only basic `SELECT`, `INSERT`, or `UPDATE`
+- one very small join only if absolutely necessary
 
 Not allowed:
 - business decisions
 - HTTP concerns
 - rich domain entities
 - complex joins
+- transactions
 - query builders or ORMs
+- too many methods in one session
 
-## Progression
+## Drill shape
 
-Increase difficulty slowly across days.
+Keep every drill intentionally small:
+- one repository class
+- one small schema
+- 2 or 3 methods max
+- simple SQL that can be read in one pass
 
-### Phase 1
-
-Read-only repository:
-- `findById`
-- `listByStatus`
-- `listRecent`
-
-### Phase 2
-
-Add writes:
-- `create`
-- `updateStatus`
-- `deleteById`
-
-### Phase 3
-
-Add mapping details:
-- nullable database columns
-- enums or string unions
-- timestamps stored as text
-- one "not found" case
-
-### Phase 4
-
-Add one slightly richer persistence scenario:
-- write to two tables in one transaction
-- or list rows plus a simple joined label
+Good session shapes:
+- `findById` + `listByStatus`
+- `findById` + `create`
+- `listRecent` + row mapping + one empty result case
 
 Keep it repository-shaped. If the interesting part is the business rule, move that idea to `/learn-service` instead.
 
@@ -130,12 +115,11 @@ Bad repository prompts:
 
 ## Tests
 
-Write 4-6 focused tests:
+Write 3-5 focused tests:
 - happy path reads
-- happy path writes
-- one null or empty result case
-- one ordering or filtering case
-- one failure or not-found case if relevant
+- happy path write if the drill includes one
+- one null, empty, or `not found` result case
+- one simple filtering or mapping case
 
 Prefer repository tests over HTTP tests.
 
@@ -159,4 +143,4 @@ During the drill:
 - prefer one failing test at a time
 - if SQL is wrong, fix the query before discussing refactors
 
-Keep the block solvable in about 20 minutes.
+Keep the block solvable in about 10-15 minutes.

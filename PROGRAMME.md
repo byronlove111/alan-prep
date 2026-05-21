@@ -4,44 +4,45 @@
 
 - **Routine fixe tous les jours** : même ordre, mêmes blocs, difficulté qui monte doucement
 - **5 jours par semaine**
-- **Objectif** : devenir solide sur la chaîne backend complète `SQL -> repository -> service -> controller -> business logic`, puis finir sous contrainte avec `/alan-tech-challenge`
+- **Objectif** : maximiser ce qui est le plus corrélé à l'entretien Alan du 8 juin : lire de l'existant, debugger, raisonner métier, étendre proprement, communiquer, et finir sous contrainte avec `/alan-tech-challenge`
 - **Toujours parler à voix haute** pendant les blocs pratiques
 - **Même thème métier sur toute la journée si possible** : claims, contracts, members, documents, reimbursements
 
-Le but n'est pas de faire des grosses sessions "héroïques". Le but est d'empiler des répétitions courtes, ciblées, quotidiennes.
+Le but n'est pas de couvrir toute la chaîne backend de façon équilibrée. Le but est d'investir l'énergie d'abord sur les blocs les plus prédictifs pour cet entretien précis, puis de garder un petit entretien des couches secondaires.
 
 ---
 
 ## Routine quotidienne
 
-### Bloc 1 — SQL (~20 min)
+### Bloc 1 — Debug (~25-30 min)
 
-Skill : `/learn-sql`
+Skill : `/learn-debug`
 
 Objectif :
-- devenir fluide sur les requêtes basiques
-- comprendre petit à petit `GROUP BY`, `ALTER TABLE`, les locks simples et les joins simples
-- manipuler une vraie mini base SQLite locale tous les jours
+- apprendre à arriver sur une petite codebase existante et comprendre l'existant avant de coder
+- devenir plus fiable pour reproduire un bug métier, isoler la vraie cause, puis corriger proprement
+- travailler le mode entretien le plus corrélé au format Alan : lecture, tests rouges, hypothèse, vérification, fix minimal
 
 Règle :
-- rester strictement dans le scope de la skill
-- écrire les requêtes soi-même
-- demander la correction exercice par exercice
+- ne pas partir en refactor large
+- suivre la logique existante (`types`, `fixtures`, `utils`, `services`) avant de patcher
+- ajouter au moins un test de régression après le fix
 
 ---
 
-### Bloc 2 — Repository (~20 min)
+### Bloc 2 — Business logic (~25 min)
 
-Skill : `/learn-repository`
+Skill : `/learn-business-logic`
 
 Objectif :
-- transformer un besoin simple en requêtes SQL lisibles
-- mapper correctement les lignes SQL vers les types TypeScript
-- être à l'aise avec les cas `not found`, filtres simples, écritures, et petites transactions
+- devenir bon sur ce qui revient souvent en entretien backend : parsing, déduplication, agrégation, transformation, data shaping, petits calculs métier
+- découper une transformation en étapes lisibles
+- muscler le raisonnement et l'explication à voix haute
 
 Règle :
-- pas de logique métier dans le repository
-- toujours regarder `schema.sql` et les tests avant de coder
+- pas de framework
+- pas de base de données
+- viser des fonctions simples, testables, lisibles
 
 ---
 
@@ -61,63 +62,67 @@ Règle :
 
 ---
 
-### Bloc 4 — Controller (~20 min)
-
-Skill : `/learn-controller`
-
-Objectif :
-- devenir rapide sur `req.params`, `req.query`, `req.body`
-- valider les entrées
-- appeler le service proprement
-- renvoyer le bon status code et la bonne forme de réponse
-
-Règle :
-- garder le controller mince
-- pousser toute la logique métier vers le service
-
----
-
-### Bloc 5 — Business logic (~25 min)
-
-Skill : `/learn-business-logic`
-
-Objectif :
-- devenir bon sur ce qui revient souvent en entretien backend : parsing, déduplication, agrégation, transformation, data shaping, petits calculs métier
-- découper une transformation en étapes lisibles
-
-Règle :
-- pas de framework
-- pas de base de données
-- viser des fonctions simples, testables, lisibles
-
----
-
-### Bloc 6 — Debug (~25-30 min)
-
-Skill : `/learn-debug`
-
-Objectif :
-- apprendre à arriver sur une petite codebase existante et comprendre l'existant avant de coder
-- devenir plus fiable pour reproduire un bug métier, isoler la vraie cause, puis corriger proprement
-- travailler un vrai mode entretien business logic : tests rouges, lecture, hypothèse, vérification, fix minimal
-
-Règle :
-- ne pas partir en refactor large
-- suivre la logique existante (`types`, `fixtures`, `utils`, `services`) avant de patcher
-- ajouter au moins un test de régression après le fix
-
-### Bloc 7 — Final Alan (~45 min)
+### Bloc 4 — Final Alan (~45 min)
 
 Skill : `/alan-tech-challenge`
 
 Objectif :
-- réassembler sous contrainte de temps tout ce qui a été travaillé plus tôt dans la journée
-- rester backend, concret, orienté tests, raisonnement et structure
+- réassembler sous contrainte de temps ce qui compte le plus pour l'entretien : lecture d'existant, compréhension du besoin, tests, extension pragmatique, communication
+- rester backend, concret, orienté raisonnement et structure
+- traiter ce bloc comme la répétition la plus proche du vrai match
 
 Règle :
-- traiter ce bloc comme le vrai match
 - poser des questions avant de coder
 - concevoir avant d'implémenter
+- privilégier le fix ou l'extension la plus simple qui marche
+
+---
+
+### Bloc 5 — Controller léger (~10-15 min)
+
+Skill : `/learn-controller`
+
+Objectif :
+- rester fluide sur la couche HTTP pour ne pas bloquer le jour J
+- pratiquer `req.params`, `req.query`, `req.body`, validation simple, status codes et réponse JSON minimale
+- garder ce bloc comme entretien léger, pas comme gros sujet de la journée
+
+Règle :
+- garder le controller mince
+- pousser toute la logique métier vers le service
+- couper le scope dès que l'exercice commence à grossir
+
+---
+
+### Bloc 6 — Repository léger (~10-15 min)
+
+Skill : `/learn-repository`
+
+Objectif :
+- savoir lire un schéma simple, écrire 1-2 queries basiques, mapper vers des types, gérer `not found`
+- garder la main sur la persistence simple sans investir trop d'énergie
+- traiter ce bloc comme entretien ciblé, pas comme approfondissement SQL
+
+Règle :
+- pas de logique métier dans le repository
+- toujours regarder `schema.sql` et les tests avant de coder
+- rester sur du SQL très simple
+
+---
+
+### Bloc 7 — SQL concepts minimum (~10 min)
+
+Skill : `/learn-sql`
+
+Objectif :
+- garder la culture minimum sur SQL pour comprendre vite un schéma et une requête simple
+- entretenir les bases utiles au repository sans en faire un gros bloc de pratique
+- renforcer surtout la lecture et les concepts, pas la profondeur
+
+Règle :
+- rester strictement dans le scope de la skill
+- viser des exercices courts
+- ne pas transformer ce bloc en session lourde
 
 ---
 
@@ -125,17 +130,17 @@ Règle :
 
 | Bloc | Skill | Durée cible |
 |------|-------|-------------|
-| SQL | `/learn-sql` | ~20 min |
-| Repository | `/learn-repository` | ~20 min |
-| Service | `/learn-service` | ~25 min |
-| Controller | `/learn-controller` | ~20 min |
-| Business logic | `/learn-business-logic` | ~25 min |
 | Debug | `/learn-debug` | ~25-30 min |
-| Final | `/alan-tech-challenge` | ~45 min |
+| Business logic | `/learn-business-logic` | ~25 min |
+| Service | `/learn-service` | ~25 min |
+| Final Alan | `/alan-tech-challenge` | ~45 min |
+| Controller léger | `/learn-controller` | ~10-15 min |
+| Repository léger | `/learn-repository` | ~10-15 min |
+| SQL concepts minimum | `/learn-sql` | ~10 min |
 
-**Total : ~3h00 par jour**
+**Total : ~2h30 à ~2h45 par jour**
 
-Si une journée est plus courte, garde le même ordre mais coupe chaque bloc d'entraînement à 10-15 minutes. Ne supprime pas le bloc final.
+Si une journée est plus courte, garde absolument les 4 premiers blocs. Coupe ou allège les blocs 5-7 en priorité.
 
 ---
 
@@ -143,23 +148,23 @@ Si une journée est plus courte, garde le même ordre mais coupe chaque bloc d'e
 
 Ordre conseillé, tous les jours :
 
-1. `/learn-sql`
-2. `/learn-repository`
+1. `/learn-debug`
+2. `/learn-business-logic`
 3. `/learn-service`
-4. `/learn-controller`
-5. `/learn-business-logic`
-6. `/learn-debug`
-7. `/alan-tech-challenge`
+4. `/alan-tech-challenge`
+5. `/learn-controller`
+6. `/learn-repository`
+7. `/learn-sql`
 
 Logique pédagogique :
 
-- `SQL` te donne la base des données et des requêtes
-- `repository` te fait transformer cette base en code de persistence
-- `service` te fait porter les règles métier
-- `controller` te fait exposer proprement le comportement en HTTP
-- `business logic` te muscle sur les transformations de données qui bloquent souvent en entretien
-- `debug` te force à lire vite une codebase existante, isoler un bug métier, puis faire un fix propre
-- `/alan-tech-challenge` te force à recombiner tout ça en situation réelle
+- `debug` te met immédiatement dans le mode "existing code + bug + fix pragmatique" qui ressemble le plus à l'entretien
+- `business logic` te muscle sur le raisonnement métier, les transformations et l'explication claire
+- `service` te fait porter la couche de décision backend la plus importante pour Alan
+- `/alan-tech-challenge` te fait recombiner tôt, tant que ton énergie est encore haute
+- `controller` reste utile, mais seulement comme petit entretien de fluidité HTTP
+- `repository` reste utile, mais sur un scope réduit : schéma simple, requêtes simples, mapping simple
+- `SQL` reste en fin de journée comme culture minimum et support du repository, pas comme priorité forte
 
 ---
 
@@ -167,32 +172,34 @@ Logique pédagogique :
 
 ### Semaines 1-2
 
-Objectif : **propreté minimale + répétition**
+Objectif : **priorités fortes d'abord + propreté minimale**
 
-- SQL : `SELECT`, `WHERE`, `ORDER BY`, puis `GROUP BY` et écritures simples
-- Repository : lectures et CRUD simples
-- Service : validations directes, erreurs de base, orchestration courte
-- Controller : params/body simples, `400`/`404`
+- Debug : reproduire vite, lire avant de coder, faire un fix minimal
 - Business logic : parsing, nettoyage, déduplication simple
+- Service : validations directes, erreurs de base, orchestration courte
 - Final : finir, même si ce n'est pas encore élégant
+- Controller : params/query/body simples, `400`/`404`
+- Repository : `findById`, lecture simple, `not found`
+- SQL : lecture de schéma, `SELECT`/`WHERE`/`ORDER BY`
 
 ### Semaines 3-4
 
-Objectif : **fluidité + moins d'hésitation**
+Objectif : **fluidité sur le coeur de l'entretien**
 
-- SQL : `ALTER TABLE`, locks simples, joins simples introduits progressivement
-- Repository : mapping plus propre, cas nuls, une petite transaction
-- Service : idempotence légère, conflits, coordination de deux repos
-- Controller : query params, `409`, shaping un peu plus propre
-- Business logic : agrégations et sorties structurées
 - Debug : lecture rapide d'une codebase existante avec un bug métier subtil à isoler
+- Business logic : agrégations et sorties structurées
+- Service : idempotence légère, conflits, coordination simple
 - Final : finir plus souvent dans les temps avec une structure claire
+- Controller : query params, `409`, shaping simple et propre
+- Repository : mapping plus propre, cas nuls, une écriture simple
+- SQL : joins simples et lecture de requêtes, sans en faire un gros bloc
 
 ### Semaines 5+
 
 Objectif : **vitesse + autonomie**
 
 - garder exactement la même routine
+- garder les 4 premiers blocs comme noyau non négociable
 - garder `/learn-debug` dans la routine pour travailler le diagnostic sous contrainte
 - demander moins d'indices
 - écrire les tests plus vite
@@ -217,9 +224,10 @@ Le fond ne change pas. Seule la densité monte.
 
 Tu progresses quand :
 
-- en SQL tu écris les requêtes basiques sans chercher la syntaxe
-- en repository tu lis vite le schéma et tu sais quoi coder
-- en service tu sais dire quelle règle métier chaque branche applique
-- en controller tu choisis le bon status code sans hésiter
+- en debug tu lis vite l'existant et tu isoles mieux la vraie cause d'un bug
 - en business logic tu sais découper une transformation en 2-4 étapes claires
+- en service tu sais dire quelle règle métier chaque branche applique
 - en `/alan-tech-challenge` tu poses de meilleures questions avant de commencer
+- en controller tu choisis le bon status code sans hésiter
+- en repository tu lis vite le schéma et tu sais quoi coder sans surcompliquer
+- en SQL tu comprends vite une requête simple et un schéma simple

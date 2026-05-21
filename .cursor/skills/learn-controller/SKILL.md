@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Learn Controller
 
-Daily controller drill. The user practices the HTTP edge of the backend: receive input, validate it, call the service, and shape the response.
+Daily controller drill. The user practices just enough HTTP work to avoid getting stuck on the web layer during the Alan interview.
 
 ## Context loading — read before every session
 
@@ -15,12 +15,14 @@ Use them to keep controller drills grounded in Alan's real product, vocabulary, 
 
 ## Goal
 
-Train controller responsibilities only:
-- read params, query, headers, and body
-- validate required fields and simple formats
+Train the minimum useful controller responsibilities only:
+- read `req.params`, `req.query`, and `req.body`
+- validate a few required fields or simple formats
 - call the right service method
-- map service errors to HTTP status codes
-- shape the JSON response
+- map a small set of service errors to HTTP status codes
+- return a small JSON response
+
+The objective is not to go far. The objective is to become fluid enough not to block on the HTTP layer on interview day.
 
 Do not put business logic in the controller. Do not touch the repository layer.
 
@@ -47,75 +49,56 @@ sessions/YYYYMMDD-HHmm-controller/
 Rules:
 - `app.ts` and a fake or stub service are provided
 - the controller file is missing or incomplete
-- the user implements only the controller and route wiring
+- the user implements only one small controller plus route wiring
 - tests are HTTP-facing and fail because the controller behavior is incomplete
 
 ## Scope
 
 Good controller concerns:
-- `req.params`, `req.query`, `req.body`, `req.headers`
-- parse booleans, numbers, and simple dates carefully
-- return `200`, `201`, `204`, `400`, `404`, `409` when appropriate
+- `req.params`
+- `req.query`
+- `req.body`
+- simple parsing for one number, boolean, or string field
+- simple validation for required fields or obvious bad input
+- return `200`, `201`, `400`, `404`, or `409` when appropriate
 - delegate to the service once the input is clean
-- map service output to a response DTO
+- map service output to a small response DTO or JSON object
 
 Not good controller concerns:
 - deciding business policy
 - building SQL queries
 - doing heavy transformations
-- implementing authentication systems from scratch
+- handling auth systems or middleware-heavy setups
+- large validation schemas
 
-## Progression
+## Drill shape
 
-### Phase 1
+Keep every drill intentionally narrow:
+- one route only
+- one controller file
+- one simple service dependency
+- one or two validation points
+- one or two mapped error cases at most
 
-Simple read endpoint:
-- one path param
-- optional query params
-- one success case
-- one bad-request case
+Good examples:
+- `GET /members/:memberId/claims?status=open`
+- `POST /reimbursements`
+- `PATCH /documents/:documentId/review`
 
-### Phase 2
-
-Write endpoint:
-- validate request body
-- call service with a typed input
-- return `201` or `204`
-
-### Phase 3
-
-Error mapping:
-- service throws `NotFoundError`
-- service throws `ConflictError`
-- controller maps each one correctly
-
-### Phase 4
-
-One realistic controller refinement:
-- pagination query params
-- auth header extraction into a simple user context
-- response shaping for a list endpoint
-
-Keep it small and interview-relevant.
+Prefer one read route or one write route. Do not combine multiple endpoints in the same session.
 
 ## Exercise design rules
 
-Use realistic endpoint examples:
-- `GET /members/:memberId/claims`
-- `POST /claims/:claimId/documents`
-- `PATCH /contracts/:contractId/status`
-- `POST /reimbursements`
-
-Each drill should focus on one route only.
+Use realistic endpoint examples, but keep the payload small and the rules obvious.
 
 ## Tests
 
-Write 4-6 HTTP tests:
+Write 3-5 HTTP tests:
 - success path
-- invalid param or body
-- missing required field
-- mapped not-found or conflict error
-- one response-shaping assertion
+- invalid param, query, or body
+- missing required field if relevant
+- mapped `NotFoundError` or `ConflictError`
+- one simple response-shaping assertion if useful
 
 Avoid duplicating service tests. The point is controller behavior.
 
@@ -134,9 +117,10 @@ Then wait.
 ## Coaching rules
 
 During the drill:
+- if validation starts growing, cut scope instead of adding more cases
 - if validation becomes large, suggest a tiny parsing helper but keep it near the controller
 - if the user starts enforcing policy rules, ask them to move that logic back to the service
 - push for explicit status-code reasoning
 - ask "what should this endpoint return when the input is malformed?" before suggesting code
 
-Keep the block solvable in about 20 minutes.
+Keep the block solvable in about 10-15 minutes.
