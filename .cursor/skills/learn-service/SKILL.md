@@ -33,22 +33,24 @@ sessions/YYYYMMDD-HHmm-service/
 ├── src/
 │   ├── types.ts
 │   ├── services/
-│   │   └── [name]Service.ts
 │   ├── repositories/
 │   │   ├── [repo-a].ts
 │   │   └── [repo-b].ts
 │   └── errors.ts
 ├── service.test.ts
-├── test-runner.ts
 ├── package.json
+├── tsconfig.json
 └── BRIEF.md
 ```
 
 Rules:
 - repository interfaces or fakes are provided
-- the service file is missing or skeletal
-- tests fail because service behavior is incomplete
+- the service implementation is not provided
+- do not pre-create starter service code, a service class skeleton, or a partially implemented method
+- the user must create the service file, constructor dependency wiring, public method signature, and the validation/orchestration logic
+- tests fail because the service does not exist yet or because its behavior is still incomplete
 - the exercise stays runnable with local tests only
+- use Jest by default for all generated tests; do not generate a homemade `test-runner.ts`
 
 ## Scope
 
@@ -109,6 +111,7 @@ Use realistic Alan-style scenarios:
 - reopen a pending task only if it was not already processed
 
 Each drill should revolve around one service method and one explicit decision tree.
+The repositories, types, errors, tests, and brief can be provided, but the service itself must be authored by the user from scratch.
 
 ## Tests
 
@@ -119,7 +122,58 @@ Write 4-6 service tests:
 - one conflict or duplicate case
 - one result-shaping case if relevant
 
+Tests should make the expected service shape clear enough for a junior developer to discover:
+- which service class to create
+- which dependencies it receives
+- which public method to expose
+- which outcomes and errors to handle
+
 Prefer fakes or stubs over a real database unless the transaction behavior is the whole point.
+Write them as standard Jest tests (`describe`/`it`/`expect`) in TypeScript.
+
+## Default test stack
+
+For every generated service session, default to:
+- `jest`
+- `ts-jest`
+- `@types/jest`
+- `@types/node`
+- `typescript`
+
+Use this minimal config:
+
+**`package.json`**:
+```json
+{
+  "name": "alan-service",
+  "version": "1.0.0",
+  "scripts": { "test": "jest --runInBand" },
+  "devDependencies": {
+    "@types/jest": "latest",
+    "@types/node": "latest",
+    "jest": "latest",
+    "ts-jest": "latest",
+    "typescript": "latest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
+}
+```
+
+**`tsconfig.json`**:
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "types": ["node", "jest"]
+  }
+}
+```
 
 ## Output to the user
 
@@ -127,7 +181,7 @@ After generating the session, say:
 
 ```text
 Session service créée.
-Lis BRIEF.md et les tests, puis implémente le service.
+Lis BRIEF.md et les tests, puis crée et implémente le service depuis zéro.
 Concentre-toi sur les règles, l'orchestration et les erreurs, pas sur HTTP ni SQL.
 ```
 
@@ -136,7 +190,7 @@ Then wait.
 ## Coaching rules
 
 During the drill:
-- if the user starts parsing HTTP input, redirect them to `/learn-controller`
+- if the user starts parsing HTTP input, remind them that HTTP parsing is out of scope for this drill
 - if the user starts writing data-transformation-heavy helpers, ask whether that piece belongs in `/learn-business-logic`
 - encourage tiny private helpers when the decision tree becomes hard to read
 - ask "what rule are you enforcing here?" whenever the code becomes mechanical
