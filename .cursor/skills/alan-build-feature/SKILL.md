@@ -16,6 +16,8 @@ Use this to generate codebases and feature briefs grounded in Alan's real produc
 **Duration**: ~1h  
 **Tests**: some failing tests provided + user must write their own
 
+Use Jest by default for all generated tests. Do not generate a homemade `test-runner.ts`.
+
 > **Format évolution (mai 2026)** : les exercices peuvent maintenant inclure des features backend complètes — pas uniquement de la logique pure. Un sujet peut demander d'implémenter une route HTTP (ex: `POST /members/:id/documents`) avec un controller, un service, et une couche de persistence (repository stub). La structure du projet reste la même, mais le fichier à créer peut être un controller ou un service, pas forcément une fonction utilitaire isolée. Voir `docs/tech-test-backend.txt` pour les conventions et concepts backend.
 
 ---
@@ -70,7 +72,6 @@ sessions/YYYYMMDD-build-[feature-slug]/
   transcript.md       ← empty — user pastes their oral recording here after the session
   package.json
   tsconfig.json
-  test-runner.ts
 ```
 
 `transcript.md` initial content:
@@ -87,6 +88,7 @@ sessions/YYYYMMDD-build-[feature-slug]/
 - `[feature-to-build].test.ts` is provided but ALL tests fail because the source file doesn't exist yet — user must create it
 - `utils.ts` has at least 2-3 helpers that are relevant to the new feature (the user needs to find and reuse them)
 - `data/sample.ts` exports a few realistic data objects for manual testing
+- Use Jest by default for all generated tests; do not generate a homemade `test-runner.ts`
 
 ### Step 2 — Setup the environment
 
@@ -95,7 +97,7 @@ After generating the files:
 ```bash
 cd sessions/YYYYMMDD-build-[feature-slug]
 npm install
-npx tsx test-runner.ts
+npm test
 ```
 
 Expected output: existing tests pass, feature tests fail. Show the output to the user so they see what's failing.
@@ -107,11 +109,23 @@ If setup fails for any reason, fix it before handing off.
 {
   "name": "alan-build",
   "version": "1.0.0",
-  "scripts": { "test": "npx tsx test-runner.ts" },
+  "scripts": { "test": "jest --runInBand" },
   "dependencies": {},
-  "devDependencies": { "tsx": "latest", "typescript": "latest", "@types/node": "latest" }
+  "devDependencies": {
+    "@types/jest": "latest",
+    "@types/node": "latest",
+    "jest": "latest",
+    "ts-jest": "latest",
+    "typescript": "latest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
 }
 ```
+
+Add any runtime dependencies required by the generated feature (for example `express`, `supertest`, or `better-sqlite3`) on top of this Jest baseline.
 
 **`tsconfig.json`**:
 ```json
@@ -120,61 +134,10 @@ If setup fails for any reason, fix it before handing off.
     "target": "ES2020",
     "module": "commonjs",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["node", "jest"]
   }
 }
-```
-
-**`test-runner.ts`** (copy from project root if available, else use this):
-```typescript
-import * as fs from "fs";
-import * as path from "path";
-
-let passed = 0;
-let failed = 0;
-
-function test(name: string, fn: () => void) {
-  try {
-    fn();
-    console.log(`  ✅ ${name}`);
-    passed++;
-  } catch (e: any) {
-    console.log(`  ❌ ${name}`);
-    console.log(`     ${e.message}`);
-    failed++;
-  }
-}
-
-function expect(actual: any) {
-  return {
-    toBe: (expected: any) => {
-      if (actual !== expected) throw new Error(`Expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
-    },
-    toEqual: (expected: any) => {
-      if (JSON.stringify(actual) !== JSON.stringify(expected))
-        throw new Error(`Expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
-    },
-    toBeNull: () => {
-      if (actual !== null) throw new Error(`Expected null, got ${JSON.stringify(actual)}`);
-    },
-    toBeTruthy: () => {
-      if (!actual) throw new Error(`Expected truthy, got ${JSON.stringify(actual)}`);
-    },
-    toBeFalsy: () => {
-      if (actual) throw new Error(`Expected falsy, got ${JSON.stringify(actual)}`);
-    },
-  };
-}
-
-const testFiles = fs.readdirSync(path.join(__dirname, "tests")).filter(f => f.endsWith(".test.ts"));
-
-for (const file of testFiles) {
-  console.log(`\n📋 ${file}`);
-  require(path.join(__dirname, "tests", file));
-}
-
-console.log(`\n${passed} passed, ${failed} failed`);
-if (failed > 0) process.exit(1);
 ```
 
 ### Step 3 — Present the brief

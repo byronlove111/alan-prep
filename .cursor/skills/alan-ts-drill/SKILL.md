@@ -48,7 +48,7 @@ Common notions encountered in Alan-style exercises:
 - Arrow functions
 - `Object.entries`, `Object.keys`, `Object.values`, `Object.fromEntries`
 - `Record<K, V>` typing
-- Writing unit tests (test + expect pattern)
+- Writing unit tests with Jest (`describe`/`it`/`expect`)
 - `interface` and type safety
 - String methods (`split`, `trim`, `includes`, `startsWith`)
 - `Date` objects and date formatting
@@ -61,9 +61,10 @@ Create folder `drills/YYYYMMDD-[notion-slug]/` with:
 
 ```
 drills/YYYYMMDD-[notion-slug]/
-├── drill.ts          # the exercise — instructions as comments + starter code
-├── drill.test.ts     # tests that must pass when the exercise is complete
-└── test-runner.ts    # standard test helper
+├── drill.ts
+├── drill.test.ts
+├── package.json
+└── tsconfig.json
 ```
 
 **Design principles:**
@@ -74,6 +75,7 @@ drills/YYYYMMDD-[notion-slug]/
 - Instructions as `// TODO:` comments directly in the code — no separate consigne file
 - 15-20 minutes max — this is a drill, not a full challenge
 - The test file already contains the expected outputs — tests fail until the drill is complete
+- Use Jest by default for all generated tests; do not generate a homemade `test-runner.ts`
 
 **Structure of `drill.ts`:**
 
@@ -89,7 +91,7 @@ Inspired by Exercism's exercise format. Each function gets a narrative block tha
 // [2-3 sentences setting the Alan domain scene — a character, a situation,
 //  a real ops or data problem the team faces. Make it vivid, not abstract.]
 //
-// Lance : npx tsx drill.test.ts
+// Lance : npm test
 // ============================================================
 
 // interface definitions here
@@ -136,34 +138,40 @@ export function foo(...): ... {
 - Each function starts with `throw new Error('not implemented')` — no starter logic
 - The manual test block at the bottom uses the same sample data for all functions, with `// =>` comments showing expected output
 
-**test-runner.ts** — always the standard one:
-```typescript
-export function test(description: string, fn: () => void) {
-  try {
-    fn();
-    console.log(`✅ ${description}`);
-  } catch (e: any) {
-    console.log(`❌ ${description}: ${e.message}`);
+**`package.json`** — always this standard Jest setup:
+```json
+{
+  "name": "alan-ts-drill",
+  "version": "1.0.0",
+  "scripts": { "test": "jest --runInBand" },
+  "devDependencies": {
+    "@types/jest": "latest",
+    "@types/node": "latest",
+    "jest": "latest",
+    "ts-jest": "latest",
+    "typescript": "latest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   }
 }
+```
 
-export function expect(value: any) {
-  return {
-    toBe: (expected: any) => {
-      if (value !== expected)
-        throw new Error(`Expected "${expected}", got "${value}"`);
-    },
-    toEqual: (expected: any) => {
-      if (JSON.stringify(value) !== JSON.stringify(expected))
-        throw new Error(`Expected ${JSON.stringify(expected)}, got ${JSON.stringify(value)}`);
-    },
-    toContain: (expected: any) => {
-      if (!value.includes(expected))
-        throw new Error(`Expected value to contain "${expected}"`);
-    },
-  };
+**`tsconfig.json`**:
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "types": ["node", "jest"]
+  }
 }
 ```
+
+After generating the drill files, run `npm install`, then `npm test`.
 
 ### Step 3 — Launch
 
@@ -173,7 +181,7 @@ After generating the files, tell the user:
 ⏱️  DRILL — 15-20 minutes.
 
 🎯  Notions : [list]
-▶️  Lance : npx tsx drill.test.ts
+▶️  Lance : npm install puis npm test
 ✅  Objectif : tous les tests passent
 
 Pas besoin d'enregistrement — c'est un drill technique, pas une simulation d'interview.

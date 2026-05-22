@@ -1,25 +1,27 @@
 ---
 name: learn-business-logic
-description: Generates a business-logic feature exercise on an existing TypeScript codebase in Alan's domain. Agent sets up the full project, gives a feature brief, and asks the user to navigate the codebase to implement or extend a pure logic module. Focus on parsing, normalization, deduplication, aggregation, data shaping, and simple business calculations. Mix of provided failing tests + tests to write. Use when the user says /learn-business-logic or wants Alan-like backend logic practice without HTTP or database work.
+description: Generates a concise business-logic feature exercise on a light TypeScript codebase in Alan's domain. Agent creates a small existing project with shared types, simple fixtures/data, utils, at most one tiny existing module, and one target test file. The user implements one focused transformation such as parsing, normalization, deduplication, aggregation, or data shaping. Use when the user says /learn-business-logic or wants gentle Alan-like business-logic practice without heavy codebase exploration.
 disable-model-invocation: true
 ---
 
 # Learn Business Logic
 
-Business-logic feature exercise on an existing codebase. The user is dropped into a small Alan-flavored TypeScript project and must read the existing modules, infer the right patterns, and build or extend the missing logic. The focus is the messy middle: turn imperfect insurance data into clean business outputs.
+Concise feature exercise on a light existing codebase. The goal is to practice Alan-flavored business rules in a calmer setup: a little context, a little existing code, and one clear transformation to build.
+
+This skill is not the hard reading drill. Keep the more difficult existing-code investigation, debugging, and "read a lot before you understand the problem" work in `/learn-debug`.
 
 ## Context loading — read before every session
 
 Before proposing subjects, read `docs/alan-context.txt`, `docs/blog-articles.txt`, and `docs/glassdoor-interviews.txt`.
-Use this to generate realistic Alan-flavored codebases and briefs: claims, reimbursements, contracts, eligibility, documents, healthcare acts, member summaries, and light fraud signals.
+Use them to keep the exercise grounded in Alan's product vocabulary and business reality: claims, reimbursements, contracts, eligibility, documents, healthcare acts, and member-facing summaries.
 
 **Stack**: TypeScript only  
-**Duration**: ~30-45 min  
-**Tests**: some failing tests provided + user writes a few more
+**Duration**: ~20-30 min  
+**Tests**: one target test file provided; one extra user test is optional
 
-The exercise must stay focused on business logic. No HTTP layer, no controller, no repository, no SQL, unless a fixture needs to look realistic.
+Use Jest by default for all generated tests. Do not generate a homemade `test-runner.ts`.
 
----
+The exercise must stay focused on business logic only. No HTTP layer, no controller, no repository, no SQL, no backend plumbing.
 
 ## Workflow
 
@@ -28,52 +30,61 @@ The exercise must stay focused on business logic. No HTTP layer, no controller, 
 Before generating anything, propose exactly 3 distinct business-logic feature ideas and ask the user to pick one.
 
 Rules for the 3 proposals:
-- Each must live in a different Alan sub-domain: claims, reimbursements, eligibility, documents, member summaries, fraud checks...
-- Each must be a different kind of logic challenge: parsing, normalization, deduplication, aggregation, shaping, simple calculations...
-- Present them as short pitches (2-3 lines each), not full specs
-- Avoid repeating something too close to a recent business-logic session in `sessions/`
+- each pitch must live in a different Alan sub-domain
+- each pitch must focus on one main transformation only
+- each pitch must mention that the codebase is light and quick to read
+- present them as short pitches, not full specs
+- avoid repeating something too close to a recent business-logic session in `sessions/`
+
+Good transformation families:
+- parsing
+- normalization
+- deduplication
+- aggregation
+- shaping
+
+Do not combine multiple big transformation families in the same proposal.
 
 Format:
 ```text
 Voici 3 exercices business logic — choisis-en un :
 
 **A — [sub-domain]**
-[2-3 line pitch]
+[2-3 line pitch with the small codebase shape and the one transformation to build]
 
 **B — [sub-domain]**
-[2-3 line pitch]
+[2-3 line pitch with the small codebase shape and the one transformation to build]
 
 **C — [sub-domain]**
-[2-3 line pitch]
+[2-3 line pitch with the small codebase shape and the one transformation to build]
 ```
 
 Wait for the user's choice before generating anything.
 
 ### Step 1 — Generate the codebase
 
-Pick a feature from the brief bank below or invent a similar one in Alan's world. Then create the full project structure.
-
-**Project structure to generate**:
+Create one small session folder:
 
 ```text
 sessions/YYYYMMDD-HHmm-business-logic-[feature-slug]/
   src/
-    types.ts                ← shared domain types
-    fixtures.ts             ← realistic raw data and helper inputs
-    utils.ts                ← reusable pure helpers
-    [existing-module-1].ts  ← working logic module
-    [existing-module-2].ts  ← another working module with a related pattern
-    [feature-to-build].ts   ← missing or partial implementation
+    types.ts
+    fixtures.ts
+    utils.ts
+    [small-existing-module].ts   ← optional, only if truly useful
+    [feature-to-build].ts
   tests/
-    [existing-module-1].test.ts   ← passing tests
-    [existing-module-2].test.ts   ← passing tests
-    [feature-to-build].test.ts    ← failing tests for the target logic
+    [feature-to-build].test.ts
   BRIEF.md
-  transcript.md             ← empty — user pastes oral transcript after the session
+  transcript.md
   package.json
   tsconfig.json
-  test-runner.ts
 ```
+
+Allowed lightweight variations:
+- `src/fixtures.ts` can be replaced or complemented by one tiny JSON or TXT data file
+- add one small existing module only if it gives a directly reusable pattern
+- if there is an existing module, keep it short and obvious enough to read quickly
 
 `transcript.md` initial content:
 ```markdown
@@ -82,26 +93,50 @@ sessions/YYYYMMDD-HHmm-business-logic-[feature-slug]/
 <!-- Colle ici le transcript de ton enregistrement oral après la session -->
 ```
 
-**Rules for the codebase:**
-- `types.ts` defines the shared domain types used by all modules
-- Existing modules are real, working business logic, not empty stubs
-- Existing tests pass out of the box
-- The target feature has a missing file or an incomplete implementation so its tests fail
-- `utils.ts` contains helpers the user is expected to discover and reuse
-- `fixtures.ts` contains messy but realistic Alan-like inputs
-- The exercise should require reading the codebase before coding, not just filling a blank function
+Rules for the codebase:
+- keep the full codebase understandable in under 10 minutes
+- `types.ts` contains a few useful shared domain types, not a large model
+- `fixtures.ts` or the data file contains small but realistic Alan-like inputs
+- `utils.ts` contains only a few helpers directly useful for the target feature
+- the target feature file is missing or partially implemented so the target tests fail
+- there must be only one target test file
+- there is no requirement for multiple existing modules or multiple passing test suites
+- this is a feature exercise, not a hidden-bug exercise
+- the user should not need a scavenger hunt to know where to look
+- use Jest by default for all generated tests; do not generate a homemade `test-runner.ts`
 
-### Step 2 — Setup the environment
+### Step 2 — Keep the scope intentionally small
+
+Each session must have exactly one main transformation:
+- parse raw rows into a typed shape
+- normalize business fields or statuses
+- deduplicate noisy records
+- aggregate a small set of values
+- shape one useful summary object
+
+Choose one. Not two or three.
+
+Rules:
+- calculations must stay simple
+- avoid mixing several precedence systems
+- avoid long pipelines with many stages
+- avoid output formats that require many nested objects unless the nesting is tiny
+- prefer one obvious input and one obvious output
+
+### Step 3 — Setup the environment
 
 After generating the files:
 
 ```bash
 cd sessions/YYYYMMDD-HHmm-business-logic-[feature-slug]
 npm install
-npx tsx test-runner.ts
+npm test
 ```
 
-Expected output: existing tests pass, target feature tests fail. Show the output to the user so they see the baseline.
+Expected baseline:
+- one test file runs
+- some or all target tests fail
+- failures come from the missing or partial feature implementation
 
 If setup fails for any reason, fix it before handing off.
 
@@ -110,9 +145,19 @@ If setup fails for any reason, fix it before handing off.
 {
   "name": "alan-business-logic",
   "version": "1.0.0",
-  "scripts": { "test": "npx tsx test-runner.ts" },
+  "scripts": { "test": "jest --runInBand" },
   "dependencies": {},
-  "devDependencies": { "tsx": "latest", "typescript": "latest", "@types/node": "latest" }
+  "devDependencies": {
+    "@types/jest": "latest",
+    "@types/node": "latest",
+    "jest": "latest",
+    "ts-jest": "latest",
+    "typescript": "latest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
 }
 ```
 
@@ -123,25 +168,24 @@ If setup fails for any reason, fix it before handing off.
     "target": "ES2020",
     "module": "commonjs",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["node", "jest"]
   }
 }
 ```
 
-**`test-runner.ts`**: copy from project root if available, else reuse the same minimal runner pattern as `alan-build-feature`.
-
-### Step 3 — Present the brief
+### Step 4 — Present the brief
 
 After setup, show:
 
 ```text
-✅ Setup done. Existing tests: all green. Feature tests: failing (that's expected).
+✅ Setup done. One test file is ready and the feature is not finished yet.
 
 📋 Brief dans BRIEF.md
-🗂️  Explore la codebase avant de coder
-🧠  Le but est de rendre la donnée propre, fiable et exploitable
-🎙️  Parle à voix haute pendant tout l'exercice — colle ton transcript dans transcript.md après
-📝  Tu dois aussi écrire des tests supplémentaires (au moins 2)
+🗂️  Lis seulement les quelques fichiers utiles avant de coder
+🧠  Le but est une transformation métier claire, pas une grosse exploration
+🎙️  Parle à voix haute pendant l'exercice — colle ton transcript dans transcript.md après
+📝  Tu peux ajouter 1 petit test si ça t'aide, mais ce n'est pas obligatoire
 🔚  Quand tu as fini, dis-le moi pour le review
 ```
 
@@ -150,118 +194,123 @@ After setup, show:
 # Feature — [feature name]
 
 ## Contexte
-[2-3 sentences: what this codebase already does, what data comes in messy, why this new logic matters]
+[2-3 sentences: what this small codebase already does, what raw data comes in, and why this new transformation matters for Alan]
 
 ## Ce que tu dois construire
-[Business-facing description of the transformation or summary to produce]
+[Describe one clear transformation and the expected output from a business angle]
 
 ## Acceptance criteria
-- [ ] All provided failing tests pass
-- [ ] You added at least 2 of your own tests covering edge cases
-- [ ] The output is normalized, deduplicated, or aggregated exactly as expected
-- [ ] The implementation reuses the right existing types and helpers
+- [ ] All provided tests pass
+- [ ] The output follows the expected business rules
+- [ ] The implementation stays small, readable, and pure
+- [ ] Shared types and helpers are reused when useful
 
-## Hints (read only if stuck for >15 min)
+## Bonus test (optional)
+- Add 1 extra test for one meaningful edge case if it stays quick
+
+## Hints (read only if stuck for >10 min)
 <details>
 <summary>Hint 1</summary>
-[Point toward a useful helper or existing module pattern]
+[Point toward the most relevant helper, fixture, or tiny existing module]
 </details>
 <details>
 <summary>Hint 2</summary>
-[Point toward a type, normalization rule, or grouping strategy to reuse]
+[Point toward the main business rule to respect, not the full solution]
 </details>
 
 ## Contraintes
 - TypeScript strict mode
 - No framework, no I/O, no database
-- Prefer small pure helpers if the logic has clear stages
+- Prefer 1 or 2 small helpers if the logic becomes easier to read
+- Stay focused on the single transformation described above
+- Tests use Jest by default
 ```
 
-The brief should be clear but slightly incomplete. Give enough business context to work, but leave some implementation decisions to the user.
+The brief should be clear and reassuring. The user should quickly understand what to build without having to reverse-engineer half the project.
 
-### Step 4 — Review (when user says they're done)
+### Step 5 — Review (when the user says they are done)
 
-1. Run the tests and show output
+1. Run the tests and show output.
 2. Assess:
-   - **Acceptance criteria**: which are met, which are not
-   - **Code navigation**: did they find and reuse the right helpers, types, and patterns?
-   - **Business logic clarity**: are the parsing / normalization / aggregation stages readable?
-   - **New tests quality**: do they cover meaningful edge cases?
-   - **What a senior Alan engineer would say** in a PR review
-3. Write debrief to `sessions/YYYYMMDD-HHmm-business-logic-[feature-slug]/debrief.md`
+   - acceptance criteria
+   - clarity of the business rules
+   - whether the solution stayed focused on the intended single transformation
+   - whether the user reused the right shared types and helpers
+   - test quality if they added the optional extra test
+   - what a senior Alan engineer would say in a short PR review
+3. Write a short debrief to `sessions/YYYYMMDD-HHmm-business-logic-[feature-slug]/debrief.md`.
 
----
+Keep the review short, concrete, and calm.
 
 ## Exercise design rules
 
-Train only these families of problems:
-- parsing raw partner or provider payloads
-- normalizing business fields and statuses
-- deduplicating claims, acts, documents, or events
-- aggregating reimbursements, eligibility signals, or contract data
-- shaping outputs for another internal or member-facing layer
-- simple insurance-related calculations and thresholds
+Good subjects:
+- parse noisy claim rows into a typed summary input
+- normalize eligibility statuses from partner wording to Alan wording
+- deduplicate uploaded documents by a simple business rule
+- aggregate reimbursement lines into a compact claim summary
+- shape raw member events into a small member-facing status object
 
-Good exercise ingredients:
-- messy but bounded inputs
-- a few trust rules or precedence rules
-- at least one ambiguous edge case
-- an output object that feels useful to a product or ops surface
+Good ingredients:
+- bounded input data
+- one or two business rules max
+- one useful output object or array
+- a small edge case that feels real but not overwhelming
 
-Bad exercise ingredients:
+Bad ingredients:
 - advanced algorithms
 - large OO hierarchies
-- controller logic
-- persistence behavior
-- generic CRUD outside Alan's world
+- hidden bugs
+- controller or persistence logic
+- a codebase that requires opening many files before the task is clear
+- one exercise that mixes parsing, normalization, deduplication, and aggregation all together
 
-Prefer arrays of objects with realistic noise:
-- duplicate claim ids, act ids, or document hashes
-- mixed casing in statuses or care categories
-- timestamps where the newest row wins
-- amounts expressed in euros in one payload and cents in another
-- partial records with nullable member, contract, or provider fields
-- raw strings that need trimming, parsing, or normalization
+Prefer a little realistic noise, not a lot:
+- duplicate ids
+- mixed casing
+- extra whitespace
+- nullable fields
+- one date or amount formatting inconsistency
 
-Keep calculations simple and business-facing. The difficulty should come from shaping messy domain data, not from math.
+Keep calculations simple and business-facing. The difficulty should come from understanding one business rule, not from math or exploration load.
 
----
+## Feature brief bank
 
-## Feature brief bank (generate original content inspired by these)
+Generate original content inspired by these smaller patterns:
 
-**Claim summary builder**
-Existing code: raw claim parsing, status normalization, member helpers.
-Feature to add: build a member-facing summary from claim events, deduplicate repeated acts, compute totals, and expose review flags.
+**Eligibility status normalizer**
+Small codebase: shared types, a few raw eligibility rows, date helpers.
+Feature to add: normalize partner statuses into one clean member eligibility snapshot with one explanation field.
 
-**Reimbursement reconciliation**
-Existing code: reimbursement line parsing, money helpers, contract snapshots.
-Feature to add: merge duplicate reimbursement events from two sources and return a clean per-claim reimbursement summary.
+**Claim event shaper**
+Small codebase: claim event fixtures, status helpers, lightweight types.
+Feature to add: turn raw claim events into a compact member-facing summary object.
 
-**Eligibility snapshot normalizer**
-Existing code: coverage rule helpers, date normalization, contract utilities.
-Feature to add: transform noisy eligibility rows into a clean member eligibility snapshot with normalized status and explanation fields.
+**Document deduplicator**
+Small codebase: uploaded document fixtures, one hash helper, shared types.
+Feature to add: keep only the useful document entries and return a compact review-ready list.
 
-**Document review aggregator**
-Existing code: document metadata parsing, hash helpers, reviewer status formatting.
-Feature to add: group uploaded documents by type, deduplicate by hash, and return a compact review summary with missing required documents.
+**Reimbursement line aggregator**
+Small codebase: reimbursement line fixtures, money helper, shared types.
+Feature to add: aggregate a few reimbursement lines into one simple claim summary.
 
-**Healthcare act shaper**
-Existing code: act categorization helpers, amount normalization, claim linkage.
-Feature to add: reshape raw healthcare act rows into a contract-level care-category summary used by another service.
+**Care category parser**
+Small codebase: healthcare act fixtures, string normalization helpers, shared types.
+Feature to add: map messy care labels to canonical categories and return grouped results.
 
-**Light fraud signal scorer**
-Existing code: claim parsing, date helpers, member summary generation.
-Feature to add: compute light fraud flags from duplicate same-day acts, suspicious repeated amounts, and repeated document uploads.
-
----
+**Member status shaper**
+Small codebase: member event fixtures, one small existing helper, shared types.
+Feature to add: shape a few raw contract or claim signals into one readable member status output.
 
 ## Coaching rules
 
 During the drill:
-- ask the user to identify the transformation stages before coding
-- push them to explore existing files before opening the target file
-- encourage small pure helpers when parsing, deduplication, and aggregation mix together
+- remind the user that this is a feature exercise, not a bug hunt
+- ask them to read `types.ts`, the data file, `utils.ts`, and the target test first
+- if there is an existing module, point to it only as a tiny reference, not as a maze to explore
+- ask them to say the single transformation in one sentence before coding
+- if they start over-exploring, redirect them to the smallest useful path
 - prefer readable business rules over clever one-liners
 - keep the framing in Alan's world: claims, reimbursements, members, contracts, eligibility, documents, healthcare acts
 
-Keep the session concise, realistic, and implementation-focused.
+Keep the session concise, reassuring, and implementation-focused.

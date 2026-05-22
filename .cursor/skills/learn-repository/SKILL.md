@@ -41,8 +41,8 @@ sessions/YYYYMMDD-HHmm-repository/
 │   ├── schema.sql
 │   └── seed.ts
 ├── repository.test.ts
-├── test-runner.ts
 ├── package.json
+├── tsconfig.json
 └── BRIEF.md
 ```
 
@@ -51,6 +51,7 @@ Rules:
 - `database.ts`, `types.ts`, `schema.sql`, and `seed.ts` are provided
 - tests fail only because the repository behavior is incomplete
 - the exercise must run locally without extra setup beyond `npm install` and `npm test`
+- use Jest by default for all generated tests; do not generate a homemade `test-runner.ts`
 - keep the dataset and schema small enough to understand in a couple of minutes
 
 ## Scope
@@ -122,6 +123,54 @@ Write 3-5 focused tests:
 - one simple filtering or mapping case
 
 Prefer repository tests over HTTP tests.
+Write them as standard Jest tests (`describe`/`it`/`expect`) in TypeScript.
+
+## Default test stack
+
+For every generated repository session, default to:
+- `jest`
+- `ts-jest`
+- `@types/jest`
+- `@types/node`
+- `typescript`
+
+Use this minimal config:
+
+**`package.json`**:
+```json
+{
+  "name": "alan-repository",
+  "version": "1.0.0",
+  "scripts": { "test": "jest --runInBand" },
+  "dependencies": {
+    "better-sqlite3": "latest"
+  },
+  "devDependencies": {
+    "@types/jest": "latest",
+    "@types/node": "latest",
+    "jest": "latest",
+    "ts-jest": "latest",
+    "typescript": "latest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
+}
+```
+
+**`tsconfig.json`**:
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "types": ["node", "jest"]
+  }
+}
+```
 
 ## Output to the user
 

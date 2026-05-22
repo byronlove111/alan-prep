@@ -1,0 +1,13 @@
+{
+  "name": "alan-debug-eligibility-snapshot",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "npx tsx test-runner.ts"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}

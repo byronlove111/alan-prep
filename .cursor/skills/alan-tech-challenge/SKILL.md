@@ -22,6 +22,7 @@ Use them to keep exercises grounded in Alan's real product, vocabulary, and engi
 - Test is 100% backend: controller → service → repository, Express, TypeScript
 - Reasoning questions happen during and after the session
 - The brief must stay intentionally incomplete
+- Use Jest by default for all generated tests; do not generate a homemade `test-runner.ts`
 
 ## What Alan actually evaluates (confirmed by engineer, May 2026)
 
@@ -96,18 +97,19 @@ sessions/YYYYMMDD-HHmm-tech-challenge/
 │   └── seed.ts
 ├── [exercise-name].test.ts
 ├── [exercise-name].http.test.ts
-├── test-runner.ts
 ├── package.json
+├── tsconfig.json
 └── transcript.md
 ```
 
-Provided by default: `types.ts`, `app.ts`, `db/`, `test-runner.ts`, `package.json`, `[exercise-name].test.ts`, and `[exercise-name].http.test.ts`.
+Provided by default: `types.ts`, `app.ts`, `db/`, `package.json`, `tsconfig.json`, `[exercise-name].test.ts`, and `[exercise-name].http.test.ts`.
 The user creates the feature files in `controllers/`, `services/`, and `repositories/`, and only adds `domain/` if the exercise is `endpoint-state-machine`.
 
 ### Generation rules
 
 - Always keep the architecture backend-only: controller → service → repository
-- `package.json` must include `express`, `better-sqlite3`, `supertest`, `tsx`, and `typescript`
+- use Jest by default for all generated tests; do not generate a homemade `test-runner.ts`
+- `package.json` must include `express`, `better-sqlite3`, `supertest`, `jest`, `ts-jest`, `@types/jest`, `@types/express`, `@types/supertest`, and `typescript`
 - `db/database.ts` must use `better-sqlite3`, enable WAL, and enable foreign keys
 - `app.ts` must expose an Express app with JSON parsing and a global error middleware
 - The repository imports `db` directly and uses raw SQL
@@ -125,6 +127,58 @@ The user creates the feature files in `controllers/`, `services/`, and `reposito
 - If the exercise is `endpoint-state-machine`, transition logic belongs on the entity and the repository may return entity instances instead of raw rows
 - `types.ts` contains raw DB record interfaces and shared unions/enums
 - Every exercise still needs a controller using `express.Router()`, validating input, checking auth when relevant, calling the service, and letting the global middleware handle errors
+
+### Default test stack
+
+For every generated tech challenge session, default to:
+- `jest`
+- `ts-jest`
+- `@types/jest`
+- `@types/node`
+- `supertest`
+- `typescript`
+
+Use this minimal config:
+
+**`package.json`**:
+```json
+{
+  "name": "alan-tech-challenge",
+  "version": "1.0.0",
+  "scripts": { "test": "jest --runInBand" },
+  "dependencies": {
+    "better-sqlite3": "latest",
+    "express": "latest",
+    "supertest": "latest"
+  },
+  "devDependencies": {
+    "@types/express": "latest",
+    "@types/jest": "latest",
+    "@types/node": "latest",
+    "@types/supertest": "latest",
+    "jest": "latest",
+    "ts-jest": "latest",
+    "typescript": "latest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
+}
+```
+
+**`tsconfig.json`**:
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "types": ["node", "jest"]
+  }
+}
+```
 
 ---
 
