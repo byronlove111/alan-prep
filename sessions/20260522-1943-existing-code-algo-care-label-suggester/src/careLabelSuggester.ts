@@ -1,31 +1,23 @@
 import { pickBestSuggestion } from "./ranking";
 import { CareLabelSuggestion } from "./types";
-import {
-  countSharedTokens,
-  normalizeLooseText,
-  tokenizeLabel,
-} from "./utils";
+import { normalizeLooseText, tokenizeLabel } from "./utils";
 
 function scoreCandidate(rawInput: string, candidate: string): CareLabelSuggestion | null {
-  const inputTokens = tokenizeLabel(rawInput);
+  const compactInput = normalizeLooseText(rawInput).split(" ").join("");
   const candidateTokens = tokenizeLabel(candidate);
-  const matchedTokens = countSharedTokens(inputTokens, candidateTokens);
+
+  const matchedTokens = candidateTokens.filter((token) =>
+    compactInput.includes(token),
+  );
 
   if (matchedTokens.length === 0) {
     return null;
   }
 
-  let score = matchedTokens.length * 3;
+  let score = 0;
 
-  if (matchedTokens.length === candidateTokens.length) {
-    score += 2;
-  }
-
-  if (
-    inputTokens.length === candidateTokens.length &&
-    matchedTokens.length === candidateTokens.length
-  ) {
-    score += 4;
+  for (const token of matchedTokens) {
+    score += token.length;
   }
 
   return {

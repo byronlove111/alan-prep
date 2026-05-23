@@ -1,0 +1,13 @@
+un member a souscrit a notre assurance, super
+
+il tombe malade, il va chez le medecin, le medecin lui fait payer la prestation 
+
+le member nous envoi donc son ordonnance/certificat medical qui prouve que il est alle chez le medecin
+
+il nous dit combien il a payer ? ou alors c ecrit sur le papier ? 
+
+ensuite nous on prend son claim, on regarde par rapport a son Plan ? le nombre de trucs qu'on a deja rembourse si ya un cap ? ect ect 
+
+on choisi de le rembourser ou non avec le pourcentage adequat 
+
+et voila fin du programme 
