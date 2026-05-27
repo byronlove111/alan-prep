@@ -1,0 +1,4 @@
+.env
+node_modules/
+# Personal concept notes (learn-concept skill)
+concepts/

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>alan-micrOCR — Wireframe</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header .logo { font-size: 18px; font-weight: 700; }
+    header .logo span { color: #0066ff; }
+    header .badge {
+      font-size: 11px; background: #f0f0f0; color: #888;
+      padding: 3px 8px; border-radius: 4px;
+    }
+
+    .container { max-width: 600px; margin: 48px auto; padding: 0 16px; }
+
+    .card {
+      background: white; border-radius: 12px;
+      border: 1px solid #e5e5e5; padding: 32px;
+    }
+    .card-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .card-subtitle { font-size: 14px; color: #888; margin-bottom: 28px; }
+
+    .section-label {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: #888; margin-bottom: 12px; margin-top: 24px;
+    }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 13px; font-weight: 500; color: #444; }
+    .field input, .field select {
+      padding: 10px 12px; border: 1px solid #d5d5d5; border-radius: 8px;
+      font-size: 14px; color: #1a1a1a; background: white; outline: none;
+      transition: border-color 0.15s; appearance: none;
+    }
+    .field input:focus, .field select:focus { border-color: #0066ff; }
+    .field.full { grid-column: 1 / -1; }
+
+    /* Plan selector */
+    .plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .plan-card {
+      border: 2px solid #e5e5e5; border-radius: 8px; padding: 14px 12px;
+      cursor: pointer; transition: all 0.15s; text-align: center;
+    }
+    .plan-card:hover { border-color: #0066ff; }
+    .plan-card.selected { border-color: #0066ff; background: #f0f5ff; }
+    .plan-card .plan-name { font-size: 14px; font-weight: 600; }
+    .plan-card .plan-desc { font-size: 11px; color: #888; margin-top: 4px; }
+    .plan-card .plan-covers {
+      margin-top: 8px; display: flex; flex-direction: column; gap: 3px;
+    }
+    .plan-cover-tag {
+      font-size: 10px; color: #555; background: #f0f0f0;
+      border-radius: 4px; padding: 2px 5px; display: inline-block;
+    }
+
+    /* Claim details */
+    .claim-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* Upload zone */
+    .upload-zone {
+      border: 2px dashed #d5d5d5; border-radius: 8px; padding: 24px;
+      text-align: center; background: #fafafa;
+    }
+    .upload-zone .upload-icon { font-size: 28px; margin-bottom: 8px; }
+    .upload-zone .upload-label { font-size: 14px; font-weight: 500; color: #444; }
+    .upload-zone .upload-hint { font-size: 12px; color: #aaa; margin-top: 4px; }
+
+    .file-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+    .file-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; background: #f5f5f5; border-radius: 6px; font-size: 13px;
+    }
+    .file-item .file-icon { font-size: 16px; }
+    .file-item .file-name { flex: 1; color: #444; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .file-item .file-type { font-size: 11px; color: #888; white-space: nowrap; }
+    .file-item .file-remove { color: #aaa; cursor: pointer; font-size: 16px; padding: 0 2px; }
+
+    /* Expiry warning */
+    .info-box {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 12px 14px; border-radius: 8px; font-size: 13px;
+      margin-top: 12px; line-height: 1.4;
+    }
+    .info-box.warning { background: #fff8e6; border: 1px solid #ffd97a; color: #7a5400; }
+    .info-box.info { background: #f0f5ff; border: 1px solid #b3ccff; color: #003399; }
+    .info-box .info-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* Submit */
+    .btn-submit {
+      width: 100%; margin-top: 28px; padding: 13px; background: #0066ff;
+      color: white; font-size: 15px; font-weight: 600; border: none;
+      border-radius: 8px; cursor: pointer; transition: background 0.15s;
+    }
+    .btn-submit:hover { background: #0052cc; }
+    .btn-submit:disabled { background: #a0b8e0; cursor: not-allowed; }
+
+    .loading-bar {
+      display: none; margin-top: 16px; height: 4px;
+      background: #e5e5e5; border-radius: 4px; overflow: hidden;
+    }
+    .loading-bar.active { display: block; }
+    .loading-bar-inner {
+      height: 100%; width: 0%; background: #0066ff; border-radius: 4px;
+      animation: loading 2.5s ease forwards;
+    }
+    @keyframes loading { 0%{width:0%} 60%{width:75%} 100%{width:95%} }
+    .loading-text {
+      display: none; margin-top: 10px; font-size: 13px;
+      color: #888; text-align: center;
+    }
+    .loading-text.active { display: block; }
+
+    /* ---- SCREEN 2 : RESULT ---- */
+    #screen-result { display: none; }
+
+    .result-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin: 0 auto 20px;
+    }
+    .result-icon.approved { background: #e8f8ee; }
+    .result-icon.rejected { background: #feeaea; }
+    .result-icon.manual   { background: #fff4e0; }
+
+    .result-status { text-align: center; margin-bottom: 24px; }
+    .status-label {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 6px;
+    }
+    .status-label.approved { color: #1a9e4a; }
+    .status-label.rejected { color: #cc2222; }
+    .status-label.manual   { color: #cc7700; }
+    .status-title { font-size: 22px; font-weight: 700; }
+    .status-subtitle { font-size: 14px; color: #888; margin-top: 6px; }
+
+    .result-amounts {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 10px; margin-bottom: 20px;
+    }
+    .amount-box { background: #f5f5f5; border-radius: 8px; padding: 14px; text-align: center; }
+    .amount-box .amount-label { font-size: 11px; color: #888; margin-bottom: 6px; }
+    .amount-box .amount-value { font-size: 20px; font-weight: 700; }
+    .amount-box .amount-value.green { color: #1a9e4a; }
+
+    .result-breakdown {
+      background: #f9f9f9; border-radius: 8px; padding: 16px;
+      margin-bottom: 16px; font-size: 13px; color: #555;
+    }
+    .result-breakdown .breakdown-title {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: #888; margin-bottom: 10px;
+    }
+    .breakdown-row {
+      display: flex; justify-content: space-between;
+      padding: 5px 0; border-bottom: 1px solid #ebebeb;
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-row .label { color: #666; }
+    .breakdown-row .value { font-weight: 500; }
+    .breakdown-row .value.deducted { color: #cc2222; }
+    .breakdown-row .value.total { color: #1a9e4a; font-weight: 700; }
+
+    .result-reason {
+      background: #f9f9f9; border-left: 3px solid #e5e5e5;
+      border-radius: 0 8px 8px 0; padding: 14px 16px;
+      font-size: 14px; color: #555; margin-bottom: 20px; line-height: 1.5;
+    }
+    .result-reason.approved { border-left-color: #1a9e4a; }
+    .result-reason.rejected { border-left-color: #cc2222; }
+    .result-reason.manual   { border-left-color: #cc7700; }
+
+    .result-meta {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .meta-tag {
+      font-size: 12px; padding: 4px 10px; border-radius: 20px;
+      background: #f0f0f0; color: #555;
+    }
+
+    .btn-new {
+      width: 100%; padding: 13px; background: white; color: #0066ff;
+      font-size: 15px; font-weight: 600; border: 2px solid #0066ff;
+      border-radius: 8px; cursor: pointer; transition: all 0.15s;
+    }
+    .btn-new:hover { background: #f0f5ff; }
+
+    .demo-switcher {
+      display: flex; gap: 8px; margin-bottom: 20px; justify-content: center;
+    }
+    .demo-btn {
+      padding: 6px 14px; font-size: 12px; font-weight: 600;
+      border-radius: 6px; border: 1px solid #e5e5e5; background: white;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .demo-btn.active-approved { background: #e8f8ee; border-color: #1a9e4a; color: #1a9e4a; }
+    .demo-btn.active-rejected { background: #feeaea; border-color: #cc2222; color: #cc2222; }
+    .demo-btn.active-manual   { background: #fff4e0; border-color: #cc7700; color: #cc7700; }
+
+    /* ---- MODAL ---- */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: white;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 480px;
+      margin: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .modal-header {
+      padding: 20px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title { font-size: 17px; font-weight: 700; }
+    .modal-close {
+      font-size: 20px; color: #aaa; cursor: pointer;
+      line-height: 1; padding: 4px;
+    }
+    .modal-close:hover { color: #333; }
+
+    .modal-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+
+    .modal-upload-zone {
+      border: 2px dashed #d5d5d5; border-radius: 8px;
+      padding: 28px 20px; text-align: center; background: #fafafa;
+    }
+    .modal-upload-zone .upload-icon { font-size: 32px; margin-bottom: 8px; }
+    .modal-upload-zone .upload-label { font-size: 14px; font-weight: 500; color: #444; }
+    .modal-upload-zone .upload-hint { font-size: 12px; color: #aaa; margin-top: 4px; }
+
+    .modal-preview {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px; background: #f5f5f5; border-radius: 8px;
+    }
+    .modal-preview .preview-icon { font-size: 28px; }
+    .modal-preview .preview-info { flex: 1; }
+    .modal-preview .preview-name { font-size: 13px; font-weight: 500; color: #333; }
+    .modal-preview .preview-size { font-size: 11px; color: #999; margin-top: 2px; }
+    .modal-preview .preview-clear { font-size: 18px; color: #aaa; cursor: pointer; }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #f0f0f0;
+      display: flex; gap: 10px;
+    }
+    .btn-cancel {
+      flex: 1; padding: 11px; background: white; color: #555;
+      font-size: 14px; font-weight: 600; border: 1px solid #d5d5d5;
+      border-radius: 8px; cursor: pointer;
+    }
+    .btn-cancel:hover { background: #f5f5f5; }
+    .btn-confirm {
+      flex: 2; padding: 11px; background: #0066ff; color: white;
+      font-size: 14px; font-weight: 600; border: none;
+      border-radius: 8px; cursor: pointer;
+    }
+    .btn-confirm:hover { background: #0052cc; }
+
+    /* Add document button */
+    .btn-add-doc {
+      width: 100%; padding: 10px; background: white; color: #0066ff;
+      font-size: 13px; font-weight: 600; border: 1.5px dashed #b3ccff;
+      border-radius: 8px; cursor: pointer; margin-top: 6px;
+      transition: all 0.15s;
+    }
+    .btn-add-doc:hover { background: #f0f5ff; border-color: #0066ff; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">alan<span>micrOCR</span></div>
+  <span class="badge">wireframe</span>
+</header>
+
+<div class="container">
+
+  <!-- SCREEN 1 : FORM -->
+  <div id="screen-form">
+    <div class="card">
+      <div class="card-title">Submit a reimbursement claim</div>
+      <div class="card-subtitle">Tell us about your care and upload your document. We'll take care of the rest.</div>
+
+      <!-- Identity -->
+      <div class="section-label">Your information</div>
+      <div class="row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" placeholder="Léa" />
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" placeholder="Martin" />
+        </div>
+        <div class="field full">
+          <label>Email</label>
+          <input type="email" placeholder="lea@example.com" />
+        </div>
+      </div>
+
+      <!-- Plan -->
+      <div class="section-label">Coverage plan</div>
+      <div class="plan-grid">
+        <div class="plan-card" onclick="selectPlan(this)" data-plan="basic">
+          <div class="plan-name">Basic</div>
+          <div class="plan-desc">Essential coverage</div>
+          <div class="plan-covers">
+            <span class="plan-cover-tag">General</span>
+            <span class="plan-cover-tag">Pharmacy</span>
+          </div>
+        </div>
+        <div class="plan-card selected" onclick="selectPlan(this)" data-plan="plus">
+          <div class="plan-name">Plus</div>
+          <div class="plan-desc">Extended coverage</div>
+          <div class="plan-covers">
+            <span class="plan-cover-tag">General</span>
+            <span class="plan-cover-tag">Specialist</span>
+            <span class="plan-cover-tag">Dental</span>
+          </div>
+        </div>
+        <div class="plan-card" onclick="selectPlan(this)" data-plan="premium">
+          <div class="plan-name">Premium</div>
+          <div class="plan-desc">Full coverage</div>
+          <div class="plan-covers">
+            <span class="plan-cover-tag">All care types</span>
+            <span class="plan-cover-tag">Optical</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Claim details -->
+      <div class="section-label">Claim details</div>
+      <div class="claim-row">
+        <div class="field">
+          <label>Type of care</label>
+          <select>
+            <option value="">Select a type…</option>
+            <option value="general_practitioner">General practitioner</option>
+            <option value="specialist" selected>Specialist</option>
+            <option value="dental">Dental</option>
+            <option value="optical">Optical</option>
+            <option value="pharmacy">Pharmacy</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Date of care</label>
+          <input type="date" value="2026-05-21" />
+        </div>
+        <div class="field">
+          <label>Amount paid (€)</label>
+          <input type="number" placeholder="0.00" value="120" />
+        </div>
+      </div>
+
+      <div class="info-box warning" style="margin-top: 12px;">
+        <span class="info-icon">⚠️</span>
+        <span>Claims older than 12 months are not eligible for reimbursement. Make sure your date of care is correct.</span>
+      </div>
+
+      <!-- Documents -->
+      <div class="section-label">Supporting documents</div>
+      <div class="file-list" id="fileList">
+        <div class="file-item">
+          <span class="file-icon">📄</span>
+          <span class="file-name">facture-dentiste-mai2026.pdf</span>
+          <span class="file-type">Medical invoice</span>
+          <span class="file-remove">×</span>
+        </div>
+        <div class="file-item">
+          <span class="file-icon">🖼️</span>
+          <span class="file-name">ordonnance-photo.jpg</span>
+          <span class="file-type">Prescription</span>
+          <span class="file-remove">×</span>
+        </div>
+      </div>
+      <button class="btn-add-doc" onclick="openModal()">+ Add a document</button>
+
+      <div class="info-box info" style="margin-top: 12px;">
+        <span class="info-icon">ℹ️</span>
+        <span>For dental and optical care, a receipt or invoice is required. A prescription alone is not sufficient.</span>
+      </div>
+
+      <button class="btn-submit" id="submitBtn" onclick="submitClaim()">
+        Submit claim
+      </button>
+      <div class="loading-bar" id="loadingBar"><div class="loading-bar-inner"></div></div>
+      <div class="loading-text" id="loadingText">Analysing your documents with OCR…</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2 : RESULT -->
+  <div id="screen-result">
+    <div class="demo-switcher">
+      <button class="demo-btn active-approved" onclick="showResult('approved', event)">✓ Approved</button>
+      <button class="demo-btn" onclick="showResult('rejected', event)">✗ Rejected</button>
+      <button class="demo-btn" onclick="showResult('manual', event)">⏳ Manual review</button>
+    </div>
+
+    <div class="card">
+      <div class="result-icon approved" id="resultIcon">✓</div>
+
+      <div class="result-status">
+        <div class="status-label approved" id="statusLabel">Approved</div>
+        <div class="status-title" id="statusTitle">Your claim has been approved</div>
+        <div class="status-subtitle" id="statusSubtitle">Reimbursement will be processed within 3 business days.</div>
+      </div>
+
+      <div class="result-amounts">
+        <div class="amount-box">
+          <div class="amount-label">Claimed</div>
+          <div class="amount-value" id="amountClaimed">€120.00</div>
+        </div>
+        <div class="amount-box">
+          <div class="amount-label">Deductible</div>
+          <div class="amount-value" id="amountDeductible">−€20.00</div>
+        </div>
+        <div class="amount-box">
+          <div class="amount-label">Reimbursed</div>
+          <div class="amount-value green" id="amountApproved">€70.00</div>
+        </div>
+      </div>
+
+      <div class="result-breakdown" id="resultBreakdown">
+        <div class="breakdown-title">Calculation breakdown</div>
+        <div class="breakdown-row">
+          <span class="label">Amount paid</span>
+          <span class="value">€120.00</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="label">Deductible applied</span>
+          <span class="value deducted">−€20.00</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="label">Coverage rate (Plus plan — Dental)</span>
+          <span class="value">70%</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="label">Reimbursed amount</span>
+          <span class="value total">€70.00</span>
+        </div>
+      </div>
+
+      <div class="result-meta" id="resultMeta">
+        <span class="meta-tag">📅 21 May 2026</span>
+        <span class="meta-tag">🦷 Dental</span>
+        <span class="meta-tag">📋 Plus plan</span>
+        <span class="meta-tag">📄 Medical invoice</span>
+      </div>
+
+      <div class="result-reason approved" id="resultReason">
+        Dental care covered at 70% under your Plus plan. A €20 deductible was applied. Receipt was provided.
+      </div>
+
+      <button class="btn-new" onclick="newClaim()">Submit another claim</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL : Add document -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add a document</div>
+      <span class="modal-close" onclick="closeModal()">×</span>
+    </div>
+    <div class="modal-body">
+
+      <!-- File drop zone (static) -->
+      <div class="modal-upload-zone" id="modalDropZone">
+        <div class="upload-icon">📎</div>
+        <div class="upload-label">Click to select a file</div>
+        <div class="upload-hint">PDF, JPG, PNG — max 10 MB</div>
+      </div>
+
+      <!-- Preview (shown after "file selected") -->
+      <div class="modal-preview" id="modalPreview" style="display:none;">
+        <span class="preview-icon">📄</span>
+        <div class="preview-info">
+          <div class="preview-name" id="previewName">certificat-medical.pdf</div>
+          <div class="preview-size">248 KB</div>
+        </div>
+        <span class="preview-clear" onclick="clearPreview()">×</span>
+      </div>
+
+      <!-- Document type -->
+      <div class="field">
+        <label>Document type</label>
+        <select id="modalDocType">
+          <option value="">Select a type…</option>
+          <option value="medical_invoice">Medical invoice</option>
+          <option value="receipt">Receipt / Payment proof</option>
+          <option value="prescription">Prescription</option>
+          <option value="medical_certificate">Medical certificate</option>
+        </select>
+      </div>
+
+      <!-- Notes -->
+      <div class="field">
+        <label>Notes <span style="color:#aaa;font-weight:400">(optional)</span></label>
+        <input type="text" placeholder="e.g. post-op follow-up, specialist referral…" />
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-confirm" onclick="confirmDocument()">Add document</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('open')
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open')
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal()
+  }
+  function clearPreview() {
+    document.getElementById('modalPreview').style.display = 'none'
+    document.getElementById('modalDropZone').style.display = 'block'
+  }
+
+  // Simulate file selected on drop zone click
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('modalDropZone').addEventListener('click', () => {
+      document.getElementById('previewName').textContent = 'certificat-medical.pdf'
+      document.getElementById('modalDropZone').style.display = 'none'
+      document.getElementById('modalPreview').style.display = 'flex'
+    })
+  })
+
+  function confirmDocument() {
+    const type = document.getElementById('modalDocType').value
+    const typeLabel = type
+      ? document.getElementById('modalDocType').selectedOptions[0].text
+      : 'Unknown type'
+    const name = document.getElementById('previewName').textContent || 'document.pdf'
+    const list = document.getElementById('fileList')
+    const item = document.createElement('div')
+    item.className = 'file-item'
+    item.innerHTML = `
+      <span class="file-icon">📄</span>
+      <span class="file-name">${name}</span>
+      <span class="file-type">${typeLabel}</span>
+      <span class="file-remove">×</span>
+    `
+    list.appendChild(item)
+    closeModal()
+    // reset
+    document.getElementById('modalDocType').value = ''
+    clearPreview()
+  }
+
+  function selectPlan(el) {
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'))
+    el.classList.add('selected')
+  }
+
+  function submitClaim() {
+    const btn = document.getElementById('submitBtn')
+    const bar = document.getElementById('loadingBar')
+    const text = document.getElementById('loadingText')
+    btn.disabled = true
+    bar.classList.add('active')
+    text.classList.add('active')
+    setTimeout(() => {
+      document.getElementById('screen-form').style.display = 'none'
+      document.getElementById('screen-result').style.display = 'block'
+    }, 2800)
+  }
+
+  function newClaim() {
+    document.getElementById('screen-form').style.display = 'block'
+    document.getElementById('screen-result').style.display = 'none'
+    document.getElementById('submitBtn').disabled = false
+    document.getElementById('loadingBar').classList.remove('active')
+    document.getElementById('loadingText').classList.remove('active')
+  }
+
+  const results = {
+    approved: {
+      icon: '✓', iconClass: 'approved', labelClass: 'approved',
+      label: 'Approved', title: 'Your claim has been approved',
+      subtitle: 'Reimbursement will be processed within 3 business days.',
+      claimed: '€120.00', deductible: '−€20.00', approved: '€70.00', approvedClass: 'green',
+      breakdown: `
+        <div class="breakdown-title">Calculation breakdown</div>
+        <div class="breakdown-row"><span class="label">Amount paid</span><span class="value">€120.00</span></div>
+        <div class="breakdown-row"><span class="label">Deductible applied</span><span class="value deducted">−€20.00</span></div>
+        <div class="breakdown-row"><span class="label">Coverage rate (Plus — Dental)</span><span class="value">70%</span></div>
+        <div class="breakdown-row"><span class="label">Reimbursed amount</span><span class="value total">€70.00</span></div>
+      `,
+      meta: '📅 21 May 2026 &nbsp;·&nbsp; 🦷 Dental &nbsp;·&nbsp; 📋 Plus plan &nbsp;·&nbsp; 📄 Invoice',
+      reason: 'Dental care covered at 70% under your Plus plan. A €20 deductible was applied. Receipt confirmed.',
+      reasonClass: 'approved',
+    },
+    rejected: {
+      icon: '✗', iconClass: 'rejected', labelClass: 'rejected',
+      label: 'Rejected', title: 'Your claim could not be approved',
+      subtitle: 'Review the reason below and contact us if you have questions.',
+      claimed: '€120.00', deductible: '—', approved: '€0.00', approvedClass: '',
+      breakdown: `
+        <div class="breakdown-title">Why it was rejected</div>
+        <div class="breakdown-row"><span class="label">Care type</span><span class="value">Optical</span></div>
+        <div class="breakdown-row"><span class="label">Your plan</span><span class="value">Basic</span></div>
+        <div class="breakdown-row"><span class="label">Optical covered?</span><span class="value deducted">No</span></div>
+      `,
+      meta: '📅 21 May 2026 &nbsp;·&nbsp; 👁 Optical &nbsp;·&nbsp; 📋 Basic plan',
+      reason: 'Optical care is not covered under your Basic plan. Upgrade to Plus or Premium to include optical coverage.',
+      reasonClass: 'rejected',
+    },
+    manual: {
+      icon: '⏳', iconClass: 'manual', labelClass: 'manual',
+      label: 'Manual review', title: 'Your claim requires manual review',
+      subtitle: 'Our team will review it and get back to you within 24 hours by email.',
+      claimed: '€480.00', deductible: '—', approved: 'Pending', approvedClass: '',
+      breakdown: `
+        <div class="breakdown-title">Why it requires review</div>
+        <div class="breakdown-row"><span class="label">Amount claimed</span><span class="value">€480.00</span></div>
+        <div class="breakdown-row"><span class="label">Auto-approval threshold</span><span class="value">€300.00</span></div>
+        <div class="breakdown-row"><span class="label">Status</span><span class="value deducted">Exceeds threshold</span></div>
+      `,
+      meta: '📅 21 May 2026 &nbsp;·&nbsp; 🏥 Specialist &nbsp;·&nbsp; 📋 Plus plan',
+      reason: 'Claims above €300 for specialist care require manual validation. You will be notified by email once reviewed.',
+      reasonClass: 'manual',
+    }
+  }
+
+  function showResult(type, e) {
+    const r = results[type]
+    document.getElementById('resultIcon').textContent = r.icon
+    document.getElementById('resultIcon').className = `result-icon ${r.iconClass}`
+    document.getElementById('statusLabel').textContent = r.label
+    document.getElementById('statusLabel').className = `status-label ${r.labelClass}`
+    document.getElementById('statusTitle').textContent = r.title
+    document.getElementById('statusSubtitle').textContent = r.subtitle
+    document.getElementById('amountClaimed').textContent = r.claimed
+    document.getElementById('amountDeductible').textContent = r.deductible
+    document.getElementById('amountApproved').textContent = r.approved
+    document.getElementById('amountApproved').className = `amount-value ${r.approvedClass}`
+    document.getElementById('resultBreakdown').innerHTML = r.breakdown
+    document.getElementById('resultMeta').innerHTML = r.meta.split('&nbsp;·&nbsp;').map(t => `<span class="meta-tag">${t.trim()}</span>`).join('')
+    document.getElementById('resultReason').textContent = r.reason
+    document.getElementById('resultReason').className = `result-reason ${r.reasonClass}`
+    document.querySelectorAll('.demo-btn').forEach(b => b.className = 'demo-btn')
+    e.target.className = `demo-btn active-${type}`
+  }
+</script>
+
+</body>
+</html>

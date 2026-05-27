@@ -1,13 +1,137 @@
-un member a souscrit a notre assurance, super
+# Schéma SQL — alan-micrOCR (MVP validé)
 
-il tombe malade, il va chez le medecin, le medecin lui fait payer la prestation 
+Décisions globales :
+- Plans en seed uniquement (pas d'API admin)
+- Pas de franchise, pas de plafond annuel, pas de requires_receipt au MVP
+- Catégorie non couverte = pas de ligne dans coverage_rules → rejet not_covered
+- 1 member = 1 plan actif (pas d'historique de changement de plan)
 
-le member nous envoi donc son ordonnance/certificat medical qui prouve que il est alle chez le medecin
+// ─────────────────────────────────────────
+// PLANS
+// ─────────────────────────────────────────
 
-il nous dit combien il a payer ? ou alors c ecrit sur le papier ? 
+table plans {
+  id            UUID          PRIMARY KEY
+  name          string        UNIQUE  // "basic" | "plus" | "premium" (seed + affichage)
+  created_at    datetime
+}
 
-ensuite nous on prend son claim, on regarde par rapport a son Plan ? le nombre de trucs qu'on a deja rembourse si ya un cap ? ect ect 
+// ─────────────────────────────────────────
+// COVERAGE_RULES
+// ─────────────────────────────────────────
 
-on choisi de le rembourser ou non avec le pourcentage adequat 
+table coverage_rules {
+  id                      UUID          PRIMARY KEY
+  plan_id                 UUID          → plans.id ON DELETE CASCADE
+  care_category           string        // dental | specialist | general_practitioner | optical | pharmacy
 
-et voila fin du programme 
+  reimbursement_rate      float         // 0.7 = 70%
+  claim_cap_amount        float | null  // plafond max remboursé sur UNE claim pour cette catégorie
+
+  created_at              datetime
+
+  unique(plan_id, care_category)
+}
+
+// ─────────────────────────────────────────
+// MEMBERS
+// ─────────────────────────────────────────
+
+table members {
+  id            UUID          PRIMARY KEY
+  first_name    string
+  last_name     string
+  email         string        UNIQUE
+
+  plan_id       UUID          → plans.id  // plan choisi au moment de la soumission
+
+  created_at    datetime
+}
+
+// Pas de total_remboursé stocké → calculé via SUM(decisions.amount_approved)
+
+// ─────────────────────────────────────────
+// CLAIMS
+// ─────────────────────────────────────────
+
+table claims {
+  id              UUID          PRIMARY KEY
+  member_id       UUID          → members.id
+
+  care_category   string        // doit matcher une coverage_rule du plan du member
+  service_date    date          // date du soin (wireframe)
+  amount_claimed  decimal       // montant déclaré en €
+
+  status          string        // pending | approved | rejected | manual_review
+
+  created_at      datetime      // soumission
+  processed_at    datetime | null
+}
+
+// status :
+// - pending à la création
+// - mis à jour après traitement (même valeur que decisions.status)
+
+// ─────────────────────────────────────────
+// CLAIM_DOCUMENTS
+// ─────────────────────────────────────────
+
+table claim_documents {
+  id              UUID          PRIMARY KEY
+  claim_id        UUID          → claims.id ON DELETE CASCADE
+
+  document_type   string        // medical_invoice | receipt | prescription | medical_certificate
+  file_name       string        // nom fichier (MVP : pas de stockage fichier réel obligatoire)
+  notes           string | null
+
+  created_at      datetime
+}
+
+// Plusieurs documents par claim (facture + ordonnance)
+// requires_receipt ignoré au MVP
+
+// ─────────────────────────────────────────
+// DECISIONS
+// ─────────────────────────────────────────
+
+table decisions {
+  id                UUID          PRIMARY KEY
+  claim_id          UUID          UNIQUE → claims.id  // 1 décision par claim
+
+  status            string        // approved | rejected | manual_review
+  amount_approved   decimal       // 0 si rejected, null si manual_review
+
+  reason_code       string        // not_covered | cap_exceeded | manual_review_required | approved
+  reason_message    string        // texte affiché à l'utilisateur (wireframe)
+
+  metadata_json     json          // breakdown : rate, amount_claimed, cap_applied, etc.
+
+  created_at        datetime
+}
+
+// ─────────────────────────────────────────
+// RELATIONS
+// ─────────────────────────────────────────
+
+plans           1 ──< coverage_rules
+plans           1 ──< members
+members         1 ──< claims
+claims          1 ──< claim_documents
+claims          1 ──  decisions
+
+// ─────────────────────────────────────────
+// REQUÊTES PRINCIPALES (à supporter)
+// ─────────────────────────────────────────
+
+// GET  /plans                          → liste pour le formulaire
+// POST /claims                         → crée member si besoin + claim + documents + traite + decision
+// GET  /claims/:id                     → claim + documents + decision (écran résultat)
+
+// ─────────────────────────────────────────
+// HORS SCOPE MVP
+// ─────────────────────────────────────────
+
+// - deductible_amount, annual_cap_amount, requires_receipt
+// - prix mensuel plan, date fin contrat
+// - historique changement de plan
+// - plusieurs décisions par claim (reprocess)
