@@ -134,6 +134,7 @@ Rules for the codebase:
 - the task must remain understandable in one sitting
 - the code should invite reasoning about cases, not architecture
 - use Jest by default for all generated tests; do not generate a homemade `test-runner.ts`
+- never use regular expressions in generated session code; prefer readable string operations such as `split`, `trim`, `includes`, `slice`, `join`, and simple loops
 
 ### Step 2 — Shape the exercise correctly
 
@@ -269,6 +270,7 @@ After setup, show:
 - TypeScript strict mode
 - No backend and no framework
 - Prefer a simple readable fix over an impressive algorithm
+- No regular expressions in generated code
 - Use AI if useful, but only after a first pass on the code and cases
 - Tests use Jest by default
 ```
@@ -327,6 +329,7 @@ Avoid these ingredients unless tiny and justified:
 - money rules with many caps
 - large business workflows
 - long chains of nullable fields
+- regular expressions in generated code
 
 ## Subject bank
 

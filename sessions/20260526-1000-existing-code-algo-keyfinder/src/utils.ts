@@ -3,8 +3,8 @@ import fs from "fs";
 export function readLines(filePath: string): string[] {
   return fs
     .readFileSync(filePath, "utf8")
-    .split(/\r?\n/)
-    .map((line) => line.trim())
+    .split("\n")
+    .map((line) => line.replace("\r", "").trim())
     .filter(Boolean);
 }
 
