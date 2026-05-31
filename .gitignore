@@ -3,3 +3,5 @@ node_modules/
 *.js.map
 tsconfig.tsbuildinfo
 .DS_Store
+# Personal concept notes (learn-concept skill)
+concepts/

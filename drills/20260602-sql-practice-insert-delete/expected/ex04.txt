@@ -1,0 +1,4 @@
+care_type  amount
+---------  ------
+optics     150.0 
+pharmacy   18.0  

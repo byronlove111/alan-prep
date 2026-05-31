@@ -1,0 +1,17 @@
+[
+  {
+    "code": "CONSULT_GP",
+    "label": "Consultation generale",
+    "aliases": ["consult", "medecin generaliste", "consultation"]
+  },
+  {
+    "code": "PHYSIO",
+    "label": "Seance kinesitherapie",
+    "aliases": ["kine", "physio", "seance de kine", "seance kine"]
+  },
+  {
+    "code": "LAB_BLOOD",
+    "label": "Analyse sanguine",
+    "aliases": ["prise de sang", "blood test"]
+  }
+]

@@ -1,0 +1,7 @@
+member_name   company_name  care_type     amount
+------------  ------------  ------------  ------
+Alice Martin  Alan Tech     consultation  120.0 
+Bob Dupont    Alan Tech     consultation  80.0  
+Bob Dupont    Alan Tech     pharmacy      22.0  
+Alice Martin  Alan Tech     pharmacy      45.5  
+Clara Renard  Studio Co     optics        150.0 

@@ -1,0 +1,3 @@
+id  care_type     amount
+--  ------------  ------
+1   consultation  120.0 

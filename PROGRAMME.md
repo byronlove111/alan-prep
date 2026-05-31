@@ -1,52 +1,58 @@
 # Programme Alan
 
-## Routine
+## Routine (entretien J-1 / jour J)
 
-Routine quotidienne :
+Ordre du jour — **priorité SQL + format réel** :
 
-1. Matin : `/alan-ts-drill`
-2. Ensuite : `/learn-implement-analyzer` ou `/learn-existing-code-algo`
+1. **`/learn-sql-basics`** — 30-45 min — **10 exos progressifs** dans `drill.sql`, `npm test` après chaque exo
+2. **`/learn-implement-analyzer`** — 45-90 min (model SQLite + business logic TS + tests)
+3. **`/alan-ts-drill`** — 15 min si encore de l'énergie (nombres, %, floats)
 
-Priorité si l'entretien approche : **`/learn-implement-analyzer`** — c'est le format le plus proche du test technique réel (une fonction à implémenter, types + tests fournis).
+Option variante : `/learn-existing-code-algo` si tu veux lire du code existant avec bug SQL ou TS.
+
+---
+
+## Format entretien (nouvelles infos)
+
+Le test technique ressemble à :
+
+```
+src/
+  model.ts           ← requêtes SQLite (SELECT, JOIN)
+  businessLogic.ts   ← règles métier TypeScript
+  businessLogic.test.ts
+db/
+  schema.sql
+  seed.sql
+```
+
+Stack : **TypeScript + Jest + SQLite** (`better-sqlite3`).
 
 ---
 
 ## Intention
 
-Le but est simple :
-
-- devenir vraiment fluide en TypeScript sur les manipulations qui bloquent vite en entretien
-- s'entraîner sur le format réel d'interview (analyzer + historique patient)
-- garder `/learn-existing-code-algo` pour la lecture d'existant quand tu veux varier
-
-La logique :
-
-- d'abord un drill court pour muscler les réflexes TS
-- puis un exercice style interview Doctolib/Alan : implémenter `analyzeXxx` avec 7 tests imposés
+- muscler **JOIN + ORDER BY** en SQL (drills courts)
+- enchaîner sur un **bloc entretien complet** model + business logic
+- garder les réflexes TS (pourcentages, arrondi, boucles) via drills si besoin
 
 ---
 
-## Cadre
+## Skills
 
-Chaque jour, même ordre :
-
-1. `/alan-ts-drill`
-2. `/learn-implement-analyzer` (prioritaire) ou `/learn-existing-code-algo`
-
-Si tu as peu de temps, tu raccourcis la durée, mais tu gardes ces 2 blocs et cet ordre.
+| Skill | Rôle |
+|-------|------|
+| `/learn-sql-basics` | **10 exos SQL progressifs** dans un seul `drill.sql` (SELECT → JOIN) |
+| `/learn-implement-analyzer` | Simulation entretien complète (model + TS + db) |
+| `/learn-existing-code-algo` | Petite codebase existante, bug à corriger (TS ou SQL) |
+| `/alan-ts-drill` | Réflexes TS courts |
 
 ---
 
-## Prochaine session — 30/05
+## Aujourd'hui — prep intensive
 
-**Matin : `/alan-ts-drill`** — thème **nombres & structures**
+1. `/learn-sql-basics` → premier drill JOIN
+2. `/learn-implement-analyzer` → exercice model + business logic
+3. Rejouer l'**IMC analyzer** ou le **remboursement** si temps restant
 
-Notions à muscler (pièges de l'exercice IMC) :
-
-- calculer un pourcentage : `((b - a) / a) * 100`
-- arrondir à N décimales : `Math.round(x * 100) / 100`
-- float vs int — ne pas confondre avec `Math.round()` seul
-- manipuler des floats (`toBeCloseTo`, comparaisons)
-- listes de dictionnaires : boucler, accéder à `array[i]` et `array[i - 1]`, construire un tableau de résultats
-
-Lancer avec : `/alan-ts-drill` + mentionner ces notions.
+Dis **`/learn-sql-basics`** ou **`/learn-implement-analyzer`** pour lancer.

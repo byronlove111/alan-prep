@@ -1,0 +1,7 @@
+{
+  "name": "alan-sql-practice-insert-delete",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "./check.sh"
+  }
+}

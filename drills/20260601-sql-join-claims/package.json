@@ -1,0 +1,7 @@
+{
+  "name": "alan-sql-drill",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "./check.sh"
+  }
+}

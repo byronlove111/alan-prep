@@ -1,0 +1,5 @@
+id  care_type  amount
+--  ---------  ------
+2   pharmacy   45.5  
+4   optics     150.0 
+5   pharmacy   22.0  

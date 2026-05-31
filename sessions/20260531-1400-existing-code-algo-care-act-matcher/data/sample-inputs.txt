@@ -1,0 +1,6 @@
+Consultation generale
+consult
+  seance-de-kine
+Analyse   sanguine
+prise_de_sang
+Radiologie

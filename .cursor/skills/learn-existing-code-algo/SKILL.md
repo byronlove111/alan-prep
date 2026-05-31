@@ -1,6 +1,6 @@
 ---
 name: learn-existing-code-algo
-description: Generates an Alan-style live-coding drill on a tiny existing TypeScript codebase with main.ts, simple data files, and tests. The user must quickly understand what is already handled, fix or complete one realistic logic path, add a targeted test, and extend the feature on 1 or 2 nearby cases. Use when the user says /learn-existing-code-algo or wants CoderPad-style existing-code reasoning practice close to Alan live coding.
+description: Generates an Alan-style live-coding drill on a tiny existing TypeScript codebase with main.ts, simple data files, SQLite model layer when relevant, and tests. The user must quickly understand what is already handled, fix or complete one realistic logic path (TypeScript and/or SQL), add a targeted test, and extend the feature on 1 or 2 nearby cases. Use when the user says /learn-existing-code-algo or wants CoderPad-style existing-code reasoning practice close to Alan live coding.
 disable-model-invocation: true
 ---
 
@@ -20,7 +20,14 @@ The target feeling is close to a small CoderPad exercise with real files:
 - 1 or 2 tiny data files (`.txt` or `.json`) when useful
 - existing code that already works for some cases
 
-Do not generate a backend. No controller, no repository, no database, no HTTP, no Express.
+Do not generate a backend. No controller, no repository, no database server, no HTTP, no Express.
+
+**SQLite variant (interview-aligned)** — use when the user wants existing-code practice closer to the real test:
+- add `db/schema.sql`, `db/seed.sql`, and `src/model.ts` with one working query and one broken/incomplete query
+- keep `src/businessLogic.ts` (or main logic file) partially correct
+- tests use `better-sqlite3` with `:memory:` DB
+- bug may live in SQL (`JOIN` missing, wrong `WHERE`, bad `ORDER BY`) or in TS business rules after the query
+- no ORM — raw SQL in `model.ts` only
 
 ## Context loading — read before every session
 
@@ -88,8 +95,13 @@ sessions/YYYYMMDD-HHmm-existing-code-algo-[feature-slug]/
   src/
     types.ts
     utils.ts
+    model.ts                      ← optional, SQLite variant
     [mainLogicFile].ts
     [supportingLogicFile].ts      ← optional
+    testDb.ts                     ← optional, SQLite variant
+  db/                             ← optional, SQLite variant
+    schema.sql
+    seed.sql
   data/
     [small-data-file].txt
     [small-data-file].json        ← optional
@@ -135,6 +147,7 @@ Rules for the codebase:
 - the code should invite reasoning about cases, not architecture
 - use Jest by default for all generated tests; do not generate a homemade `test-runner.ts`
 - never use regular expressions in generated session code; prefer readable string operations such as `split`, `trim`, `includes`, `slice`, `join`, and simple loops
+- for SQLite variant: add `better-sqlite3` dependency; use parameterized queries (`?`) in `model.ts`
 
 ### Step 2 — Shape the exercise correctly
 
